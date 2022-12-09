@@ -15,7 +15,17 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React from alaa and adel again
+          https://www.behance.net/gallery/126118663/Online-Exam-Case-Study
+        
+        </a>
+        github repo :
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          https://github.com/alaahendam/Examino
         
         </a>
       </header>
