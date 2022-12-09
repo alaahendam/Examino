@@ -7,25 +7,24 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          This Project Powered By Alaa Hendam & Mohamed Adel
         </p>
         <a
           className="App-link"
-          href="https://reactjs.org"
+          href="https://www.behance.net/gallery/126118663/Online-Exam-Case-Study"
           target="_blank"
           rel="noopener noreferrer"
         >
-          https://www.behance.net/gallery/126118663/Online-Exam-Case-Study
+          Ui & Ux Case Study
         
         </a>
-        github repo :
         <a
           className="App-link"
-          href="https://reactjs.org"
+          href="https://www.behance.net/gallery/126118663/Online-Exam-Case-Study"
           target="_blank"
           rel="noopener noreferrer"
         >
-          https://github.com/alaahendam/Examino
+          Github Repo
         
         </a>
       </header>
