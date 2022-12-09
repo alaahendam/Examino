@@ -1,0 +1,53 @@
+.navBar{
+    width: 100%;
+    height: 50px;
+    background: linear-gradient(100deg,#A840D1, #56D1D4);
+    font-family: 'poppins';
+    display: flex;
+    color: white;
+    align-items: center;
+}
+.navBar .logo{
+    flex: 50%;
+    font-weight: 600;
+    font-size: 25px;
+    padding-left: 40px;
+}
+.navBar .logo p{
+    cursor: pointer;
+}
+.navBar .info{
+    flex: 50%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 20px;
+    font-size: 13px;
+}
+.navBar .info p{
+    cursor: pointer;
+}
+.signUpTab{
+    border: 1px solid white;
+    border-radius: 5px;
+    padding: 5px;
+}
+.menuToggler{
+    display: none;
+    flex: 50%;
+    padding-top: 10px;
+    direction: rtl;
+    padding-right: 30px;
+}
+@media only screen and (max-width: 600px) {
+    .navBar .info{
+        display: none;
+    }
+    .menuToggler{
+        display: block;
+        font-size: 30px;
+    }
+    .signUpTab{
+        border: 1px solid #E7EBF0;
+    }
+  }
