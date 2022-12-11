@@ -59,7 +59,7 @@ const NavBar = () => {
           style={{
             display: openMenu ? "flex" : "none",
             width: "100%",
-            height: "230px",
+            height: "80vh",
             color: "black",
             flexDirection: "column",
             justifyContent: "space-between",
@@ -69,7 +69,7 @@ const NavBar = () => {
         >
           {tabs.map((tab) => (
             <p
-              style={tab.value == activeTab ? activeStyle : null}
+              style={tab.value == activeTab ? { ...activeStyle } : null}
               className={tab.value == "signUp" ? "signUpTab" : null}
               onClick={() => handelNavigate(tab.value)}
             >

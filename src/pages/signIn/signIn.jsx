@@ -2,15 +2,20 @@ import React, { useState } from "react";
 import "./signIn.css";
 import loginIcon from "../../images/Login-amico.png";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 const SignIn = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
   const handelLogin = () => {
     if (!userName) {
       toast.error("أدخل أسم المستخدم");
     }
     if (!password) {
       toast.error("أدخل رقم المرور");
+    }
+    if (userName && password) {
+      toast("يمكنك الدخول");
     }
   };
   return (
@@ -44,6 +49,14 @@ const SignIn = () => {
           }}
           onChange={(e) => setPassword(e.target.value)}
         />
+        <p
+          style={{
+            fontSize: "10px",
+            marginBottom: "15px",
+          }}
+        >
+          forgot password ?
+        </p>
         <input
           type="button"
           value="Sign In"
@@ -54,6 +67,25 @@ const SignIn = () => {
           }}
           onClick={handelLogin}
         />
+        <p
+          style={{
+            fontSize: "13px",
+            marginBottom: "15px",
+          }}
+        >
+          create account ?{" "}
+          <a
+            style={{
+              fontSize: "14px",
+              fontWeight: 600,
+              cursor: "pointer",
+              textDecorationLine: "underline",
+            }}
+            onClick={() => navigate("/signUp")}
+          >
+            Sign Up
+          </a>
+        </p>
       </div>
     </div>
   );
