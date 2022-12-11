@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import "./signUp.css";
 import Student from "../../images/student.png";
 import Teacher from "../../images/teacher.png";
 const SignUp = () => {
+  const navigate = useNavigate();
   const [userType, setUserType] = useState(0);
   const {
     register,
@@ -74,13 +76,32 @@ const SignUp = () => {
       ))}
       <input
         type="submit"
-        value="Sign In"
+        value="Sign Up"
         style={{
           background: "linear-gradient(100deg,#A840D1, #56D1D4)",
           color: "white",
           cursor: "pointer",
         }}
       />
+      <p
+        style={{
+          fontSize: "13px",
+          marginBottom: "15px",
+        }}
+      >
+        You Have an Account ?{" "}
+        <a
+          style={{
+            fontSize: "14px",
+            fontWeight: 600,
+            cursor: "pointer",
+            textDecorationLine: "underline",
+          }}
+          onClick={() => navigate("/signUp")}
+        >
+          Sign In
+        </a>
+      </p>
     </form>
   );
 };
