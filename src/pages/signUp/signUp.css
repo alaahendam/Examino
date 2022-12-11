@@ -1,0 +1,18 @@
+.signUp{
+    width: 100%;
+    height: 84vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.signUp input{
+    margin-bottom: 10px;
+    height: 37px;
+    width: 70%;
+    border:1px solid #E7EBF0;
+    border-radius: 4px;
+}
+.signUp input:focus{
+    outline-color: #56D1D4;
+}

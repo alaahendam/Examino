@@ -27,7 +27,7 @@
 .signInInfo input:focus{
     outline-color: #56D1D4;
 }
-.signInInfo .welcome{
+.welcome{
     font-size: 20px;
     font-weight: 600;
 }
