@@ -1,10 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import "./signUp.css";
-import student from "../../images/student.png";
-import teacher from "../../images/teacher.png";
+import Student from "../../images/student.png";
+import Teacher from "../../images/teacher.png";
 const SignUp = () => {
+  const [userType, setUserType] = useState(0);
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm();
+  const inputField = [
+    { type: "text", placeholder: "user name", name: "userName" },
+    { type: "number", placeholder: "ID", name: "id" },
+    { type: "email", placeholder: "Email Address", name: "emailAddress" },
+    { type: "text", placeholder: "Telephone", name: "telephone" },
+    { type: "password", placeholder: "Password", name: "password" },
+    {
+      type: "password",
+      placeholder: "Confirm Password",
+      name: "confirmPassword",
+    },
+  ];
+  const userTypeField = [Teacher, Student];
+  const onSubmit = (data) => console.log(data);
   return (
-    <div className="signUp">
+    <form onSubmit={handleSubmit(onSubmit)} className="signUp">
       <p className="welcome">Welcome To Examino !</p>
       <p
         style={{
@@ -19,53 +40,40 @@ const SignUp = () => {
           display: "flex",
         }}
       >
-        <img src={teacher} alt="" srcset="" />
-        <img src={student} alt="" srcset="" />
+        {userTypeField.map((field, index) => (
+          <div
+            style={{
+              cursor: "pointer",
+              marginBottom: "17px",
+            }}
+            onClick={() => setUserType(index)}
+          >
+            <img src={field} alt="" srcset="" />
+            <p
+              style={{
+                fontSize: "12px",
+                textAlign: "center",
+                textDecoration: userType == index ? "underline" : "none",
+                fontWeight: userType == index ? 600 : 500,
+              }}
+            >
+              {index == 0 ? "Teacher" : "Student"}
+            </p>
+          </div>
+        ))}
       </div>
+      {inputField.map((inputData) => (
+        <input
+          type={inputData.type}
+          placeholder={inputData.placeholder}
+          {...register(`${inputData.name}`, { required: true })}
+          style={{
+            paddingLeft: "10px",
+          }}
+        />
+      ))}
       <input
-        type="text"
-        placeholder="user name"
-        style={{
-          paddingLeft: "10px",
-        }}
-      />
-      <input
-        type="text"
-        placeholder="ID"
-        style={{
-          paddingLeft: "10px",
-        }}
-      />
-      <input
-        type="email"
-        placeholder="Email Address"
-        style={{
-          paddingLeft: "10px",
-        }}
-      />
-      <input
-        type="telephone"
-        placeholder="Telephone"
-        style={{
-          paddingLeft: "10px",
-        }}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        style={{
-          paddingLeft: "10px",
-        }}
-      />
-      <input
-        type="password"
-        placeholder="Confirm Password"
-        style={{
-          paddingLeft: "10px",
-        }}
-      />
-      <input
-        type="button"
+        type="submit"
         value="Sign In"
         style={{
           background: "linear-gradient(100deg,#A840D1, #56D1D4)",
@@ -73,7 +81,7 @@ const SignUp = () => {
           cursor: "pointer",
         }}
       />
-    </div>
+    </form>
   );
 };
 export default SignUp;
