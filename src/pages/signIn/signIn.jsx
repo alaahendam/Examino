@@ -1,10 +1,18 @@
 import React, { useState } from "react";
 import "./signIn.css";
 import loginIcon from "../../images/Login-amico.png";
-
+import { toast } from "react-toastify";
 const SignIn = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const handelLogin = () => {
+    if (!userName) {
+      toast.error("أدخل أسم المستخدم");
+    }
+    if (!password) {
+      toast.error("أدخل رقم المرور");
+    }
+  };
   return (
     <div className="signIn">
       <div className="signInInfo">
@@ -44,6 +52,7 @@ const SignIn = () => {
             color: "white",
             cursor: "pointer",
           }}
+          onClick={handelLogin}
         />
       </div>
     </div>
