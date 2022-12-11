@@ -1,19 +1,26 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./navBar.css";
 import menu from "../../images/menu.png";
 import { GiHamburgerMenu } from "react-icons/gi";
 
 const NavBar = () => {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("home");
   const [openMenu, setOpenMenu] = useState(false);
   const tabs = [
-    { value: "home", label: "Home" },
-    { value: "About", label: "About" },
-    { value: "Contact Us", label: "Contact Us" },
-    { value: "SignIn", label: "Sign In" },
+    { value: "/", label: "Home" },
+    { value: "about", label: "About" },
+    { value: "contactUs", label: "Contact Us" },
+    { value: "signIn", label: "Sign In" },
     { value: "signUp", label: "Sign Up" },
   ];
   const activeStyle = { fontSize: "15px", fontWeight: 600 };
+  const handelNavigate = (value) => {
+    setActiveTab(value);
+    navigate(value);
+    setOpenMenu(false);
+  };
   return (
     <div className="navBar">
       <div className="logo">
@@ -24,7 +31,7 @@ const NavBar = () => {
           <p
             style={tab.value == activeTab ? activeStyle : null}
             className={tab.value == "signUp" ? "signUpTab" : null}
-            onClick={() => setActiveTab(tab.value)}
+            onClick={() => handelNavigate(tab.value)}
           >
             {tab.label}
           </p>
@@ -64,7 +71,7 @@ const NavBar = () => {
             <p
               style={tab.value == activeTab ? activeStyle : null}
               className={tab.value == "signUp" ? "signUpTab" : null}
-              onClick={() => setActiveTab(tab.value)}
+              onClick={() => handelNavigate(tab.value)}
             >
               {tab.label}
             </p>

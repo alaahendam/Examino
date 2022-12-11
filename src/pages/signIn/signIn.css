@@ -1,0 +1,39 @@
+.signIn{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.signIn img{
+    width: 200px;
+    height: 200px;
+}
+.signInInfo{
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.signInInfo input{
+    margin-bottom: 10px;
+    height: 28px;
+    width: 70%;
+}
+.signInInfo .welcome{
+    font-size: 20px;
+    font-weight: 600;
+}
+@media only screen and (max-width: 600px) {
+    .signInInfo input{
+        width: 100%;
+    }
+    .signIn img{
+        width: 150px;
+        height: 150px;
+    }
+    .signInInfo .welcome{
+        font-size: 16px;
+    }
+  }
