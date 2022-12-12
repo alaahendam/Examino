@@ -24,7 +24,7 @@ const NavBar = () => {
   return (
     <div className="navBar">
       <div className="logo">
-        <p onClick={() => navigate("/home")}>Examino</p>
+        <p onClick={() => navigate("/")}>Examino</p>
       </div>
       <div className="info">
         {tabs.map((tab) => (
