@@ -97,7 +97,7 @@ const SignUp = () => {
             cursor: "pointer",
             textDecorationLine: "underline",
           }}
-          onClick={() => navigate("/signUp")}
+          onClick={() => navigate("/signIn")}
         >
           Sign In
         </a>
