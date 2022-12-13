@@ -1,0 +1,15 @@
+.forM {
+  max-width: 800px;
+  width: 400px;
+}
+.btnForm {
+  background: linear-gradient(100deg, #a840d1, #56d1d4);
+}
+@media screen and (max-width: 600px) {
+   .divform{
+   text-align: center;
+   }
+   .forM{
+    display: inline-block;
+   }
+  }
