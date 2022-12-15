@@ -6,6 +6,8 @@
     display: flex;
     color: white;
     align-items: center;
+    position:fixed;
+    top: 0;
 }
 .navBar .logo{
     flex: 50%;
@@ -38,6 +40,7 @@
     padding-top: 10px;
     direction: rtl;
     padding-right: 30px;
+    
 }
 @media only screen and (max-width: 600px) {
     .navBar .info{

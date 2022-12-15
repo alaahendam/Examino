@@ -1,0 +1,22 @@
+.social-container {
+    display: flex;
+    flex-direction: column;
+  }
+  a.social {
+   margin: 0.5em;
+    transition: transform 250ms;
+    color: black;
+  }
+  a.social:hover {
+    transform: scale(1.1);
+  }
+  a.social{
+    transition: all 1.3s;
+  }
+  @media only screen and (max-width: 600px) {
+   .social-container{
+    flex-direction: row;
+   display: block;
+    text-align: center;
+   }
+  }

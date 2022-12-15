@@ -1,46 +1,52 @@
-import Button from "react-bootstrap/Button";
-import Col from "react-bootstrap/Col";
-import Form from "react-bootstrap/Form";
-import Row from "react-bootstrap/Row";
-import "./Contactform.css";
+import React from "react";
+import ReactDOM from "react-dom";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import "../ContactForm/Contactform.css"
+const SignupSchema = yup.object().shape({
+  firstName: yup.string().required(),
+  age: yup.number().required().positive().integer(),
+  website: yup.string().url()
+});
+
 function ContactForm() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    resolver: yupResolver(SignupSchema)
+  });
+  const onSubmit = (data) => {
+    alert(JSON.stringify(data));
+  };
+
   return (
-    <div className="divform">
-    <Form className="forM">
-      <Row className="mb-4">
-        <Form.Group as={Col} controlId="formGridEmail">
-          <Form.Control type="text" placeholder="User Name" required />
-        </Form.Group>
-      </Row>
-
-      <Form.Group className="mb-4" controlId="formGridAddress1">
-        <Form.Control placeholder="Email Address" type="email" required />
-      </Form.Group>
-
-      <Form.Group className="mb-4" controlId="formGridAddress2">
-        <Form.Control placeholder="Object" type="text" required />
-      </Form.Group>
-
-      <Form.Group className="mb-4" controlId="exampleForm.ControlTextarea1">
-        <Form.Control
-          as="textarea"
-          rows={6}
-          placeholder="Your Message"
-          type="text"
-          required
-        />
-      </Form.Group>
-
-      <Button
-        className="btnForm"
-        variant="primary"
-        type="submit"
-        style={{ width: "100%" }}
-      >
-        Submit
-      </Button>
-    </Form>
-    </div>
+    <form className="contact" >
+      <div>
+        <input {...register("User Name")} placeholder="User Name" required />
+        {/* {errors.firstName && <p>{errors.firstName.message}</p>} */}
+      </div>
+      <div style={{ marginBottom: 10 }}>
+        <input {...register("Email Adress")} placeholder="Email Adress" required type="email" />
+        {/* {errors.lastName && <p>{errors.lastName.message}</p>} */}
+      </div>
+      <div>
+        <input type="" {...register("object")} placeholder="object" required />
+        {/* {errors.age && <p>{errors.age.message}</p>} */}
+      </div>
+      <div>
+      <textarea
+       type="text" 
+       placeholder="Write a comment..."
+       name="content"
+       required
+         />
+      </div>
+      <input value="SEND" className="submitt" type="submit" style={{background: "linear-gradient(100deg,#A840D1, #56D1D4)"
+    ,color:"white",letterSpacing:"0.5em",cursor:"pointer",fontSize:"20px"}} />
+    </form>
   );
 }
 
