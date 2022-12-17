@@ -7,7 +7,7 @@ const PrivateRoute = (element, role) => {
   if (login && login.role == role) {
     return element;
   } else {
-    return <Navigate to="/signIn" replace />;
+    return <Navigate to="/" replace />;
   }
 };
 
