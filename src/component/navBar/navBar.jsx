@@ -4,12 +4,17 @@ import "./navBar.css";
 import menu from "../../images/menu.png";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useSelector, useDispatch } from "react-redux";
+import { addLogin, deleteLogin } from "../../redux/features/loginSlice";
 import { toast } from "react-toastify";
+import Student from "../../images/student.png";
+import Teacher from "../../images/teacher.png";
 const NavBar = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const login = useSelector((state) => state.login.login);
   const [activeTab, setActiveTab] = useState("home");
   const [openMenu, setOpenMenu] = useState(false);
+  const [openLogout, setOpenLogout] = useState(false);
   var tabs = [
     { value: "/", label: "Home" },
     { value: "about", label: "About" },
@@ -49,6 +54,46 @@ const NavBar = () => {
             {tab.label}
           </p>
         ))}
+        {login ? (
+          <div
+            style={{
+              backgroundColor: "rgb(201 201 16)",
+              borderRadius: "50%",
+            }}
+            onClick={() => setOpenLogout(!openLogout)}
+          >
+            <img
+              src={login.role == "Teacher" ? Teacher : Student}
+              style={{
+                width: "40px",
+                height: "40px",
+                borderRadius: "50%",
+                cursor: "pointer",
+              }}
+            />
+            {openLogout ? (
+              <div
+                style={{
+                  backgroundColor: "#ddd6d6",
+                  width: "130px",
+                  height: "40px",
+                  position: "absolute",
+                  top: "50px",
+                  right: "5px",
+                  borderRadius: "8px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: "18px",
+                  cursor: "pointer",
+                }}
+                onClick={() => dispatch(addLogin(null))}
+              >
+                Logout
+              </div>
+            ) : null}
+          </div>
+        ) : null}
       </div>
       <div className="menuToggler">
         <GiHamburgerMenu
@@ -89,6 +134,49 @@ const NavBar = () => {
               {tab.label}
             </p>
           ))}
+          {login ? (
+            <div
+              style={{
+                backgroundColor: "rgb(201 201 16)",
+                borderRadius: "50%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexDirection: "column",
+              }}
+              onClick={() => setOpenLogout(!openLogout)}
+            >
+              <img
+                src={login.role == "Teacher" ? Teacher : Student}
+                style={{
+                  width: "40px",
+                  height: "40px",
+                  borderRadius: "50%",
+                  cursor: "pointer",
+                }}
+              />
+              {openLogout ? (
+                <div
+                  style={{
+                    backgroundColor: "#ddd6d6",
+                    width: "130px",
+                    height: "40px",
+                    position: "absolute",
+                    bottom: "50px",
+                    borderRadius: "8px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: "18px",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => dispatch(addLogin(null))}
+                >
+                  Logout
+                </div>
+              ) : null}
+            </div>
+          ) : null}
         </div>
       </div>
       <div

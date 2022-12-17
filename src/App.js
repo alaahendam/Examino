@@ -40,8 +40,8 @@ function App() {
       <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/signIn" element={<SignIn />} />
-        <Route path="/signUp" element={<SignUp />} />
+        <Route path="/signIn" element={PrivateRoute(<SignIn />, "SignIn")} />
+        <Route path="/signUp" element={PrivateRoute(<SignUp />, "SignIn")} />
         <Route path="/about" element={<About />} />
         <Route path="/contactUs" element={<ContactUs />} />
         <Route path="/exams" element={PrivateRoute(<Exams />, "Teacher")} />
