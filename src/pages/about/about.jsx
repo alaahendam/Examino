@@ -12,17 +12,17 @@ const About = () => {
           <Aboutdiv1 />
         </div>
         <div className="about12" style={{textAlign:"right"}}>
-          <img src={img} style={{height:"260px",width:"70%"}}></img>
+          <img className="testimage" src={img}></img>
         </div>
         </div>
       <div className="child-about about2">
         <div className="about21">
-        <img src={img2} style={{height:"320px",width:"70%"}}></img>
+        <img className="whyImage" src={img2} style={{height:"320px",width:"70%"}}></img>
         </div>
         <div className="about22">
           <h3>Why Choose Us !? </h3>
           <br/>
-          <div className="kkk" style={{textAlign:"left"}}>
+          <div className="whyPargraph" style={{textAlign:"left"}}>
              <ol>
                 <li>Details Summary behave a lot like the only just the basics. Could you layer on functionality, like a group of details elements in which only one can be open at once?</li>
                 <li>Can you progressively enhance Details  Summary to add custom styling and animation?</li>
