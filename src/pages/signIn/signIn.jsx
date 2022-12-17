@@ -15,9 +15,22 @@ const SignIn = () => {
 
   const navigate = useNavigate();
   const login = useSelector((state) => state.login.login);
+  const usersData = useSelector((state) => state.users.users);
   const dispatch = useDispatch();
-
-  const onSubmit = (data) => dispatch(addLogin(data));
+  var findLoginFlag = true;
+  const onSubmit = (data) => {
+    usersData.map((users) => {
+      if (users.userName == data.userName && users.password == data.password) {
+        dispatch(addLogin(users));
+        toast("يمكنك الدخول");
+      } else {
+        findLoginFlag = false;
+      }
+    });
+  };
+  if (!findLoginFlag) {
+    toast.error("المستخدم غير موجود");
+  }
   return (
     <div className="signIn">
       <div className="signInInfo">

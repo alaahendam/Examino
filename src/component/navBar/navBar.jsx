@@ -14,16 +14,19 @@ const NavBar = () => {
     { value: "/", label: "Home" },
     { value: "about", label: "About" },
     { value: "contactUs", label: "Contact Us" },
-    { value: "signIn", label: "Sign In" },
-    { value: "signUp", label: "Sign Up" },
+    ,
   ];
-  // if (login) {
-  //   tabs = [
-  //     { value: "/", label: "Home" },
-  //     { value: "about", label: "About" },
-  //     { value: "contactUs", label: "Contact Us" },
-  //   ];
-  // }
+  if (login && login.role == "Teacher") {
+    tabs.push({ value: "questionBank", label: "Question Bank" });
+    tabs.push({ value: "exams", label: "Exams" });
+    tabs.push({ value: "certificate", label: "Certificate" });
+  } else if (login && login.role == "Student") {
+    tabs.push({ value: "exams", label: "Exams" });
+    tabs.push({ value: "scores", label: "Scores" });
+  } else {
+    tabs.push({ value: "signIn", label: "Sign In" });
+    tabs.push({ value: "signUp", label: "Sign Up" });
+  }
   const activeStyle = { fontSize: "15px", fontWeight: 600 };
   const handelNavigate = (value) => {
     setActiveTab(value);

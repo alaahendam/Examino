@@ -9,6 +9,11 @@ import SignIn from "./pages/signIn/signIn";
 import SignUp from "./pages/signUp/signUp";
 import About from "./pages/about/about";
 import ContactUs from "./pages/contactUs/contactUs";
+import Exams from "./pages/exams/exams";
+import Scores from "./pages/scores/scores";
+import QuestionBank from "./pages/questionBank/questionBank";
+import Certificate from "./pages/certificate/certificate";
+
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { db } from "./firebase/firebase-config";
@@ -38,6 +43,10 @@ function App() {
         <Route path="/signUp" element={<SignUp />} />
         <Route path="/about" element={<About />} />
         <Route path="/contactUs" element={<ContactUs />} />
+        <Route path="/exams" element={<Exams />} />
+        <Route path="/scores" element={<Scores />} />
+        <Route path="/questionBank" element={<QuestionBank />} />
+        <Route path="/certificate" element={<Certificate />} />
       </Routes>
       <Footer />
       <ToastContainer />
