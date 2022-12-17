@@ -1,0 +1,48 @@
+.contact{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.contact input{
+    margin-bottom: 20px;
+    height: 37px;
+    border:1px solid #E7EBF0;
+    border-radius: 4px;
+    width: 80%;
+    padding-left: 10px;
+}
+.contact textarea{
+    margin-bottom: 20px;
+    height: 100px;
+    border:1px solid #E7EBF0;
+    border-radius: 4px;
+    width: 80%;
+    padding-left: 10px;
+}
+.contact input:focus{
+    outline-color: #56D1D4;
+}
+.contact textarea:focus{
+    outline-color: #56D1D4;
+    
+}
+.submitt:hover{
+    transform: scale(1.1);
+}
+.submitt{
+    transition: all 1.3s;
+}
+@media only screen and (max-width: 600px) {
+    .contact input{
+        width: 90%;
+    }
+    .contact{
+        text-align: center;
+        display: block;
+    }
+    .contact textarea{
+        width: 90%
+    }
+
+  }

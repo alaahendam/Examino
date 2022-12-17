@@ -1,0 +1,45 @@
+.text{
+    text-align: center;
+    padding-bottom: 50px;
+}
+.root { 
+    display: grid; 
+    grid-template-columns: 40% 40% 15%; 
+    grid-gap: 20px; 
+    width: 95%; 
+    margin: auto;
+} 
+.image{
+  animation: fade 3s infinite;
+}
+.grid-element { 
+    margin: 10px;
+}
+.div3{
+  text-align: right;
+}
+@media only screen and (max-width: 600px) {
+    .root{
+      display: flex;
+      flex-direction: column;
+    }
+    .grid-element{
+       width: 95%;
+       
+    }
+    .text{
+      padding-bottom: 0px;
+    }
+   .div1{
+    order: 2;
+   }
+   .div3{
+    order: 3;
+    padding-bottom: 30px;
+   }
+   .div2{
+    order: 1;
+    margin-top: 0px;
+   }
+
+  }
