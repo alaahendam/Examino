@@ -2,7 +2,7 @@ import React from "react";
 import Avatar from '@mui/material/Avatar';
 import "../Avatar/Avatar.css"
 import AvatarGroup from '@mui/material/AvatarGroup';
-import image from "../../images/contact2.webp"
+import image from "../../images/onlinecall.webp"
 function Avatarr(){
     return(
        <div>

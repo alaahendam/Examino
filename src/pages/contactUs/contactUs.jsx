@@ -1,8 +1,9 @@
 import React from "react";
 import "../contactUs/contactUs.css";
 import SocialMedia from "../../component/SocialMediaIcons/SocialMedia";
-import img from "../../images/contact2.webp";
+import img from "../../images/onlinecall.webp";
 import ContactForm from "../../component/ContactForm/Contactform";
+//addImage
 function ContactUs(){
   return(
   <div style={{marginTop:"50px"}}>
