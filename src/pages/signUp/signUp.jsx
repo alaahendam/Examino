@@ -4,9 +4,13 @@ import { useNavigate } from "react-router-dom";
 import "./signUp.css";
 import Student from "../../images/student.png";
 import Teacher from "../../images/teacher.png";
+import { db } from "../../firebase/firebase-config";
+import { collection, addDoc } from "firebase/firestore";
+import { toast } from "react-toastify";
 const SignUp = () => {
+  const usersCollectionRef = collection(db, "users");
   const navigate = useNavigate();
-  const [userType, setUserType] = useState(0);
+  const [userType, setUserType] = useState("Teacher");
   const {
     register,
     formState: { errors },
@@ -24,8 +28,15 @@ const SignUp = () => {
       name: "confirmPassword",
     },
   ];
-  const userTypeField = [Teacher, Student];
-  const onSubmit = (data) => console.log(data);
+  const userTypeField = [
+    { label: "Teacher", logo: Teacher },
+    { label: "Student", logo: Student },
+  ];
+  const onSubmit = async (data) => {
+    delete data.confirmPassword;
+    await addDoc(usersCollectionRef, { ...data, role: userType });
+    toast("تم تسجيل البيانات بنجاح");
+  };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="signUp">
       <p className="welcome">Welcome To Examino !</p>
@@ -42,24 +53,24 @@ const SignUp = () => {
           display: "flex",
         }}
       >
-        {userTypeField.map((field, index) => (
+        {userTypeField.map((type) => (
           <div
             style={{
               cursor: "pointer",
               marginBottom: "17px",
             }}
-            onClick={() => setUserType(index)}
+            onClick={() => setUserType(type.label)}
           >
-            <img src={field} alt="" srcset="" />
+            <img src={type.logo} alt="" srcset="" />
             <p
               style={{
                 fontSize: "12px",
                 textAlign: "center",
-                textDecoration: userType == index ? "underline" : "none",
-                fontWeight: userType == index ? 600 : 500,
+                textDecoration: userType == type.label ? "underline" : "none",
+                fontWeight: userType == type.label ? 600 : 500,
               }}
             >
-              {index == 0 ? "Teacher" : "Student"}
+              {type.label}
             </p>
           </div>
         ))}

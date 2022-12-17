@@ -3,24 +3,34 @@ import { useNavigate } from "react-router-dom";
 import "./navBar.css";
 import menu from "../../images/menu.png";
 import { GiHamburgerMenu } from "react-icons/gi";
-
+import { useSelector, useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 const NavBar = () => {
   const navigate = useNavigate();
+  const login = useSelector((state) => state.login.login);
   const [activeTab, setActiveTab] = useState("home");
   const [openMenu, setOpenMenu] = useState(false);
-  const tabs = [
+  var tabs = [
     { value: "/", label: "Home" },
     { value: "about", label: "About" },
     { value: "contactUs", label: "Contact Us" },
     { value: "signIn", label: "Sign In" },
     { value: "signUp", label: "Sign Up" },
   ];
+  // if (login) {
+  //   tabs = [
+  //     { value: "/", label: "Home" },
+  //     { value: "about", label: "About" },
+  //     { value: "contactUs", label: "Contact Us" },
+  //   ];
+  // }
   const activeStyle = { fontSize: "15px", fontWeight: 600 };
   const handelNavigate = (value) => {
     setActiveTab(value);
     navigate(value);
     setOpenMenu(false);
   };
+
   return (
     <div className="navBar">
       <div className="logo">

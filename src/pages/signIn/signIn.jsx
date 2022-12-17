@@ -1,23 +1,23 @@
 import React, { useState } from "react";
 import "./signIn.css";
+import { useForm } from "react-hook-form";
 import loginIcon from "../../images/Login-amico.png";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { addLogin, deleteLogin } from "../../redux/features/loginSlice";
 const SignIn = () => {
-  const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState("");
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm();
+
   const navigate = useNavigate();
-  const handelLogin = () => {
-    if (!userName) {
-      toast.error("أدخل أسم المستخدم");
-    }
-    if (!password) {
-      toast.error("أدخل رقم المرور");
-    }
-    if (userName && password) {
-      toast("يمكنك الدخول");
-    }
-  };
+  const login = useSelector((state) => state.login.login);
+  const dispatch = useDispatch();
+
+  const onSubmit = (data) => dispatch(addLogin(data));
   return (
     <div className="signIn">
       <div className="signInInfo">
@@ -31,61 +31,68 @@ const SignIn = () => {
         >
           sign in to enter your account
         </p>
-        <input
-          type="text"
-          value={userName}
-          placeholder="user name"
+        <form
+          onSubmit={handleSubmit(onSubmit)}
           style={{
-            paddingLeft: "10px",
-          }}
-          onChange={(e) => setUserName(e.target.value)}
-        />
-        <input
-          type="password"
-          value={password}
-          placeholder="password"
-          style={{
-            paddingLeft: "10px",
-          }}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <p
-          style={{
-            fontSize: "10px",
-            marginBottom: "15px",
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          forgot password ?
-        </p>
-        <input
-          type="button"
-          value="Sign In"
-          style={{
-            background: "linear-gradient(100deg,#A840D1, #56D1D4)",
-            color: "white",
-            cursor: "pointer",
-          }}
-          onClick={handelLogin}
-        />
-        <p
-          style={{
-            fontSize: "13px",
-            marginBottom: "15px",
-          }}
-        >
-          create account ?{" "}
-          <a
+          <input
+            type="text"
+            placeholder="User Name"
+            {...register("userName", { required: true })}
             style={{
-              fontSize: "14px",
-              fontWeight: 600,
-              cursor: "pointer",
-              textDecorationLine: "underline",
+              paddingLeft: "10px",
             }}
-            onClick={() => navigate("/signUp")}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            {...register("password", { required: true })}
+            style={{
+              paddingLeft: "10px",
+            }}
+          />
+          <p
+            style={{
+              fontSize: "10px",
+              marginBottom: "15px",
+            }}
           >
-            Sign Up
-          </a>
-        </p>
+            forgot password ?
+          </p>
+          <input
+            type="submit"
+            value="Sign In"
+            style={{
+              background: "linear-gradient(100deg,#A840D1, #56D1D4)",
+              color: "white",
+              cursor: "pointer",
+            }}
+          />
+          <p
+            style={{
+              fontSize: "13px",
+              marginBottom: "15px",
+            }}
+          >
+            create account ?{" "}
+            <a
+              style={{
+                fontSize: "14px",
+                fontWeight: 600,
+                cursor: "pointer",
+                textDecorationLine: "underline",
+              }}
+              onClick={() => navigate("/signUp")}
+            >
+              Sign Up
+            </a>
+          </p>
+        </form>
       </div>
     </div>
   );
