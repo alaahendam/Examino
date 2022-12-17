@@ -7,7 +7,11 @@ import Teacher from "../../images/teacher.png";
 import { db } from "../../firebase/firebase-config";
 import { collection, addDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
+import { useSelector, useDispatch } from "react-redux";
+import { addUser } from "../../redux/features/usersSlice";
 const SignUp = () => {
+  const usersData = useSelector((state) => state.users.users);
+  const dispatch = useDispatch();
   const usersCollectionRef = collection(db, "users");
   const navigate = useNavigate();
   const [userType, setUserType] = useState("Teacher");
@@ -32,10 +36,24 @@ const SignUp = () => {
     { label: "Teacher", logo: Teacher },
     { label: "Student", logo: Student },
   ];
+  var findLoginFlag = false;
   const onSubmit = async (data) => {
     delete data.confirmPassword;
-    await addDoc(usersCollectionRef, { ...data, role: userType });
-    toast("تم تسجيل البيانات بنجاح");
+    usersData.map((users) => {
+      if (
+        users.userName == data.userName ||
+        users.id == data.id ||
+        users.emailAddress == data.emailAddress
+      ) {
+        toast.error("الحساب موجود بالفعل");
+        findLoginFlag = true;
+      }
+    });
+    if (!findLoginFlag) {
+      await addDoc(usersCollectionRef, { ...data, role: userType });
+      dispatch(addUser({ ...data, role: userType }));
+      toast("تم تسجيل البيانات بنجاح");
+    }
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="signUp">

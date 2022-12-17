@@ -20,13 +20,13 @@ export const usersSlice = createSlice({
         return user;
       });
     },
-    adduser: (state, action) => {
+    addUser: (state, action) => {
       state.users.push(action.payload);
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { addUsers, deleteUsers, editUser, adduser } = usersSlice.actions;
+export const { addUsers, deleteUsers, editUser, addUser } = usersSlice.actions;
 
 export default usersSlice.reducer;

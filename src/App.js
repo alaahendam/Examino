@@ -13,6 +13,7 @@ import Exams from "./pages/exams/exams";
 import Scores from "./pages/scores/scores";
 import QuestionBank from "./pages/questionBank/questionBank";
 import Certificate from "./pages/certificate/certificate";
+import PrivateRoute from "./privateRoute";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -43,10 +44,16 @@ function App() {
         <Route path="/signUp" element={<SignUp />} />
         <Route path="/about" element={<About />} />
         <Route path="/contactUs" element={<ContactUs />} />
-        <Route path="/exams" element={<Exams />} />
-        <Route path="/scores" element={<Scores />} />
-        <Route path="/questionBank" element={<QuestionBank />} />
-        <Route path="/certificate" element={<Certificate />} />
+        <Route path="/exams" element={PrivateRoute(<Exams />, "Teacher")} />
+        <Route path="/scores" element={PrivateRoute(<Scores />, "Student")} />
+        <Route
+          path="/questionBank"
+          element={PrivateRoute(<QuestionBank />, "Teacher")}
+        />
+        <Route
+          path="/certificate"
+          element={PrivateRoute(<Certificate />, "Teacher")}
+        />
       </Routes>
       <Footer />
       <ToastContainer />
