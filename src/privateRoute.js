@@ -8,6 +8,8 @@ const PrivateRoute = (element, role) => {
     return element;
   } else if (!login && role == "SignIn") {
     return element;
+  } else if (login && role == "Both") {
+    return element;
   } else {
     return <Navigate to="/" replace />;
   }

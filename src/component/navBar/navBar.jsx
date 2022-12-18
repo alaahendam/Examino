@@ -137,23 +137,21 @@ const NavBar = () => {
           {login ? (
             <div
               style={{
-                backgroundColor: "rgb(201 201 16)",
-                borderRadius: "50%",
                 display: "flex",
-                alignItems: "center",
                 justifyContent: "center",
-                flexDirection: "column",
+                alignItems: "center",
               }}
-              onClick={() => setOpenLogout(!openLogout)}
             >
               <img
                 src={login.role == "Teacher" ? Teacher : Student}
                 style={{
+                  backgroundColor: "rgb(203 203 19)",
                   width: "40px",
                   height: "40px",
                   borderRadius: "50%",
                   cursor: "pointer",
                 }}
+                onClick={() => setOpenLogout(!openLogout)}
               />
               {openLogout ? (
                 <div

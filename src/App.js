@@ -38,23 +38,30 @@ function App() {
   return (
     <div className="App">
       <NavBar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/signIn" element={PrivateRoute(<SignIn />, "SignIn")} />
-        <Route path="/signUp" element={PrivateRoute(<SignUp />, "SignIn")} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contactUs" element={<ContactUs />} />
-        <Route path="/exams" element={PrivateRoute(<Exams />, "Teacher")} />
-        <Route path="/scores" element={PrivateRoute(<Scores />, "Student")} />
-        <Route
-          path="/questionBank"
-          element={PrivateRoute(<QuestionBank />, "Teacher")}
-        />
-        <Route
-          path="/certificate"
-          element={PrivateRoute(<Certificate />, "Teacher")}
-        />
-      </Routes>
+      <div
+        style={{
+          paddingTop: "50px",
+          paddingBottom: "30px",
+        }}
+      >
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/signIn" element={PrivateRoute(<SignIn />, "SignIn")} />
+          <Route path="/signUp" element={PrivateRoute(<SignUp />, "SignIn")} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contactUs" element={<ContactUs />} />
+          <Route path="/exams" element={PrivateRoute(<Exams />, "Both")} />
+          <Route path="/scores" element={PrivateRoute(<Scores />, "Student")} />
+          <Route
+            path="/questionBank"
+            element={PrivateRoute(<QuestionBank />, "Teacher")}
+          />
+          <Route
+            path="/certificate"
+            element={PrivateRoute(<Certificate />, "Teacher")}
+          />
+        </Routes>
+      </div>
       <Footer />
       <ToastContainer />
     </div>
