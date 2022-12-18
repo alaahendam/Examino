@@ -1,5 +1,6 @@
 import React from "react";
 import "./home.css";
+import WhatSay from "../../component/cart";
 import home from "../../images/home.jpg";
 import { useNavigate } from "react-router-dom";
 const Home = () => {
