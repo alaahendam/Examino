@@ -1,0 +1,81 @@
+.Exams {
+  width: 100%;
+  height: 86vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(100deg, #a840d1, #56d1d4);
+}
+.examTab {
+  border: 1px solid #e7ebf0;
+  padding: 7px 28px;
+  border-radius: 5px;
+  margin-left: 1px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.examTabInfo {
+  width: 70%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  overflow: auto;
+}
+.examCard {
+  width: 220px;
+  height: 180px;
+  border-radius: 6px;
+  margin-left: 30px;
+  margin-top: 30px;
+  border: 2px solid #e7ebf0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.examsHeader {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 30px;
+}
+.examsHeader p {
+  font-size: 23px;
+  font-weight: 600;
+  margin-bottom: 30px;
+}
+.exambtnInfo {
+  color: #a840d1;
+  cursor: pointer;
+  font-weight: 600;
+}
+@media only screen and (max-width: 600px) {
+  .examTab {
+    font-size: 12px;
+    padding: 7px 20px;
+  }
+  .examTabInfo {
+    width: 100%;
+  }
+  .examCard {
+    width: 45%;
+    margin-left: 10px;
+  }
+  .examsHeader p {
+    margin-bottom: 15px;
+  }
+}
