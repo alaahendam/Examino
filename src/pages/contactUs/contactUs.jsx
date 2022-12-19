@@ -6,7 +6,7 @@ import ContactForm from "../../component/ContactForm/Contactform";
 //addImage
 function ContactUs(){
   return(
-  <div style={{marginTop:"50px"}}>
+  <div>
        <br /><br />
        <div className="text">
            <h2>Contact Us !</h2>
