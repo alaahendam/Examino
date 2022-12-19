@@ -6,13 +6,15 @@ import image from "../../images/onlinecall.webp"
 function Avatarr(){
     return(
        <div>
-        <a href="https://twitter.com/twcloudchen" class="circle">
-            <img height="128" width="128" src={image} alt="Cloud Chen" />
-          </a>
-          <h4>Ghanem</h4>
-          <p>Level Four</p>
-          <p>Computer Science</p>
-          <br/>
+     <AvatarGroup max={2} style={{justifyContent:"center",paddingTop:"15px"}}>
+      <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+      <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />
+    </AvatarGroup>
+    <br/>
+         <h4>
+          Mohamed Adel & Alaa Hendam
+         </h4>
+         <br/>
           <p className="para1">
           
         GeeksforGeeks is my favourite site where 
