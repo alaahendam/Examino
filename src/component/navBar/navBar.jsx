@@ -45,11 +45,12 @@ const NavBar = () => {
         <p onClick={() => navigate("/")}>Examino</p>
       </div>
       <div className="info">
-        {tabs.map((tab) => (
+        {tabs.map((tab, index) => (
           <p
             style={tab.value == activeTab ? activeStyle : null}
             className={tab.value == "signUp" ? "signUpTab" : null}
             onClick={() => handelNavigate(tab.value)}
+            key={index}
           >
             {tab.label}
           </p>
@@ -125,11 +126,12 @@ const NavBar = () => {
             paddingTop: "50px",
           }}
         >
-          {tabs.map((tab) => (
+          {tabs.map((tab, index) => (
             <p
               style={tab.value == activeTab ? { ...activeStyle } : null}
               className={tab.value == "signUp" ? "signUpTab" : null}
               onClick={() => handelNavigate(tab.value)}
+              key={index}
             >
               {tab.label}
             </p>
@@ -168,7 +170,7 @@ const NavBar = () => {
                     fontSize: "18px",
                     cursor: "pointer",
                   }}
-                  onClick={() => dispatch(addLogin(null))}
+                  onClick={() => window.localStorage.clear()}
                 >
                   Logout
                 </div>
