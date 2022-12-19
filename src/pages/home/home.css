@@ -27,6 +27,14 @@
     cursor: pointer;
 }
 
+.aboutavatar{
+    margin: auto;
+    width: 70%;
+    border-radius: 0.5rem;
+    background-color: white;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+}
+
 @media only screen and (max-width: 600px) {
     .home img {
         width: 80%;

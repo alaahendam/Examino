@@ -51,7 +51,7 @@ const Exams = () => {
             display: "flex",
           }}
         >
-          {ExamTabs.map((tab) => (
+          {ExamTabs.map((tab, index) => (
             <div
               className="examTab"
               style={{
@@ -61,6 +61,7 @@ const Exams = () => {
                     : null,
                 color: tab.value == activeTab ? "white" : null,
               }}
+              key={index}
               onClick={() => setActiveTab(tab.value)}
             >
               {tab.label}
@@ -70,8 +71,8 @@ const Exams = () => {
       </div>
       <div className="examTabInfo">
         {activeArrayExam
-          ? activeArrayExam.map((exam) => (
-              <div className="examCard">
+          ? activeArrayExam.map((exam, index) => (
+              <div className="examCard" key={index}>
                 <img
                   src={examImg}
                   style={{

@@ -23,6 +23,8 @@ const SignIn = () => {
       if (users.userName == data.userName && users.password == data.password) {
         dispatch(addLogin(users));
         toast("يمكنك الدخول");
+        window.localStorage.setItem("login", JSON.stringify(users));
+        navigate("/exams");
         findLoginFlag = true;
       }
     });
@@ -30,7 +32,7 @@ const SignIn = () => {
       toast.error("المستخدم غير موجود");
     }
   };
-  
+
   return (
     <div className="signIn">
       <div className="signInInfo">
