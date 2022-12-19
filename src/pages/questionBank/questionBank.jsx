@@ -4,7 +4,7 @@ import QuestionMaker from "../../component/questionMaker/questionMaker";
 
 const QuestionBank = () => {
   return (
-    <div>
+    <div className="QuestionBank">
       <QuestionMaker />
     </div>
   );

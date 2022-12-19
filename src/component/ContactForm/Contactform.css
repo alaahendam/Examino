@@ -24,8 +24,7 @@
     outline-color: #56D1D4;
 }
 .contact textarea:focus{
-    outline-color: #56D1D4;
-    
+    outline-color: #56D1D4;  
 }
 .submitt:hover{
     transform: scale(1.1);

@@ -1,0 +1,28 @@
+.QuestionMaker {
+  width: 50%;
+  height: 300px;
+  background-color: red;
+}
+.QuestionMaker .header {
+  height: 50px;
+  background-color: green;
+}
+.QuestionMaker textarea {
+  margin-bottom: 20px;
+  height: 50px;
+  border: 1px solid #e7ebf0;
+  border-radius: 4px;
+  width: 80%;
+  padding-left: 10px;
+}
+input:focus {
+  outline-color: #56d1d4;
+}
+.QuestionMaker textarea:focus {
+  outline-color: #56d1d4;
+}
+.QuestionMaker input {
+  margin-bottom: 10px;
+  height: 37px;
+  width: 40%;
+}
