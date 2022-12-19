@@ -1,9 +1,25 @@
 import React from "react";
 import "./Certificates.css";
-import image from "../../images/student.png"
+import image from "../../images/student.png";
+import { useRef } from "react";
+import { async } from "q";
+import html2canvas from "html2canvas";
 function Certificates(){
+    const handleDownloadImage = async () => {
+        const element = document.getElementById('print'),
+        canvas = await html2canvas(element),
+        data = canvas.toDataURL('image/jpg'),
+        link = document.createElement('a');
+     
+        link.href = data;
+        link.download = 'downloaded-image.jpg';
+     
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      };
     return(
-        <div>
+        <div id="print" >
             {/* <link href="https://fonts.googleapis.com/css?family=Satisfy" rel="stylesheet"> */}
 
 <table class="cert">
@@ -32,6 +48,7 @@ function Certificates(){
     </td>
   </tr>
 </table>
+<button type="button" onClick={handleDownloadImage}>Download</button>
         </div>
     )
 }
