@@ -2,8 +2,34 @@
   width: 100%;
   height: 84vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+.QuestionBank .btn {
+  color: white;
+  background: linear-gradient(100deg, #a840d1, #56d1d4);
+  width: 140px;
+  height: 40px;
+}
+.newLevelDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.newLevelDiv .btn {
+  color: white;
+  background: linear-gradient(100deg, #a840d1, #56d1d4);
+  width: 140px;
+  height: 40px;
+  cursor: pointer;
+  padding-left: 0px;
+}
+.newLevelDiv input {
+  padding-left: 10px;
+  width: 80%;
+  height: 50px;
 }
 .QuestionBank .levelsDivs {
   width: 100%;

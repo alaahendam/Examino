@@ -18,22 +18,14 @@ import StarBorder from "@mui/icons-material/StarBorder";
 
 const QuestionBank = () => {
   const [openChapters, setOpenChapters] = useState(false);
-  const [levels, setLevels] = useState([
-    { label: "level1", value: "level1" },
-    { label: "level2", value: "level2" },
-    { label: "level3", value: "level3" },
-    { label: "level4", value: "level4" },
-    { label: "level1", value: "level1" },
-    { label: "level2", value: "level2" },
-    { label: "level3", value: "level3" },
-    { label: "level4", value: "level4" },
-    { label: "level1", value: "level1" },
-  ]);
+  const [levelName, setLevelName] = useState("");
+  const [newLevel, setNewLevel] = useState(false);
+  const [openChapterQuestion, setOpenChapterQuestion] = useState("");
+  const [levels, setLevels] = useState([]);
   const [chapters, setChapters] = useState([
     { label: "chapter1", value: "chapter1" },
     { label: "chapter2", value: "chapter2" },
   ]);
-  const [openChapterQuestion, setOpenChapterQuestion] = useState("");
 
   const handleClick = (chapter) => {
     if (chapter == openChapterQuestion) {
@@ -42,8 +34,21 @@ const QuestionBank = () => {
       setOpenChapterQuestion(chapter);
     }
   };
+  const handelAddNewLevel = (e) => {
+    e.preventDefault();
+    setLevels([...levels, { label: levelName, value: levelName }]);
+    setNewLevel(false);
+  };
   return (
     <div className="QuestionBank">
+      <div>
+        <input
+          type={"button"}
+          value="Add A New Level"
+          className="btn"
+          onClick={() => setNewLevel(true)}
+        />
+      </div>
       <div className="levelsDivs">
         {levels.map((level) => (
           <div className="levelDiv" onClick={() => setOpenChapters(true)}>
@@ -52,7 +57,29 @@ const QuestionBank = () => {
         ))}
       </div>
       <Dialog
-        maxWidth={true}
+        maxWidth={"md"}
+        fullWidth={true}
+        open={newLevel}
+        onClose={() => setNewLevel(false)}
+      >
+        <form
+          style={{
+            height: "88vh",
+          }}
+          className="newLevelDiv"
+          onSubmit={handelAddNewLevel}
+        >
+          <p>Add A New Level !</p>
+          <input
+            type="text"
+            placeholder="Pleace Set Level Name"
+            onChange={(e) => setLevelName(e.target.value)}
+          />
+          <input type={"submit"} value="Add Level" className="btn" />
+        </form>
+      </Dialog>
+      <Dialog
+        maxWidth={"md"}
         fullWidth={true}
         open={openChapters}
         onClose={() => setOpenChapters(false)}
