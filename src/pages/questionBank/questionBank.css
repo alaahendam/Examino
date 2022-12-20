@@ -11,6 +11,7 @@
   background: linear-gradient(100deg, #a840d1, #56d1d4);
   width: 140px;
   height: 40px;
+  cursor: pointer;
 }
 .newLevelDiv {
   display: flex;
@@ -19,6 +20,17 @@
   justify-content: space-evenly;
 }
 .newLevelDiv .btn {
+  color: white;
+  background: linear-gradient(100deg, #a840d1, #56d1d4);
+  width: 140px;
+  height: 40px;
+  cursor: pointer;
+  padding-left: 0px;
+}
+.chapterFrom {
+  display: flex;
+}
+.chapterFrom .btn {
   color: white;
   background: linear-gradient(100deg, #a840d1, #56d1d4);
   width: 140px;
@@ -50,6 +62,13 @@
 }
 .signUp input:focus {
   outline-color: #56d1d4;
+}
+.QuestionReview {
+  width: 100%;
+  height: 70px;
+  border: 2px solid gray;
+  margin: 10px 5px;
+  padding-left: 15px;
 }
 @media only screen and (max-width: 600px) {
   .QuestionBank .levelDiv {

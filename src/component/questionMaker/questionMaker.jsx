@@ -4,7 +4,8 @@ import { useForm, useFieldArray } from "react-hook-form";
 import { BsCardImage } from "react-icons/bs";
 import { AiOutlineClose } from "react-icons/ai";
 
-const QuestionMaker = () => {
+const QuestionMaker = ({ handelAddNewQuestion }) => {
+  const [questionType, setQuestionType] = useState("radio");
   const {
     register,
     formState: { errors },
@@ -20,7 +21,7 @@ const QuestionMaker = () => {
   // const [numberOfQuestion, setNumberOfQuestion] = useState([]);
   // console.log(numberOfQuestion);
   const onSubmit = (data) => {
-    console.log(data);
+    handelAddNewQuestion(data);
   };
   return (
     <form className="QuestionMaker" onSubmit={handleSubmit(onSubmit)}>
@@ -29,6 +30,14 @@ const QuestionMaker = () => {
           <option value="Difficulty A">Difficulty A</option>
           <option value="Difficulty B">Difficulty B</option>
           <option value="Difficulty C">Difficulty C</option>
+        </select>
+        <select
+          {...register("questionType", { required: true })}
+          onChange={(e) => setQuestionType(e.target.value)}
+        >
+          <option value="radio">radio</option>
+          <option value="checkbox">checkbox</option>
+          <option value="radio">true & false</option>
         </select>
         <label htmlFor="uploadImgLabel">
           <BsCardImage
@@ -80,7 +89,7 @@ const QuestionMaker = () => {
               }}
             >
               <input
-                type="checkbox"
+                type={questionType}
                 id={`${index}`}
                 value={index}
                 {...register(`correctAnswer`)}
