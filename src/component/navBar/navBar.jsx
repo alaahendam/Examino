@@ -38,7 +38,10 @@ const NavBar = () => {
     navigate(value);
     setOpenMenu(false);
   };
-
+  const handelLogout = () => {
+    dispatch(addLogin(null));
+    window.localStorage.clear();
+  };
   return (
     <div className="navBar">
       <div className="logo">
@@ -87,8 +90,9 @@ const NavBar = () => {
                   justifyContent: "center",
                   fontSize: "18px",
                   cursor: "pointer",
+                  zIndex: 11,
                 }}
-                onClick={() => dispatch(addLogin(null))}
+                onClick={handelLogout}
               >
                 Logout
               </div>
@@ -170,7 +174,7 @@ const NavBar = () => {
                     fontSize: "18px",
                     cursor: "pointer",
                   }}
-                  onClick={() => window.localStorage.clear()}
+                  onClick={handelLogout}
                 >
                   Logout
                 </div>
