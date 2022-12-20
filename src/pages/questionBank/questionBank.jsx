@@ -3,21 +3,18 @@ import "./questionBank.css";
 import QuestionMaker from "../../component/questionMaker/questionMaker";
 import Dialog from "@mui/material/Dialog";
 import NavBar from "../../component/navBar/navBar";
-import ListSubheader from "@mui/material/ListSubheader";
+
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Collapse from "@mui/material/Collapse";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import DraftsIcon from "@mui/icons-material/Drafts";
-import SendIcon from "@mui/icons-material/Send";
+
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
-import StarBorder from "@mui/icons-material/StarBorder";
 
 const QuestionBank = () => {
   const [openChapters, setOpenChapters] = useState(false);
+  const [chapterInfo, setChapterInfo] = useState([]);
   const [levelName, setLevelName] = useState("");
   const [chapterName, setChapterName] = useState("");
   const [newLevel, setNewLevel] = useState(false);
@@ -25,13 +22,12 @@ const QuestionBank = () => {
   const [levels, setLevels] = useState([]);
 
   const handleClick = (chapter) => {
-    console.log("chapter");
-    console.log(chapter);
     if (chapter == openChapterQuestion) {
       setOpenChapterQuestion(null);
     } else {
       setOpenChapterQuestion(chapter);
     }
+    setChapterInfo(levels[openChapters.levelIndex].chapters[chapter].question);
   };
   const handelAddNewLevel = (e) => {
     e.preventDefault();
@@ -59,11 +55,12 @@ const QuestionBank = () => {
           .question,
         questionData,
       ];
-
+    setChapterInfo(
+      tempArray[openChapters.levelIndex].chapters[openChapterQuestion].question
+    );
     setLevels(tempArray);
   };
-  console.log("levels");
-  console.log(levels);
+  console.log(chapterInfo);
   return (
     <div className="QuestionBank">
       <div>
@@ -81,6 +78,7 @@ const QuestionBank = () => {
             onClick={() =>
               setOpenChapters({ levelIndex: index, openChapterDialog: true })
             }
+            key={index}
           >
             {level.label}
           </div>
@@ -89,7 +87,7 @@ const QuestionBank = () => {
       <Dialog
         maxWidth={"md"}
         fullWidth={true}
-        open={newLevel}
+        open={newLevel ? true : false}
         onClose={() => setNewLevel(false)}
       >
         <form
@@ -113,7 +111,7 @@ const QuestionBank = () => {
         fullScreen
         maxWidth={"md"}
         fullWidth={true}
-        open={openChapters}
+        open={openChapters ? true : false}
         onClose={() => setOpenChapters(false)}
       >
         <div
@@ -147,6 +145,7 @@ const QuestionBank = () => {
                     bgcolor: "background.paper",
                   }}
                   component="nav"
+                  key={index}
                 >
                   <ListItemButton onClick={() => handleClick(index)}>
                     <ListItemText primary={`${chapter.chapterName}`} />
@@ -164,6 +163,15 @@ const QuestionBank = () => {
                     <QuestionMaker
                       handelAddNewQuestion={handelAddNewQuestion}
                     />
+                    {chapterInfo.map((question, index) => (
+                      <div className="QuestionReview" key={index}>
+                        <div style={{ display: "flex" }}>
+                          <p>{`Q${index + 1} )`}</p>
+                          <p>{question.question}</p>
+                          <p>{`( ${question.difficulty} )`}</p>
+                        </div>
+                      </div>
+                    ))}
                   </Collapse>
                 </List>
               ))

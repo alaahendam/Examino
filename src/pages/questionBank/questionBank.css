@@ -63,6 +63,13 @@
 .signUp input:focus {
   outline-color: #56d1d4;
 }
+.QuestionReview {
+  width: 100%;
+  height: 70px;
+  border: 2px solid gray;
+  margin: 10px 5px;
+  padding-left: 15px;
+}
 @media only screen and (max-width: 600px) {
   .QuestionBank .levelDiv {
     width: 90%;
