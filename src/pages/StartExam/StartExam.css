@@ -1,0 +1,46 @@
+.startExam{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    border: 1px #cecece solid;
+    height: 80%;
+    width: 80%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    border-radius: 15px;
+    margin-top: 10px;
+    text-align: center;
+}
+.startExam img{
+    width: 150px;
+    height: 150px;
+    margin-top: 2rem;
+    border: 1px #A840D1 solid;
+    padding: 10px;
+    border-radius: 50%;
+}
+.paragraph{
+  
+   display: flex;
+   justify-content: center;
+   width: 50%;
+   margin: auto;
+   margin-top: 2rem;
+}
+.buttonn{
+    width: 10rem;
+    height: 2rem;
+    border-radius: 0.5rem;
+    background: linear-gradient(100deg,#A840D1, #56D1D4);
+    border: none;
+    color: white;
+    margin-top: 4rem;
+    cursor: pointer;
+}
+@media only screen and (max-width: 600px) {
+    .paragraph{
+        width: 90%;
+        text-align: left;
+    }
+
+  }
