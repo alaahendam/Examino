@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./questionMaker.css";
-import { useForm, useFieldArray } from "react-hook-form";
+import { useForm, useFieldArray, useController } from "react-hook-form";
 import { BsCardImage } from "react-icons/bs";
 import { AiOutlineClose } from "react-icons/ai";
 
@@ -11,19 +11,30 @@ const QuestionMaker = ({ handelAddNewQuestion }) => {
     formState: { errors },
     handleSubmit,
     control,
+    reset,
+    resetField,
+    setValue,
+    watch,
   } = useForm();
+
   const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
     {
       control, // control props comes from useForm (optional: if you are using FormContext)
       name: "numberOfAnswer", // unique name for your Field Array
     }
   );
-  // const [numberOfQuestion, setNumberOfQuestion] = useState([]);
-  // console.log(numberOfQuestion);
+
   const onSubmit = (data) => {
-    console.log(questionType);
+    handelAddNewQuestion(data);
+    // reset();
+    // setQuestionType("radio");
+    remove();
     console.log(data);
-    // handelAddNewQuestion(data);
+    remove();
+    resetField("correctAnswer");
+  };
+  const handelQuestionTypeChange = (type) => {
+    setQuestionType(type);
   };
   return (
     <form className="QuestionMaker" onSubmit={handleSubmit(onSubmit)}>
@@ -35,7 +46,7 @@ const QuestionMaker = ({ handelAddNewQuestion }) => {
         </select>
         <select
           {...register("questionType", { required: true })}
-          onChange={(e) => setQuestionType(e.target.value)}
+          onChange={(e) => handelQuestionTypeChange(e.target.value)}
         >
           <option value="radio">radio</option>
           <option value="checkbox">checkbox</option>
@@ -78,7 +89,7 @@ const QuestionMaker = ({ handelAddNewQuestion }) => {
             type="button"
             className="btn"
             value="Add Answer"
-            onClick={() => append(1)}
+            onClick={() => append({})}
           />
         </div>
         <div className="questionField">
@@ -94,8 +105,10 @@ const QuestionMaker = ({ handelAddNewQuestion }) => {
                 type={questionType}
                 id={`${index}`}
                 value={index}
-                {...register(`numberOfAnswer.${index}.correctAnswer`)}
+                control={control}
+                {...register(`correctAnswer`)}
               />
+
               <input
                 type="text"
                 style={{

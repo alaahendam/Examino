@@ -11,7 +11,8 @@ import Collapse from "@mui/material/Collapse";
 
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
-
+import { BiEditAlt } from "react-icons/bi";
+import { MdDeleteOutline } from "react-icons/md";
 const QuestionBank = () => {
   const [openChapters, setOpenChapters] = useState(false);
   const [chapterInfo, setChapterInfo] = useState([]);
@@ -164,19 +165,56 @@ const QuestionBank = () => {
                     />
                     {chapterInfo.map((question, index) => (
                       <div className="QuestionReview" key={index}>
-                        <div style={{ display: "flex" }}>
-                          <p>{`Q${index + 1} )`}</p>
-                          <p>{question.question}</p>
+                        <div
+                          style={{
+                            display: "flex",
+                            flexWrap: "wrap",
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          <div
+                            style={{
+                              display: "flex",
+                            }}
+                          >
+                            <p>{`Q${index + 1} )`}</p>
+                            <p>{question.question}</p>
+                          </div>
                           <p>{`( ${question.difficulty} )`}</p>
+                          <div>
+                            <BiEditAlt
+                              style={{
+                                fontSize: "30px",
+                                color: "#A840D1",
+                                cursor: "pointer",
+                              }}
+                            />
+                            <MdDeleteOutline
+                              style={{
+                                marginLeft: "10px",
+                                fontSize: "30px",
+                                color: "#A840D1",
+                                cursor: "pointer",
+                              }}
+                            />
+                          </div>
                         </div>
-                        <form style={{ display: "flex" }}>
+                        <form
+                          style={{
+                            display: "flex",
+                            flexWrap: "wrap",
+                            justifyContent: "space-between",
+                          }}
+                        >
                           {question.numberOfAnswer.map((answer, index) => (
                             <div style={{ display: "flex" }}>
                               <input
                                 type={question.questionType}
                                 name="questionReview"
                                 defaultChecked={
-                                  answer.answerLabel ? true : false
+                                  question.correctAnswer.includes(String(index))
+                                    ? true
+                                    : false
                                 }
                               />
                               <label>{answer.answerLabel}</label>
