@@ -21,7 +21,8 @@ const QuestionBank = () => {
   const [newLevel, setNewLevel] = useState(false);
   const [openChapterQuestion, setOpenChapterQuestion] = useState(null);
   const [levels, setLevels] = useState([]);
-
+  const [editQuestion, setEditQuestion] = useState(false);
+  const [editData, setEditData] = useState(null);
   const handleClick = (chapter) => {
     if (chapter == openChapterQuestion) {
       setOpenChapterQuestion(null);
@@ -59,6 +60,20 @@ const QuestionBank = () => {
     setChapterInfo(
       tempArray[openChapters.levelIndex].chapters[openChapterQuestion].question
     );
+    setLevels(tempArray);
+  };
+  const handelEditData = (data) => {
+    setEditQuestion(!editQuestion);
+    setEditData(data);
+  };
+  const deleteQuestion = (QuestionIndex) => {
+    let tempArray = [...levels];
+    const newTempArray = chapterInfo.filter((info, index) => {
+      return index != QuestionIndex;
+    });
+    tempArray[openChapters.levelIndex].chapters[openChapterQuestion].question =
+      newTempArray;
+    setChapterInfo(newTempArray);
     setLevels(tempArray);
   };
   return (
@@ -160,9 +175,7 @@ const QuestionBank = () => {
                     timeout="auto"
                     unmountOnExit
                   >
-                    <QuestionMaker
-                      handelAddNewQuestion={handelAddNewQuestion}
-                    />
+                    <QuestionMaker handelQuestion={handelAddNewQuestion} />
                     {chapterInfo.map((question, index) => (
                       <div className="QuestionReview" key={index}>
                         <div
@@ -188,6 +201,7 @@ const QuestionBank = () => {
                                 color: "#A840D1",
                                 cursor: "pointer",
                               }}
+                              onClick={() => handelEditData(question)}
                             />
                             <MdDeleteOutline
                               style={{
@@ -196,6 +210,7 @@ const QuestionBank = () => {
                                 color: "#A840D1",
                                 cursor: "pointer",
                               }}
+                              onClick={() => deleteQuestion(index)}
                             />
                           </div>
                         </div>
@@ -212,9 +227,13 @@ const QuestionBank = () => {
                                 type={question.questionType}
                                 name="questionReview"
                                 defaultChecked={
-                                  question.correctAnswer.includes(String(index))
-                                    ? true
-                                    : false
+                                  question.correctAnswer
+                                    ? question.correctAnswer.includes(
+                                        String(index)
+                                      )
+                                      ? true
+                                      : false
+                                    : null
                                 }
                               />
                               <label>{answer.answerLabel}</label>
@@ -228,6 +247,18 @@ const QuestionBank = () => {
               ))
             : null}
         </div>
+      </Dialog>
+      <Dialog
+        maxWidth={"md"}
+        fullWidth={true}
+        open={editQuestion ? true : false}
+        onClose={() => setEditQuestion(false)}
+      >
+        <QuestionMaker
+          handelQuestion={handelAddNewQuestion}
+          editFlag={true}
+          editData={editData}
+        />
       </Dialog>
     </div>
   );

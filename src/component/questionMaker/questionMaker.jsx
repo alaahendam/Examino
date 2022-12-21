@@ -4,7 +4,7 @@ import { useForm, useFieldArray, useController } from "react-hook-form";
 import { BsCardImage } from "react-icons/bs";
 import { AiOutlineClose } from "react-icons/ai";
 
-const QuestionMaker = ({ handelAddNewQuestion }) => {
+const QuestionMaker = ({ handelQuestion, editFlag, editData }) => {
   const [questionType, setQuestionType] = useState("radio");
   const {
     register,
@@ -15,7 +15,9 @@ const QuestionMaker = ({ handelAddNewQuestion }) => {
     resetField,
     setValue,
     watch,
-  } = useForm();
+  } = useForm({
+    defaultValues: editFlag ? editData : null,
+  });
 
   const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
     {
@@ -25,7 +27,7 @@ const QuestionMaker = ({ handelAddNewQuestion }) => {
   );
 
   const onSubmit = (data) => {
-    handelAddNewQuestion(data);
+    handelQuestion(data);
     // reset();
     // setQuestionType("radio");
     remove();
