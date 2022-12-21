@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./questionBank.css";
 import QuestionMaker from "../../component/questionMaker/questionMaker";
 import Dialog from "@mui/material/Dialog";
@@ -23,6 +23,17 @@ const QuestionBank = () => {
   const [levels, setLevels] = useState([]);
   const [editQuestion, setEditQuestion] = useState(false);
   const [editData, setEditData] = useState(null);
+  const [questionEditIndex, setQuestionEditIndex] = useState(null);
+  useEffect(() => {
+    if (
+      levels[openChapters.levelIndex] &&
+      levels[openChapters.levelIndex].chapters[openChapterQuestion]
+    ) {
+      setChapterInfo(
+        levels[openChapters.levelIndex].chapters[openChapterQuestion].question
+      );
+    }
+  }, [chapterInfo]);
   const handleClick = (chapter) => {
     if (chapter == openChapterQuestion) {
       setOpenChapterQuestion(null);
@@ -62,10 +73,7 @@ const QuestionBank = () => {
     );
     setLevels(tempArray);
   };
-  const handelEditData = (data) => {
-    setEditQuestion(!editQuestion);
-    setEditData(data);
-  };
+
   const deleteQuestion = (QuestionIndex) => {
     let tempArray = [...levels];
     const newTempArray = chapterInfo.filter((info, index) => {
@@ -76,6 +84,24 @@ const QuestionBank = () => {
     setChapterInfo(newTempArray);
     setLevels(tempArray);
   };
+  const handelEditData = (data, index) => {
+    setEditQuestion(!editQuestion);
+    setEditData(data);
+    setQuestionEditIndex(index);
+  };
+  const handelEditOldQuestion = (questionData) => {
+    let tempArray = [...levels];
+    tempArray[openChapters.levelIndex].chapters[openChapterQuestion].question[
+      questionEditIndex
+    ] = questionData;
+
+    setLevels(tempArray);
+    setChapterInfo(null);
+    // setChapterInfo(
+    //   tempArray[openChapters.levelIndex].chapters[openChapterQuestion].question
+    // );
+  };
+
   return (
     <div className="QuestionBank">
       <div>
@@ -176,72 +202,76 @@ const QuestionBank = () => {
                     unmountOnExit
                   >
                     <QuestionMaker handelQuestion={handelAddNewQuestion} />
-                    {chapterInfo.map((question, index) => (
-                      <div className="QuestionReview" key={index}>
-                        <div
-                          style={{
-                            display: "flex",
-                            flexWrap: "wrap",
-                            justifyContent: "space-between",
-                          }}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                            }}
-                          >
-                            <p>{`Q${index + 1} )`}</p>
-                            <p>{question.question}</p>
-                          </div>
-                          <p>{`( ${question.difficulty} )`}</p>
-                          <div>
-                            <BiEditAlt
+                    {chapterInfo
+                      ? chapterInfo.map((question, index) => (
+                          <div className="QuestionReview" key={index}>
+                            <div
                               style={{
-                                fontSize: "30px",
-                                color: "#A840D1",
-                                cursor: "pointer",
+                                display: "flex",
+                                flexWrap: "wrap",
+                                justifyContent: "space-between",
                               }}
-                              onClick={() => handelEditData(question)}
-                            />
-                            <MdDeleteOutline
-                              style={{
-                                marginLeft: "10px",
-                                fontSize: "30px",
-                                color: "#A840D1",
-                                cursor: "pointer",
-                              }}
-                              onClick={() => deleteQuestion(index)}
-                            />
-                          </div>
-                        </div>
-                        <form
-                          style={{
-                            display: "flex",
-                            flexWrap: "wrap",
-                            justifyContent: "space-between",
-                          }}
-                        >
-                          {question.numberOfAnswer.map((answer, index) => (
-                            <div style={{ display: "flex" }}>
-                              <input
-                                type={question.questionType}
-                                name="questionReview"
-                                defaultChecked={
-                                  question.correctAnswer
-                                    ? question.correctAnswer.includes(
-                                        String(index)
-                                      )
-                                      ? true
-                                      : false
-                                    : null
-                                }
-                              />
-                              <label>{answer.answerLabel}</label>
+                            >
+                              <div
+                                style={{
+                                  display: "flex",
+                                }}
+                              >
+                                <p>{`Q${index + 1} )`}</p>
+                                <p>{question.question}</p>
+                              </div>
+                              <p>{`( ${question.difficulty} )`}</p>
+                              <div>
+                                <BiEditAlt
+                                  style={{
+                                    fontSize: "30px",
+                                    color: "#A840D1",
+                                    cursor: "pointer",
+                                  }}
+                                  onClick={() =>
+                                    handelEditData(question, index)
+                                  }
+                                />
+                                <MdDeleteOutline
+                                  style={{
+                                    marginLeft: "10px",
+                                    fontSize: "30px",
+                                    color: "#A840D1",
+                                    cursor: "pointer",
+                                  }}
+                                  onClick={() => deleteQuestion(index)}
+                                />
+                              </div>
                             </div>
-                          ))}
-                        </form>
-                      </div>
-                    ))}
+                            <form
+                              style={{
+                                display: "flex",
+                                flexWrap: "wrap",
+                                justifyContent: "space-between",
+                              }}
+                            >
+                              {question.numberOfAnswer.map((answer, index) => (
+                                <div style={{ display: "flex" }}>
+                                  <input
+                                    type={question.questionType}
+                                    name="questionReview"
+                                    defaultChecked={
+                                      question.correctAnswer
+                                        ? question.correctAnswer.includes(
+                                            String(index)
+                                          )
+                                          ? true
+                                          : false
+                                        : null
+                                    }
+                                  />
+                                  <label>{answer.answerLabel}</label>
+                                </div>
+                              ))}
+                            </form>
+                          </div>
+                        ))
+                      : null}
                   </Collapse>
                 </List>
               ))
@@ -255,7 +285,7 @@ const QuestionBank = () => {
         onClose={() => setEditQuestion(false)}
       >
         <QuestionMaker
-          handelQuestion={handelAddNewQuestion}
+          handelQuestion={handelEditOldQuestion}
           editFlag={true}
           editData={editData}
         />

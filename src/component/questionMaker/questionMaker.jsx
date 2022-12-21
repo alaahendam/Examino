@@ -5,7 +5,9 @@ import { BsCardImage } from "react-icons/bs";
 import { AiOutlineClose } from "react-icons/ai";
 
 const QuestionMaker = ({ handelQuestion, editFlag, editData }) => {
-  const [questionType, setQuestionType] = useState("radio");
+  const [questionType, setQuestionType] = useState(
+    editFlag ? editData.questionType : "radio"
+  );
   const {
     register,
     formState: { errors },
@@ -135,7 +137,7 @@ const QuestionMaker = ({ handelQuestion, editFlag, editData }) => {
       <input
         type="submit"
         className="btn"
-        value="submit"
+        value={editFlag ? "Save Edit" : "Submit"}
         style={{
           position: "absolute",
           bottom: "10px",
