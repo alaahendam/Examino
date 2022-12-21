@@ -21,7 +21,9 @@ const QuestionMaker = ({ handelAddNewQuestion }) => {
   // const [numberOfQuestion, setNumberOfQuestion] = useState([]);
   // console.log(numberOfQuestion);
   const onSubmit = (data) => {
-    handelAddNewQuestion(data);
+    console.log(questionType);
+    console.log(data);
+    // handelAddNewQuestion(data);
   };
   return (
     <form className="QuestionMaker" onSubmit={handleSubmit(onSubmit)}>
@@ -92,7 +94,7 @@ const QuestionMaker = ({ handelAddNewQuestion }) => {
                 type={questionType}
                 id={`${index}`}
                 value={index}
-                {...register(`correctAnswer`)}
+                {...register(`numberOfAnswer.${index}.correctAnswer`)}
               />
               <input
                 type="text"

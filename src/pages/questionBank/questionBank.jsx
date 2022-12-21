@@ -60,7 +60,6 @@ const QuestionBank = () => {
     );
     setLevels(tempArray);
   };
-  console.log(chapterInfo);
   return (
     <div className="QuestionBank">
       <div>
@@ -170,6 +169,20 @@ const QuestionBank = () => {
                           <p>{question.question}</p>
                           <p>{`( ${question.difficulty} )`}</p>
                         </div>
+                        <form style={{ display: "flex" }}>
+                          {question.numberOfAnswer.map((answer, index) => (
+                            <div style={{ display: "flex" }}>
+                              <input
+                                type={question.questionType}
+                                name="questionReview"
+                                defaultChecked={
+                                  answer.answerLabel ? true : false
+                                }
+                              />
+                              <label>{answer.answerLabel}</label>
+                            </div>
+                          ))}
+                        </form>
                       </div>
                     ))}
                   </Collapse>
