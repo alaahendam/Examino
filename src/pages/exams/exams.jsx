@@ -3,20 +3,48 @@ import "./exams.css";
 import { useSelector, useDispatch } from "react-redux";
 import examImg from "../../images/exam.png";
 import HorizontalLinearStepper from "../../component/stepper/stepper";
+import { useForm } from "react-hook-form";
+import ExamInfo from "./examInfo";
+import ExamCondition from "./examCondition";
+import ExamPreview from "./examPreview";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 const Exams = () => {
   const login = useSelector((state) => state.login.login);
   const [activeTab, setActiveTab] = useState("activeExam");
   const [activeArrayExam, setActiveArrayExam] = useState(null);
+  const [activeStep, setActiveStep] = React.useState(0);
+  const [skipped, setSkipped] = React.useState(new Set());
+
+  const isStepSkipped = (step) => {
+    return skipped.has(step);
+  };
+
+  const handleNext = () => {
+    let newSkipped = skipped;
+    if (isStepSkipped(activeStep)) {
+      newSkipped = new Set(newSkipped.values());
+      newSkipped.delete(activeStep);
+    }
+
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    setSkipped(newSkipped);
+  };
+
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm();
   const ExamTabs = [
     { label: "Old Exam", value: "oldExam" },
     { label: "Active Exam", value: "activeExam" },
     { label: "Future Exam", value: "futureExam" },
   ];
   const oldExam = [
-    { examName: "old1", examdate: "2022-03-25" },
-    { examName: "old2", examdate: "2022-03-25" },
-    { examName: "old1", examdate: "2022-03-25" },
-    { examName: "old2", examdate: "2022-03-25" },
     { examName: "old1", examdate: "2022-03-25" },
     { examName: "old2", examdate: "2022-03-25" },
     { examName: "old1", examdate: "2022-03-25" },
@@ -29,6 +57,7 @@ const Exams = () => {
     { examName: "future1", examdate: "2022-03-25" },
     { examName: "future2", examdate: "2022-03-25" },
   ];
+  const steps = ["Exam Information", "Exam Condition", "Exam Preview"];
   useEffect(() => {
     if (activeTab == "oldExam") {
       setActiveArrayExam(oldExam);
@@ -38,12 +67,53 @@ const Exams = () => {
       setActiveArrayExam(futureExam);
     }
   }, [activeTab]);
+  const onSubmit = (data) => {
+    handleNext();
+    console.log(data);
+  };
+  const ExamsDetails = [
+    <ExamInfo register={register} />,
+    <ExamCondition register={register} />,
+    <ExamPreview register={register} />,
+  ];
   return (
     <div>
       {login.role == "Teacher" ? (
-        <div>
-          <HorizontalLinearStepper />
-        </div>
+        <form className="examStructure" onSubmit={handleSubmit(onSubmit)}>
+          <HorizontalLinearStepper steps={steps} activeStep={activeStep} />
+          {activeStep === steps.length ? null : (
+            <React.Fragment>
+              <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+                <Button
+                  color="inherit"
+                  disabled={activeStep === 0}
+                  onClick={handleBack}
+                  sx={{ mr: 1 }}
+                >
+                  Back
+                </Button>
+                <Box sx={{ flex: "1 1 auto" }} />
+                {activeStep === steps.length - 1 ? (
+                  <input
+                    type="submit"
+                    value="Submit"
+                    style={{
+                      background: "linear-gradient(100deg,#A840D1, #56D1D4)",
+                      color: "white",
+                      cursor: "pointer",
+                    }}
+                  />
+                ) : (
+                  <Button onClick={handleNext}>Next</Button>
+                )}
+              </Box>
+            </React.Fragment>
+          )}
+          <div className="examStructureBody">
+            {ExamsDetails[activeStep]}
+            {}
+          </div>
+        </form>
       ) : (
         <div className="Exams">
           <div className="examsHeader">
