@@ -1,0 +1,32 @@
+.ExamContent{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    border: 1px #cecece solid;
+    height: 80%;
+    width: 80%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    border-radius: 15px;
+    margin-top: 10px;
+    text-align: center;
+}
+.TitleExam{
+ padding-top: 0.3rem;
+}
+.InputGroup{
+    padding-top: 2rem;
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+
+}
+/* .textfield{
+    font-size: 15px;
+}
+@media only screen and (max-width: 600px) {
+    .textfield{
+        font-size: 5px;
+    }
+  } */
