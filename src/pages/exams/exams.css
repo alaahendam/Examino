@@ -6,11 +6,17 @@
   align-items: center;
 }
 .examStructure {
+  display: flex;
+  height: 86vh;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .examStructureBody {
-  width: 100%;
+  width: 70%;
   height: 75vh;
-  background-color: red;
+  box-shadow: 2px 2px 2px 2px #c9c7c7;
+  position: relative;
 }
 /* width */
 ::-webkit-scrollbar {
@@ -84,5 +90,9 @@
   }
   .examsHeader p {
     margin-bottom: 15px;
+  }
+  .examStructureBody {
+    width: 95%;
+    height: 80vh;
   }
 }

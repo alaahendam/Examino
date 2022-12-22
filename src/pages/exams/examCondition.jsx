@@ -6,7 +6,7 @@ const ExamCondition = ({ register }) => {
       <input
         type="text"
         placeholder="Exam Condition"
-        {...register("ExamCondition", { required: true })}
+        {...register("ExamCondition")}
         style={{
           paddingLeft: "10px",
         }}

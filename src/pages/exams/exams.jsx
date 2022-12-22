@@ -80,38 +80,68 @@ const Exams = () => {
     <div>
       {login.role == "Teacher" ? (
         <form className="examStructure" onSubmit={handleSubmit(onSubmit)}>
-          <HorizontalLinearStepper steps={steps} activeStep={activeStep} />
-          {activeStep === steps.length ? null : (
-            <React.Fragment>
-              <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-                <Button
-                  color="inherit"
-                  disabled={activeStep === 0}
-                  onClick={handleBack}
-                  sx={{ mr: 1 }}
+          <div className="examStructureBody">
+            <HorizontalLinearStepper steps={steps} activeStep={activeStep} />
+            {ExamsDetails[activeStep]}
+            {activeStep === steps.length ? null : (
+              <React.Fragment style={{}}>
+                <Box
+                  sx={{
+                    width: "100%",
+                    display: "flex",
+                    flexDirection: "row",
+                    pt: 2,
+                    position: "absolute",
+                    bottom: "20px",
+                    height: "40px",
+                  }}
                 >
-                  Back
-                </Button>
-                <Box sx={{ flex: "1 1 auto" }} />
-                {activeStep === steps.length - 1 ? (
                   <input
-                    type="submit"
-                    value="Submit"
+                    type="button"
+                    value="Back"
+                    color="inherit"
+                    disabled={activeStep === 0}
+                    onClick={handleBack}
                     style={{
-                      background: "linear-gradient(100deg,#A840D1, #56D1D4)",
-                      color: "white",
+                      borderImage:
+                        "linear-gradient(100deg, rgb(168, 64, 209), rgb(86, 209, 212)) 7 / 3 / 0 stretch",
                       cursor: "pointer",
+                      width: "100px",
+                      height: "40px",
+                      backgroundColor: "white",
+                      color: "black",
                     }}
                   />
-                ) : (
-                  <Button onClick={handleNext}>Next</Button>
-                )}
-              </Box>
-            </React.Fragment>
-          )}
-          <div className="examStructureBody">
-            {ExamsDetails[activeStep]}
-            {}
+                  <Box sx={{ flex: "1 1 auto" }} />
+                  {activeStep === steps.length - 1 ? (
+                    <input
+                      type="submit"
+                      value="Submit"
+                      style={{
+                        background: "linear-gradient(100deg,#A840D1, #56D1D4)",
+                        color: "white",
+                        cursor: "pointer",
+                        width: "100px",
+                        height: "40px",
+                      }}
+                    />
+                  ) : (
+                    <Button
+                      onClick={handleNext}
+                      sx={{
+                        background: "linear-gradient(100deg,#A840D1, #56D1D4)",
+                        color: "white",
+                        cursor: "pointer",
+                        width: "100px",
+                        height: "40px",
+                      }}
+                    >
+                      Next
+                    </Button>
+                  )}
+                </Box>
+              </React.Fragment>
+            )}
           </div>
         </form>
       ) : (

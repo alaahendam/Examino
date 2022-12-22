@@ -6,7 +6,7 @@ const ExamInfo = ({ register }) => {
       <input
         type="text"
         placeholder="Exam Name"
-        {...register("ExamName", { required: true })}
+        {...register("ExamName")}
         style={{
           paddingLeft: "10px",
         }}
