@@ -1,6 +1,7 @@
 import React from "react";
 import "./ExamContent.css";
 import CounterSlider from "../../component/CounterSlider";
+import QueistionDesign from "../../component/QuestionDesign/QuestionDesign";
 import Switch from '@mui/material/Switch';
 import Box from '@mui/material/Box';
 import Item from '@mui/material/Box';
@@ -10,7 +11,7 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
-
+//functionlaity for slider component 
 function reducer(state, action) {
     if (action.type === "increment") {
       return {
@@ -38,8 +39,9 @@ function reducer(state, action) {
   }
 
 function ExamContent(props){
+    //Functionallity for the timer component
     const [state, dispatch] = React.useReducer(reducer, { count: 0, step: 1 });
-    const [timer, setTimer] = React.useState(20);
+    const [timer, setTimer] = React.useState(1000);
     const Navigate=useNavigate();
     const id = React.useRef(null);
     const clear = () => {
@@ -149,7 +151,12 @@ function ExamContent(props){
       >
         Reset
       </button> */}
+      <div className="Queistion">
+         <QueistionDesign />
+      </div>
+      <br />
             </div>
+            
         </div>
     )
 }
