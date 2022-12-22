@@ -1,5 +1,6 @@
 import React from "react"
 import { qBank } from "./Questionsbank"
+import "./QuestionDesign.css"
 export default function QueistionDesign() {
   return (
     <div className="container mt-3">
@@ -13,15 +14,17 @@ export default function QueistionDesign() {
            <div className="form-group">
              <div className="form-check">
               {Q.answers.map((answer =>
-              <div>
+              <div style={{marginTop:"0.5"}}>
+                <div className="BTNgroup" >
                   <input
                   type="checkbox"
                   name="selectCheckbox"
                   id="selectCheckbox"
                 />
-                <label htmlFor="chooseCb" className="form-check-label">
+                <label style={{paddingLeft:"0.4rem"}} htmlFor="chooseCb" className="form-check-label">
                   {answer}
                 </label>
+                </div><br />
                 </div>
                 ))} 
              </div>
