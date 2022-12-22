@@ -16,19 +16,10 @@ const Exams = () => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
 
-  const isStepSkipped = (step) => {
-    return skipped.has(step);
-  };
-
-  const handleNext = () => {
-    let newSkipped = skipped;
-    if (isStepSkipped(activeStep)) {
-      newSkipped = new Set(newSkipped.values());
-      newSkipped.delete(activeStep);
-    }
-
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped(newSkipped);
+  const handleNext = async () => {
+    const isStepValid = await trigger();
+    console.log(isStepValid);
+    if (isStepValid) setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
   const handleBack = () => {
@@ -38,7 +29,12 @@ const Exams = () => {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm();
+    reset,
+    trigger,
+  } = useForm({
+    shouldUnregister: false,
+    mode: "onChange",
+  });
   const ExamTabs = [
     { label: "Old Exam", value: "oldExam" },
     { label: "Active Exam", value: "activeExam" },
@@ -84,7 +80,7 @@ const Exams = () => {
             <HorizontalLinearStepper steps={steps} activeStep={activeStep} />
             {ExamsDetails[activeStep]}
             {activeStep === steps.length ? null : (
-              <React.Fragment style={{}}>
+              <React.Fragment>
                 <Box
                   sx={{
                     width: "100%",
