@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
+import { useForm, useFieldArray } from "react-hook-form";
 import "./examStructure.css";
 
-const ExamCondition = ({ register }) => {
+const ExamCondition = ({ mainRegister, arrayField }) => {
+  const [level, setLevel] = useState("");
   const QuestionType = [
     { label: "Choose Correct Answer", value: "ChooseCorrectAnswer" },
     { label: "Choose Multi Correct Answer", value: "ChooseMultiCorrectAnswer" },
@@ -9,6 +11,22 @@ const ExamCondition = ({ register }) => {
     { label: "Long Essay", value: "LongEssay" },
     { label: "Short Essay", value: "ShortEassay" },
   ];
+  const level1 = [];
+  const level2 = [];
+  const level3 = [];
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    control,
+    reset,
+    resetField,
+    setValue,
+    watch,
+  } = useForm();
+  const onSubmit = (data) => {
+    console.log(data);
+  };
   return (
     <div className="ExamInfo ExamStructureInfo">
       <div>
@@ -26,10 +44,13 @@ const ExamCondition = ({ register }) => {
           >
             Q1)What level do you want to take exams ?
           </label>
-          <select {...register("ExamType", { required: true })}>
-            <option value="radio">radio</option>
-            <option value="checkbox">checkbox</option>
-            <option value="radio">true & false</option>
+          <select
+            {...mainRegister("Level", { required: true })}
+            onChange={(e) => setLevel(e.target.level)}
+          >
+            <option value="level1">Level 1</option>
+            <option value="level2">Level 2</option>
+            <option value="level3">Level 3</option>
           </select>
         </div>
 
@@ -52,85 +73,51 @@ const ExamCondition = ({ register }) => {
               <input
                 className="QuestionTypePoint"
                 type="number"
-                {...register(`${question.value}`, { required: true })}
+                {...mainRegister(`${question.value}`, { required: true })}
                 placeholder={question.label}
               />
             ))}
           </div>
         </div>
-        <input
-          type="text"
-          placeholder="Exam Name"
-          {...register("ExamName", { required: true })}
+        <div
           style={{
-            paddingLeft: "10px",
+            display: "flex",
+            flexDirection: "column",
           }}
-        />
-        <select {...register("ExamType", { required: true })}>
-          <option value="radio">radio</option>
-          <option value="checkbox">checkbox</option>
-          <option value="radio">true & false</option>
-        </select>
-      </div>
-      <input
-        type="number"
-        placeholder="Duration"
-        {...register("Duration", { required: true })}
-        style={{
-          paddingLeft: "10px",
-        }}
-      />
-      <label
-        style={{
-          paddingLeft: "5px",
-          marginTop: "10px",
-        }}
-      >
-        Exam Start
-      </label>
-      <div>
-        <input
-          type="date"
-          placeholder="Exam Name"
-          {...register("startDate", { required: true })}
-          style={{
-            paddingLeft: "10px",
-          }}
-        />
-        <input
-          type="time"
-          placeholder="Exam Name"
-          {...register("startTime", { required: true })}
-          style={{
-            paddingLeft: "10px",
-          }}
-        />
-      </div>
-      <label
-        style={{
-          paddingLeft: "5px",
-          marginBottom: "10px",
-        }}
-      >
-        Exam End
-      </label>
-      <div>
-        <input
-          type="date"
-          placeholder="Exam Name"
-          {...register("endDate", { required: true })}
-          style={{
-            paddingLeft: "10px",
-          }}
-        />
-        <input
-          type="time"
-          placeholder="Exam Name"
-          {...register("endTime", { required: true })}
-          style={{
-            paddingLeft: "10px",
-          }}
-        />
+        >
+          <label
+            style={{
+              paddingLeft: "5px",
+              marginTop: "10px",
+            }}
+          >
+            Select Condetion
+          </label>
+          <form className="SelectConditon" onSubmit={handleSubmit(onSubmit)}>
+            <select {...register("ExamType1", { required: true })}>
+              <option value="radio">radio</option>
+              <option value="checkbox">checkbox</option>
+              <option value="radio">true & false</option>
+            </select>
+            <select {...register("ExamType2", { required: true })}>
+              <option value="radio">radio</option>
+              <option value="checkbox">checkbox</option>
+              <option value="radio">true & false</option>
+            </select>
+            <select {...register("ExamType3", { required: true })}>
+              <option value="radio">radio</option>
+              <option value="checkbox">checkbox</option>
+              <option value="radio">true & false</option>
+            </select>
+
+            <input
+              type="number"
+              {...register("numberOfQuestion5", { required: true })}
+              placeholder="Number Of Question"
+            />
+            <input type="submit" value="Save Conditon" />
+          </form>
+        </div>
       </div>
     </div>
   );

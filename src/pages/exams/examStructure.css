@@ -26,6 +26,12 @@
   width: 45%;
   margin-bottom: 10px;
 }
+.SelectConditon select {
+  width: 23%;
+}
+.SelectConditon input {
+  width: 23%;
+}
 .ExamStructureInfo select:focus {
   outline-color: #56d1d4;
 }
@@ -41,5 +47,8 @@
   }
   .ExamStructureInfo select {
     width: 47%;
+  }
+  .ExamStructureInfo .QuestionTypePoint {
+    width: 30%;
   }
 }

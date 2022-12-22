@@ -3,7 +3,7 @@ import "./exams.css";
 import { useSelector, useDispatch } from "react-redux";
 import examImg from "../../images/exam.png";
 import HorizontalLinearStepper from "../../component/stepper/stepper";
-import { useForm } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
 import ExamInfo from "./examInfo";
 import ExamCondition from "./examCondition";
 import ExamPreview from "./examPreview";
@@ -29,11 +29,16 @@ const Exams = () => {
     register,
     formState: { errors },
     handleSubmit,
+    control,
     reset,
     trigger,
   } = useForm({
     shouldUnregister: false,
     mode: "onChange",
+  });
+  const arrayField = useFieldArray({
+    control, // control props comes from useForm (optional: if you are using FormContext)
+    name: "conditions", // unique name for your Field Array
   });
   const ExamTabs = [
     { label: "Old Exam", value: "oldExam" },
@@ -64,12 +69,11 @@ const Exams = () => {
     }
   }, [activeTab]);
   const onSubmit = (data) => {
-    handleNext();
     console.log(data);
   };
   const ExamsDetails = [
     <ExamInfo register={register} />,
-    <ExamCondition register={register} />,
+    <ExamCondition mainRegister={register} arrayField={arrayField} />,
     <ExamPreview register={register} />,
   ];
   return (

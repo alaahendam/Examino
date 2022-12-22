@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./questionMaker.css";
-import { useForm, useFieldArray, useController } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
 import { BsCardImage } from "react-icons/bs";
 import { AiOutlineClose } from "react-icons/ai";
 
