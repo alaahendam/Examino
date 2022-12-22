@@ -1,23 +1,33 @@
 .ExamInfo {
-  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: red;
-}
 
+  padding-left: 20px;
+}
+.ExamStructureInfo {
+  width: 100%;
+  background-color: red;
+  height: 77%;
+}
 .ExamStructureInfo input {
   height: 50px;
   margin-top: 5px;
   margin-left: 5px;
-  width: 50%;
+  width: 45%;
 }
 .ExamStructureInfo select {
   height: 50px;
   border: 1px solid #e7ebf0;
   border-radius: 4px;
   margin-left: 5px;
+  width: 45%;
 }
 .ExamStructureInfo select:focus {
   outline-color: #56d1d4;
+}
+@media only screen and (max-width: 600px) {
+    .ExamStructureInfo {
+        height: 72%;
+      }
 }
