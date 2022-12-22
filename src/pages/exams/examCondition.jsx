@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { useForm, useFieldArray } from "react-hook-form";
-import "./examStructure.css";
 
+import "./examStructure.css";
+import { MdDeleteOutline } from "react-icons/md";
 const ExamCondition = ({ mainRegister, arrayField }) => {
   const [level, setLevel] = useState("");
+  const [condition, setCondition] = useState({});
   const QuestionType = [
     { label: "Choose Correct Answer", value: "ChooseCorrectAnswer" },
     { label: "Choose Multi Correct Answer", value: "ChooseMultiCorrectAnswer" },
@@ -14,19 +15,11 @@ const ExamCondition = ({ mainRegister, arrayField }) => {
   const level1 = [];
   const level2 = [];
   const level3 = [];
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-    control,
-    reset,
-    resetField,
-    setValue,
-    watch,
-  } = useForm();
-  const onSubmit = (data) => {
-    console.log(data);
+  const collectCondition = () => {
+    arrayField.append(condition);
   };
+  console.log(condition);
+  console.log(arrayField.fields);
   return (
     <div className="ExamInfo ExamStructureInfo">
       <div>
@@ -93,18 +86,30 @@ const ExamCondition = ({ mainRegister, arrayField }) => {
           >
             Select Condetion
           </label>
-          <form className="SelectConditon" onSubmit={handleSubmit(onSubmit)}>
-            <select {...register("ExamType1", { required: true })}>
+          <div className="SelectConditon">
+            <select
+              onChange={(e) =>
+                setCondition({ ...condition, chapter: e.target.value })
+              }
+            >
               <option value="radio">radio</option>
               <option value="checkbox">checkbox</option>
               <option value="radio">true & false</option>
             </select>
-            <select {...register("ExamType2", { required: true })}>
+            <select
+              onChange={(e) =>
+                setCondition({ ...condition, type: e.target.value })
+              }
+            >
               <option value="radio">radio</option>
               <option value="checkbox">checkbox</option>
               <option value="radio">true & false</option>
             </select>
-            <select {...register("ExamType3", { required: true })}>
+            <select
+              onChange={(e) =>
+                setCondition({ ...condition, difficulty: e.target.value })
+              }
+            >
               <option value="radio">radio</option>
               <option value="checkbox">checkbox</option>
               <option value="radio">true & false</option>
@@ -112,11 +117,29 @@ const ExamCondition = ({ mainRegister, arrayField }) => {
 
             <input
               type="number"
-              {...register("numberOfQuestion5", { required: true })}
               placeholder="Number Of Question"
+              onChange={(e) =>
+                setCondition({ ...condition, number: e.target.value })
+              }
             />
-            <input type="submit" value="Save Conditon" />
-          </form>
+            <input
+              type="button"
+              value="Save Conditon"
+              onClick={collectCondition}
+            />
+          </div>
+          <div className="conditionGroub">
+            {arrayField.fields.map((field, index) => (
+              <div
+                style={{
+                  display: "flex",
+                }}
+              >
+                <p>{`${arrayField.fields[index].number} Question of type ${arrayField.fields[index].type} from chapter ${arrayField.fields[index].chapter} Difficulty ${arrayField.fields[index].difficulty}`}</p>
+                <MdDeleteOutline onClick={() => arrayField.remove(index)} />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
