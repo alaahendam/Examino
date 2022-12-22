@@ -19,13 +19,21 @@ const ExamInfo = ({ register }) => {
         </select>
       </div>
       <input
-        type="text"
+        type="number"
         placeholder="Duration"
         {...register("Duration", { required: true })}
         style={{
           paddingLeft: "10px",
         }}
       />
+      <label
+        style={{
+          paddingLeft: "5px",
+          marginTop: "10px",
+        }}
+      >
+        Exam Start
+      </label>
       <div>
         <input
           type="date"
@@ -44,6 +52,14 @@ const ExamInfo = ({ register }) => {
           }}
         />
       </div>
+      <label
+        style={{
+          paddingLeft: "5px",
+          marginBottom: "10px",
+        }}
+      >
+        Exam End
+      </label>
       <div>
         <input
           type="date"
