@@ -17,6 +17,7 @@
   height: 75vh;
   box-shadow: 2px 2px 2px 2px #c9c7c7;
   position: relative;
+  padding-top: 15px;
 }
 /* width */
 ::-webkit-scrollbar {

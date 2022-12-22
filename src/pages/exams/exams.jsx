@@ -18,8 +18,8 @@ const Exams = () => {
 
   const handleNext = async () => {
     const isStepValid = await trigger();
-    console.log(isStepValid);
-    if (isStepValid) setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    // if (isStepValid) setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
   const handleBack = () => {
