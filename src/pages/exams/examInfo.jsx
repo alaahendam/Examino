@@ -2,7 +2,7 @@ import React from "react";
 import "./examStructure.css";
 const ExamInfo = ({ register }) => {
   return (
-    <div className="ExamInfo">
+    <div className="ExamInfo ExamStructureInfo">
       <div>
         <input
           type="text"

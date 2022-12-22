@@ -87,9 +87,8 @@ const Exams = () => {
                     display: "flex",
                     flexDirection: "row",
                     pt: 2,
-                    position: "absolute",
-                    bottom: "20px",
-                    height: "40px",
+
+                    height: "60px",
                   }}
                 >
                   <input

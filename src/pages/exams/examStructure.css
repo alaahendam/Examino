@@ -4,20 +4,20 @@
   flex-direction: column;
   justify-content: center;
   background-color: red;
-  height: 100%;
 }
-input {
+
+.ExamStructureInfo input {
   height: 50px;
   margin-top: 5px;
   margin-left: 5px;
   width: 50%;
 }
-select {
+.ExamStructureInfo select {
   height: 50px;
   border: 1px solid #e7ebf0;
   border-radius: 4px;
   margin-left: 5px;
 }
-select:focus {
+.ExamStructureInfo select:focus {
   outline-color: #56d1d4;
 }
