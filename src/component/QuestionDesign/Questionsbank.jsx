@@ -4,7 +4,7 @@ export const qBank = [
         "how you buld?",
       answers: ["vinayak", "sarthak", "somil", "devesh"],
       correct: "vinayak",
-      questionId: "1"
+      questionId: 1
     },
     {
       question:
@@ -23,7 +23,7 @@ export const qBank = [
     {
       question:
         "how  the app ?",
-      answers: ["vayak", "rthak", "mil", "lo"],
+      answers: ["vayak", "rthak"],
       correct: "lo",
       questionId: 4
     },
@@ -44,5 +44,5 @@ export const qBank = [
   ];
     
   // n = 5 to export 5 question
-  export default (n = 5) =>
-    Promise.resolve(qBank.sort(() => 0.5 - Math.random()).slice(0, n));
+  // export default (n = 5) =>
+  //   Promise.resolve(qBank.sort(() => 0.5 - Math.random()).slice(0, n));

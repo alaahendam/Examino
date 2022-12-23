@@ -1,4 +1,7 @@
-.Contentquest{
-    text-align: left;
-    margin-top: 4rem;
+.BTNgroup{
+    border-radius: 8px;
+    border: 1px #cecece solid;
+    width: 30%;
+    padding-left: 0.5rem;
+    height: 30px;
 }
