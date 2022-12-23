@@ -41,6 +41,9 @@ const ExamCondition = ({ mainRegister, arrayField }) => {
             {...mainRegister("Level", { required: true })}
             onChange={(e) => setLevel(e.target.level)}
           >
+            <option value="level1" disabled>
+              Choose Level
+            </option>
             <option value="level1">Level 1</option>
             <option value="level2">Level 2</option>
             <option value="level3">Level 3</option>
@@ -92,6 +95,9 @@ const ExamCondition = ({ mainRegister, arrayField }) => {
                 setCondition({ ...condition, chapter: e.target.value })
               }
             >
+              <option value="level1" disabled>
+                Choose Chapter
+              </option>
               <option value="radio">radio</option>
               <option value="checkbox">checkbox</option>
               <option value="radio">true & false</option>
@@ -101,6 +107,9 @@ const ExamCondition = ({ mainRegister, arrayField }) => {
                 setCondition({ ...condition, type: e.target.value })
               }
             >
+              <option value="level1" disabled>
+                Choose Type
+              </option>
               <option value="radio">radio</option>
               <option value="checkbox">checkbox</option>
               <option value="radio">true & false</option>
@@ -110,6 +119,9 @@ const ExamCondition = ({ mainRegister, arrayField }) => {
                 setCondition({ ...condition, difficulty: e.target.value })
               }
             >
+              <option value="level1" disabled>
+                Choose Difficulty
+              </option>
               <option value="radio">radio</option>
               <option value="checkbox">checkbox</option>
               <option value="radio">true & false</option>
@@ -126,6 +138,11 @@ const ExamCondition = ({ mainRegister, arrayField }) => {
               type="button"
               value="Save Conditon"
               onClick={collectCondition}
+              style={{
+                background: "linear-gradient(100deg,#A840D1, #56D1D4)",
+                color: "white",
+                cursor: "pointer",
+              }}
             />
           </div>
           <div className="conditionGroub">
@@ -133,10 +150,20 @@ const ExamCondition = ({ mainRegister, arrayField }) => {
               <div
                 style={{
                   display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
               >
                 <p>{`${arrayField.fields[index].number} Question of type ${arrayField.fields[index].type} from chapter ${arrayField.fields[index].chapter} Difficulty ${arrayField.fields[index].difficulty}`}</p>
-                <MdDeleteOutline onClick={() => arrayField.remove(index)} />
+                <MdDeleteOutline
+                  onClick={() => arrayField.remove(index)}
+                  style={{
+                    fontSize: "23px",
+                    cursor: "pointer",
+                    color: "#A840D1",
+                    marginLeft: "15px",
+                  }}
+                />
               </div>
             ))}
           </div>
