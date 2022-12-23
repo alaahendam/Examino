@@ -10,6 +10,7 @@ import ExamPreview from "./examPreview";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { toast } from "react-toastify";
+import success from "../../images/success.jpg";
 const Exams = () => {
   const login = useSelector((state) => state.login.login);
   const [activeTab, setActiveTab] = useState("activeExam");
@@ -89,6 +90,11 @@ const Exams = () => {
           <div className="examStructureBody">
             <HorizontalLinearStepper steps={steps} activeStep={activeStep} />
             {ExamsDetails[activeStep]}
+            <div className="finalExamStep">
+              {activeStep === steps.length ? (
+                <img src={success} className="successImg" />
+              ) : null}
+            </div>
             {activeStep === steps.length ? null : (
               <React.Fragment>
                 <Box
@@ -142,7 +148,7 @@ const Exams = () => {
                         height: "40px",
                       }}
                     >
-                      {activeStep === steps.length - 1 ? "Finish" : "Next Page"}
+                      {activeStep === steps.length - 1 ? "Done" : "Next Page"}
                     </Button>
                   )}
                 </Box>

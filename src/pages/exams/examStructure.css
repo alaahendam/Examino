@@ -9,6 +9,12 @@
   height: 77%;
   overflow: auto;
 }
+.examPrevie2 {
+  height: 100%;
+}
+.examPreview {
+  height: 77%;
+}
 .ExamStructureInfo input {
   height: 50px;
   margin-bottom: 10px;
@@ -42,6 +48,15 @@
 .examPreviewDiv p {
   width: 45%;
 }
+.examPreviewDivDate {
+  display: flex;
+}
+.examPreviewDivDate p {
+  width: 45%;
+}
+.examPreview p {
+  margin-bottom: 10px;
+}
 @media only screen and (max-width: 600px) {
   .ExamStructureInfo {
     height: 72%;
@@ -60,5 +75,12 @@
   }
   .examPreviewDiv p {
     width: 100%;
+  }
+  .examPreview {
+    height: 73%;
+  }
+  .examPrevie2 {
+    height: 89%;
+    padding-left: 20px;
   }
 }
