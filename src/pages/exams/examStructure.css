@@ -35,6 +35,13 @@
 .ExamStructureInfo select:focus {
   outline-color: #56d1d4;
 }
+.examPreviewDiv {
+  display: flex;
+  flex-wrap: wrap;
+}
+.examPreviewDiv p {
+  width: 45%;
+}
 @media only screen and (max-width: 600px) {
   .ExamStructureInfo {
     height: 72%;
@@ -50,5 +57,8 @@
   }
   .ExamStructureInfo .QuestionTypePoint {
     width: 30%;
+  }
+  .examPreviewDiv p {
+    width: 100%;
   }
 }

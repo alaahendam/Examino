@@ -9,6 +9,7 @@ import ExamCondition from "./examCondition";
 import ExamPreview from "./examPreview";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import { toast } from "react-toastify";
 const Exams = () => {
   const login = useSelector((state) => state.login.login);
   const [activeTab, setActiveTab] = useState("activeExam");
@@ -19,7 +20,11 @@ const Exams = () => {
   const handleNext = async () => {
     const isStepValid = await trigger();
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    // if (isStepValid) setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    // if (isStepValid) {
+    //   setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    // } else {
+    //   toast.error("يرجي إدخال جميع البيانات ");
+    // }
   };
 
   const handleBack = () => {
@@ -70,6 +75,7 @@ const Exams = () => {
   }, [activeTab]);
   const onSubmit = (data) => {
     console.log(data);
+    handleNext();
   };
   const ExamsDetails = [
     <ExamInfo register={register} />,
@@ -93,6 +99,7 @@ const Exams = () => {
                     pt: 2,
 
                     height: "60px",
+                    padding: "0px 10px",
                   }}
                 >
                   <input
@@ -112,10 +119,10 @@ const Exams = () => {
                     }}
                   />
                   <Box sx={{ flex: "1 1 auto" }} />
-                  {activeStep === steps.length - 1 ? (
+                  {activeStep === steps.length - 2 ? (
                     <input
                       type="submit"
-                      value="Submit"
+                      value="Next Page"
                       style={{
                         background: "linear-gradient(100deg,#A840D1, #56D1D4)",
                         color: "white",
@@ -135,7 +142,7 @@ const Exams = () => {
                         height: "40px",
                       }}
                     >
-                      Next
+                      {activeStep === steps.length - 1 ? "Finish" : "Next Page"}
                     </Button>
                   )}
                 </Box>

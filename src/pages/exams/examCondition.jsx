@@ -18,8 +18,7 @@ const ExamCondition = ({ mainRegister, arrayField }) => {
   const collectCondition = () => {
     arrayField.append(condition);
   };
-  console.log(condition);
-  console.log(arrayField.fields);
+
   return (
     <div className="ExamInfo ExamStructureInfo">
       <div>
