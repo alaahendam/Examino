@@ -90,11 +90,52 @@ const Exams = () => {
           <div className="examStructureBody">
             <HorizontalLinearStepper steps={steps} activeStep={activeStep} />
             {ExamsDetails[activeStep]}
-            <div className="finalExamStep">
-              {activeStep === steps.length ? (
+
+            {activeStep === steps.length ? (
+              <div className="finalExamStep">
                 <img src={success} className="successImg" />
-              ) : null}
-            </div>
+                <div>
+                  <input
+                    type="button"
+                    value="Delete"
+                    style={{
+                      backgroundColor: "red",
+                      color: "white",
+                      cursor: "pointer",
+                      width: "100px",
+                      height: "40px",
+                      marginLeft: "5px",
+                    }}
+                  />
+                  <input
+                    type="button"
+                    value="Edit"
+                    style={{
+                      background: "linear-gradient(100deg,#A840D1, #56D1D4)",
+                      color: "white",
+                      cursor: "pointer",
+                      width: "100px",
+                      height: "40px",
+                      marginLeft: "5px",
+                    }}
+                    onClick={() => setActiveStep(0)}
+                  />
+                  <input
+                    type="button"
+                    value="Save"
+                    style={{
+                      backgroundColor: "green",
+                      color: "white",
+                      cursor: "pointer",
+                      width: "100px",
+                      height: "40px",
+                      marginLeft: "5px",
+                    }}
+                  />
+                </div>
+              </div>
+            ) : null}
+
             {activeStep === steps.length ? null : (
               <React.Fragment>
                 <Box
