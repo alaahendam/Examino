@@ -99,7 +99,7 @@ const Exams = () => {
                     type="button"
                     value="Delete"
                     style={{
-                      backgroundColor: "red",
+                      backgroundColor: "#ff4e4e",
                       color: "white",
                       cursor: "pointer",
                       width: "100px",
@@ -124,7 +124,7 @@ const Exams = () => {
                     type="button"
                     value="Save"
                     style={{
-                      backgroundColor: "green",
+                      backgroundColor: "#4abd4a",
                       color: "white",
                       cursor: "pointer",
                       width: "100px",
@@ -179,18 +179,20 @@ const Exams = () => {
                       }}
                     />
                   ) : (
-                    <Button
+                    <input
+                      type="button"
+                      value={
+                        activeStep === steps.length - 1 ? "Done" : "Next Page"
+                      }
                       onClick={handleNext}
-                      sx={{
+                      style={{
                         background: "linear-gradient(100deg,#A840D1, #56D1D4)",
                         color: "white",
                         cursor: "pointer",
                         width: "100px",
                         height: "40px",
                       }}
-                    >
-                      {activeStep === steps.length - 1 ? "Done" : "Next Page"}
-                    </Button>
+                    />
                   )}
                 </Box>
               </React.Fragment>

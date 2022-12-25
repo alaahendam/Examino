@@ -64,12 +64,13 @@ const ExamCondition = ({ mainRegister, arrayField }) => {
             Q2)How Many Points Do You Want For Each Question ?
           </label>
           <div>
-            {QuestionType.map((question) => (
+            {QuestionType.map((question, index) => (
               <input
                 className="QuestionTypePoint"
                 type="number"
                 {...mainRegister(`${question.value}`, { required: true })}
                 placeholder={question.label}
+                key={index}
               />
             ))}
           </div>
@@ -152,6 +153,7 @@ const ExamCondition = ({ mainRegister, arrayField }) => {
                   justifyContent: "center",
                   alignItems: "center",
                 }}
+                key={index}
               >
                 <p>{`${arrayField.fields[index].number} Question of type ${arrayField.fields[index].type} from chapter ${arrayField.fields[index].chapter} Difficulty ${arrayField.fields[index].difficulty}`}</p>
                 <MdDeleteOutline

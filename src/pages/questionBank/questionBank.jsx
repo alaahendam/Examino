@@ -101,6 +101,7 @@ const QuestionBank = () => {
     //   tempArray[openChapters.levelIndex].chapters[openChapterQuestion].question
     // );
   };
+  console.log(levels);
 
   return (
     <div className="QuestionBank">
@@ -260,7 +261,7 @@ const QuestionBank = () => {
                               }}
                             >
                               {question.numberOfAnswer.map((answer, index) => (
-                                <div style={{ display: "flex" }}>
+                                <div style={{ display: "flex" }} key={index}>
                                   <input
                                     type={question.questionType}
                                     name="questionReview"

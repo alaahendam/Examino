@@ -56,11 +56,12 @@ const ExamPreview = ({}) => {
           <p>60</p>
         </div>
         <div>
-          {QuestionType.map((type) => (
+          {QuestionType.map((type, index) => (
             <div
               style={{
                 display: "flex",
               }}
+              key={index}
             >
               <p
                 style={{

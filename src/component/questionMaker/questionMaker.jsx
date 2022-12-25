@@ -104,6 +104,7 @@ const QuestionMaker = ({ handelQuestion, editFlag, editData }) => {
                 alignItems: "center",
                 marginBottom: "5px",
               }}
+              key={index}
             >
               <input
                 type={questionType}
