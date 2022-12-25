@@ -71,13 +71,14 @@ const SignUp = () => {
           display: "flex",
         }}
       >
-        {userTypeField.map((type) => (
+        {userTypeField.map((type, index) => (
           <div
             style={{
               cursor: "pointer",
               marginBottom: "17px",
             }}
             onClick={() => setUserType(type.label)}
+            key={index}
           >
             <img src={type.logo} alt="" srcset="" />
             <p
@@ -93,7 +94,7 @@ const SignUp = () => {
           </div>
         ))}
       </div>
-      {inputField.map((inputData) => (
+      {inputField.map((inputData, index) => (
         <input
           type={inputData.type}
           placeholder={inputData.placeholder}
@@ -101,6 +102,7 @@ const SignUp = () => {
           style={{
             paddingLeft: "10px",
           }}
+          key={index}
         />
       ))}
       <input

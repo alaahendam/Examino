@@ -5,3 +5,12 @@
     padding-left: 0.5rem;
     height: 30px;
 }
+.btnn{
+    border-radius: 5px;
+    cursor: pointer;
+    letter-spacing: 2px ;
+    font-size: 18px;
+    background: linear-gradient(100deg,#A840D1, #56D1D4);
+    color: white;
+    border: none;
+}

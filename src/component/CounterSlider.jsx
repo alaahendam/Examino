@@ -10,7 +10,7 @@ function CounterSlider({ onChange }) {
       <input
         type="range"
         min="1"
-        max="10"
+        max="4"
         style={{
             width:"90%"
         }}

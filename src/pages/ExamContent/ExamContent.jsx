@@ -5,6 +5,7 @@ import QueistionDesign from "../../component/QuestionDesign/QuestionDesign";
 import Switch from '@mui/material/Switch';
 import Box from '@mui/material/Box';
 import Item from '@mui/material/Box';
+import DarkMode from "../../component/DarkMode/DarkMode";
 import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router";
 import Grid from '@mui/material/Grid';
@@ -63,11 +64,11 @@ function ExamContent(props){
   
 
     return(
-        <div>
+        <div className="Bbody">
             <div className="ExamContent">
               <div className="TitleExam">
                 <div style={{textAlign:"right"}}>
-               <Switch {...label} defaultChecked/>
+               <DarkMode />
                </div>
                  <h3>Math Exam</h3>
               </div>
@@ -80,6 +81,7 @@ function ExamContent(props){
                     className="textfield"
                     style={{
                         width:"100%",
+                        color:"white"
                     }}
                         id="outlined-read-only-input"
                         defaultValue="Hello World"
@@ -110,7 +112,7 @@ function ExamContent(props){
                </Box>     
               </div>
               <div style={{paddingTop:"1rem",width:"100%"}}>
-                <h5>Pages 3 of 10</h5>
+                <h5>Pages 1 of 4</h5>
               <CounterSlider
               style={{
                 width:"100%"

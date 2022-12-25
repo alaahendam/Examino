@@ -8,7 +8,7 @@ import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Collapse from "@mui/material/Collapse";
-
+import levelImg from "../../images/level3.jpg";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import { BiEditAlt } from "react-icons/bi";
@@ -101,6 +101,7 @@ const QuestionBank = () => {
     //   tempArray[openChapters.levelIndex].chapters[openChapterQuestion].question
     // );
   };
+  console.log(levels);
 
   return (
     <div className="QuestionBank">
@@ -113,17 +114,26 @@ const QuestionBank = () => {
         />
       </div>
       <div className="levelsDivs">
-        {levels.map((level, index) => (
-          <div
-            className="levelDiv"
-            onClick={() =>
-              setOpenChapters({ levelIndex: index, openChapterDialog: true })
-            }
-            key={index}
-          >
-            {level.label}
+        {levels.length == 0 ? (
+          <div className="levelsImg">
+            <img src={levelImg} />
           </div>
-        ))}
+        ) : (
+          levels.map((level, index) => (
+            <div
+              className="levelDiv"
+              onClick={() =>
+                setOpenChapters({
+                  levelIndex: index,
+                  openChapterDialog: true,
+                })
+              }
+              key={index}
+            >
+              {level.label}
+            </div>
+          ))
+        )}
       </div>
       <Dialog
         maxWidth={"md"}
@@ -251,7 +261,7 @@ const QuestionBank = () => {
                               }}
                             >
                               {question.numberOfAnswer.map((answer, index) => (
-                                <div style={{ display: "flex" }}>
+                                <div style={{ display: "flex" }} key={index}>
                                   <input
                                     type={question.questionType}
                                     name="questionReview"

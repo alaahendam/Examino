@@ -36,7 +36,7 @@ function App() {
     };
     getUsers();
   }, []);
-
+  console.log(usersData);
   return (
     <div className="App">
       <NavBar />
