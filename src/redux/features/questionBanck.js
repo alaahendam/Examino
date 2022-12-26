@@ -25,7 +25,6 @@ export const questionBankSlice = createSlice({
     },
   },
 });
-
 // Action creators are generated for each case reducer function
 export const { addUsers, deleteUsers, editUser, addUser } = usersSlice.actions;
 
