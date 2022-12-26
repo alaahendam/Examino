@@ -1,13 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export const questionBankSlice = createSlice({
-  name: "users",
+  name: "questionBank",
   initialState: {
     questionBank: null,
   },
   reducers: {
-    addUsers: (state, action) => {
-      state.users = action.payload;
+    addLevel: (state, action) => {
+      state.questionBank = action.payload;
     },
     deleteUser: (state, action) => {
       state.users = state.users.filter((user) => user.id !== action.payload);
