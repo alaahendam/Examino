@@ -17,8 +17,8 @@ import PrivateRoute from "./privateRoute";
 import StartExam from "./pages/StartExam/StartExam";
 import ExamContent from "./pages/ExamContent/ExamContent";
 
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+// import { ToastContainer, toast } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
 import { db } from "./firebase/firebase-config";
 import { collection, getDocs } from "firebase/firestore";
 import { addUsers } from "./redux/features/usersSlice";
@@ -67,7 +67,7 @@ function App() {
         </Routes>
       </div>
       <Footer />
-      <ToastContainer />
+      {/* <ToastContainer /> */}
     </div>
   );
 }

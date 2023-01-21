@@ -6,7 +6,7 @@ import Student from "../../images/student.png";
 import Teacher from "../../images/teacher.png";
 import { db } from "../../firebase/firebase-config";
 import { collection, addDoc } from "firebase/firestore";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
 import { addUser } from "../../redux/features/usersSlice";
 const SignUp = () => {
@@ -45,14 +45,14 @@ const SignUp = () => {
         users.id == data.id ||
         users.emailAddress == data.emailAddress
       ) {
-        toast.error("الحساب موجود بالفعل");
+        // toast.error("الحساب موجود بالفعل");
         findLoginFlag = true;
       }
     });
     if (!findLoginFlag) {
       await addDoc(usersCollectionRef, { ...data, role: userType });
       dispatch(addUser({ ...data, role: userType }));
-      toast("تم تسجيل البيانات بنجاح");
+      // toast("تم تسجيل البيانات بنجاح");
     }
   };
   return (

@@ -9,7 +9,7 @@ import ExamCondition from "./examCondition";
 import ExamPreview from "./examPreview";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import success from "../../images/success.jpg";
 const Exams = () => {
   const login = useSelector((state) => state.login.login);

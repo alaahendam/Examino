@@ -5,7 +5,6 @@ import menu from "../../images/menu.png";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useSelector, useDispatch } from "react-redux";
 import { addLogin, deleteLogin } from "../../redux/features/loginSlice";
-import { toast } from "react-toastify";
 import Student from "../../images/student.png";
 import Teacher from "../../images/teacher.png";
 const NavBar = () => {

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "./signIn.css";
 import { useForm } from "react-hook-form";
 import loginIcon from "../../images/Login-amico.png";
-import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { addLogin, deleteLogin } from "../../redux/features/loginSlice";
@@ -22,14 +21,14 @@ const SignIn = () => {
     usersData.map((users) => {
       if (users.userName == data.userName && users.password == data.password) {
         dispatch(addLogin(users));
-        toast("يمكنك الدخول");
+        // toast("يمكنك الدخول");
         window.localStorage.setItem("login", JSON.stringify(users));
         navigate("/exams");
         findLoginFlag = true;
       }
     });
     if (!findLoginFlag) {
-      toast.error("المستخدم غير موجود");
+      // toast.error("المستخدم غير موجود");
     }
   };
 
