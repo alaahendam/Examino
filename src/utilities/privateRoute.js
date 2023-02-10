@@ -4,14 +4,17 @@ import { useSelector, useDispatch } from "react-redux";
 
 const PrivateRoute = (element, role) => {
   const login = useSelector((state) => state.login.login);
-  if (login && login.role == role) {
-    return element;
+  let token = localStorage.getItem("token");
+  if (token) {
+    if (login && login.role == role) {
+      return element;
+    } else if (login && role == "Both") {
+      return element;
+    }
   } else if (!login && role == "SignIn") {
     return element;
-  } else if (login && role == "Both") {
-    return element;
   } else {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/about" replace />;
   }
 };
 

@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  login: JSON.parse(window.localStorage.getItem("login")),
+  login: null,
 };
 
 export const loginSlice = createSlice({

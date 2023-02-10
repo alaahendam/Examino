@@ -8,6 +8,7 @@ import { db } from "../../firebase/firebase-config";
 import { collection, addDoc } from "firebase/firestore";
 // import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
+import API from "../../utilities/api";
 import { addUser } from "../../redux/features/usersSlice";
 const SignUp = () => {
   const usersData = useSelector((state) => state.users.users);
@@ -21,9 +22,9 @@ const SignUp = () => {
     handleSubmit,
   } = useForm();
   const inputField = [
-    { type: "text", placeholder: "user name", name: "userName" },
-    { type: "number", placeholder: "ID", name: "id" },
-    { type: "email", placeholder: "Email Address", name: "emailAddress" },
+    { type: "text", placeholder: "user name", name: "name" },
+    { type: "number", placeholder: "ID", name: "userId" },
+    { type: "email", placeholder: "Email Address", name: "email" },
     { type: "text", placeholder: "Telephone", name: "telephone" },
     { type: "password", placeholder: "Password", name: "password" },
     {
@@ -36,24 +37,12 @@ const SignUp = () => {
     { label: "Teacher", logo: Teacher },
     { label: "Student", logo: Student },
   ];
-  var findLoginFlag = false;
   const onSubmit = async (data) => {
     delete data.confirmPassword;
-    usersData.map((users) => {
-      if (
-        users.userName == data.userName ||
-        users.id == data.id ||
-        users.emailAddress == data.emailAddress
-      ) {
-        // toast.error("الحساب موجود بالفعل");
-        findLoginFlag = true;
-      }
-    });
-    if (!findLoginFlag) {
-      await addDoc(usersCollectionRef, { ...data, role: userType });
-      dispatch(addUser({ ...data, role: userType }));
-      // toast("تم تسجيل البيانات بنجاح");
-    }
+    data.role = userType;
+    console.log(data);
+    let result = await API.post("/user/create", data);
+    console.log(result);
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="signUp">

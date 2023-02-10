@@ -5,6 +5,7 @@ import loginIcon from "../../images/Login-amico.png";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { addLogin, deleteLogin } from "../../redux/features/loginSlice";
+import API from "../../utilities/api";
 const SignIn = () => {
   const {
     register,
@@ -17,19 +18,13 @@ const SignIn = () => {
   const usersData = useSelector((state) => state.users.users);
   const dispatch = useDispatch();
   var findLoginFlag = false;
-  const onSubmit = (data) => {
-    usersData.map((users) => {
-      if (users.userName == data.userName && users.password == data.password) {
-        dispatch(addLogin(users));
-        // toast("يمكنك الدخول");
-        window.localStorage.setItem("login", JSON.stringify(users));
-        navigate("/exams");
-        findLoginFlag = true;
-      }
-    });
-    if (!findLoginFlag) {
-      // toast.error("المستخدم غير موجود");
-    }
+  const onSubmit = async (values) => {
+    console.log(values);
+    let { data } = await API.post("/user/login", values);
+    console.log(data);
+    window.localStorage.setItem("token", data.token);
+    dispatch(addLogin(data.data));
+    navigate("/exams");
   };
 
   return (
@@ -57,7 +52,7 @@ const SignIn = () => {
           <input
             type="text"
             placeholder="User Name"
-            {...register("userName", { required: true })}
+            {...register("name", { required: true })}
             style={{
               paddingLeft: "10px",
             }}
