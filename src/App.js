@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
+
 import { useSelector, useDispatch } from "react-redux";
 import "./App.css";
 import NavBar from "./component/navBar/navBar";
@@ -21,8 +22,9 @@ import { addLogin, deleteLogin } from "./redux/features/loginSlice";
 
 import API from "./utilities/api";
 import { useNavigate } from "react-router-dom";
-// import { ToastContainer, toast } from "react-toastify";
-// import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const dispatch = useDispatch();
@@ -39,6 +41,7 @@ function App() {
         .catch((err) => {
           console.log(err);
           window.localStorage.clear();
+          dispatch(addLogin(null));
           navigate("/");
         });
     } catch (error) {
@@ -82,7 +85,7 @@ function App() {
         </Routes>
       </div>
       <Footer />
-      {/* <ToastContainer /> */}
+      <ToastContainer />
     </div>
   );
 }

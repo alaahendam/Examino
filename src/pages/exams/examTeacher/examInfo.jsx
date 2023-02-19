@@ -1,82 +1,97 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./examStructure.css";
-const ExamInfo = ({ register }) => {
+import { useSelector, useDispatch } from "react-redux";
+import API from "../../../utilities/api";
+
+const ExamInfo = ({ register, setLevel }) => {
+  const login = useSelector((state) => state.login.login);
+  const [levels, setLevels] = useState(null);
+  const [chapters, setChapters] = useState(null);
+  useEffect(() => {
+    setLevels(login.ownedLevels);
+  }, []);
+
   return (
     <div className="ExamInfo ExamStructureInfo">
       <div>
         <input
           type="text"
           placeholder="Exam Name"
-          {...register("ExamName", { required: true })}
+          {...register("examName", { required: true })}
           style={{
             paddingLeft: "10px",
           }}
         />
-        <select {...register("ExamType", { required: true })}>
-          <option value="radio">radio</option>
-          <option value="checkbox">checkbox</option>
-          <option value="radio">true & false</option>
+        <input
+          type="number"
+          placeholder="Duration"
+          {...register("duration", { required: true })}
+          style={{
+            paddingLeft: "10px",
+          }}
+        />
+      </div>
+      <div style={{ display: "flex" }}>
+        <div style={{ width: "45%" }}>
+          <label
+            style={{
+              paddingLeft: "5px",
+              marginTop: "10px",
+            }}
+          >
+            Exam Start
+          </label>
+          <input
+            type="datetime-local"
+            {...register("startDate", { required: true })}
+            style={{
+              paddingLeft: "10px",
+              width: "100%",
+            }}
+          />
+        </div>
+        <div style={{ marginLeft: "5px", width: "45%" }}>
+          <label
+            style={{
+              paddingLeft: "5px",
+              marginTop: "10px",
+            }}
+          >
+            Exam End
+          </label>
+          <input
+            type="datetime-local"
+            {...register("endDate", { required: true })}
+            style={{
+              paddingLeft: "10px",
+              width: "100%",
+            }}
+          />
+        </div>
+      </div>
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        <label
+          style={{
+            paddingLeft: "5px",
+            marginTop: "10px",
+          }}
+        >
+          What level do you want to take exam ?
+        </label>
+        <select
+          {...register("level", { required: true })}
+          onChange={(e) => setLevel(e.target.value)}
+        >
+          <option disabled selected value="">
+            {" "}
+            Select Level{" "}
+          </option>
+          {levels
+            ? levels.map((level) => (
+                <option value={`${JSON.stringify(level)}`}>{level.name}</option>
+              ))
+            : null}
         </select>
-      </div>
-      <input
-        type="number"
-        placeholder="Duration"
-        {...register("Duration", { required: true })}
-        style={{
-          paddingLeft: "10px",
-        }}
-      />
-      <label
-        style={{
-          paddingLeft: "5px",
-          marginTop: "10px",
-        }}
-      >
-        Exam Start
-      </label>
-      <div>
-        <input
-          type="date"
-          placeholder="Exam Name"
-          {...register("startDate", { required: true })}
-          style={{
-            paddingLeft: "10px",
-          }}
-        />
-        <input
-          type="time"
-          placeholder="Exam Name"
-          {...register("startTime", { required: true })}
-          style={{
-            paddingLeft: "10px",
-          }}
-        />
-      </div>
-      <label
-        style={{
-          paddingLeft: "5px",
-          marginBottom: "10px",
-        }}
-      >
-        Exam End
-      </label>
-      <div>
-        <input
-          type="date"
-          placeholder="Exam Name"
-          {...register("endDate", { required: true })}
-          style={{
-            paddingLeft: "10px",
-          }}
-        />
-        <input
-          type="time"
-          placeholder="Exam Name"
-          {...register("endTime", { required: true })}
-          style={{
-            paddingLeft: "10px",
-          }}
-        />
       </div>
     </div>
   );

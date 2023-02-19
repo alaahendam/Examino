@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../exams.css";
-
 import examImg from "../../../images/exam.png";
-
+import API from "../../../utilities/api";
 // import { toast } from "react-toastify";
 
 const ExamStudent = () => {
@@ -27,7 +26,19 @@ const ExamStudent = () => {
     { examName: "future1", examdate: "2022-03-25" },
     { examName: "future2", examdate: "2022-03-25" },
   ];
-
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        let { data } = await API.post("/exam/studentExams", {
+          levels: [{ levelId: 1 }, { levelId: 2 }],
+        });
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
   useEffect(() => {
     if (activeTab === "oldExam") {
       setActiveArrayExam(oldExam);

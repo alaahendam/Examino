@@ -3,7 +3,6 @@ import "./questionBankChapters.css";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import API from "../../utilities/api";
-
 import QuestionMaker from "../../component/questionMaker/questionMaker";
 import Dialog from "@mui/material/Dialog";
 import NavBar from "../../component/navBar/navBar";
@@ -11,25 +10,25 @@ import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Collapse from "@mui/material/Collapse";
-import levelImg from "../../images/level3.jpg";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import { BiEditAlt } from "react-icons/bi";
 import { MdDeleteOutline } from "react-icons/md";
+import { FcApproval } from "react-icons/fc";
+import HowToRegSharpIcon from "@mui/icons-material/HowToRegSharp";
 
 const QuestionBankChapters = () => {
   const login = useSelector((state) => state.login.login);
   let { levelName } = useParams();
   const [chapters, setChapters] = useState(null);
   const [chapterName, setChapterName] = useState("");
-  const [openChapters, setOpenChapters] = useState(false);
   const [chapterQuestions, setChapterQuestions] = useState(null);
 
   const [openChapterQuestion, setOpenChapterQuestion] = useState(null);
   const [editQuestion, setEditQuestion] = useState(false);
   const [editData, setEditData] = useState(null);
-  const [questionEditIndex, setQuestionEditIndex] = useState(null);
-
+  const [openStudents, setOpenStudents] = useState(false);
+  const [students, setStudents] = useState(null);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -124,6 +123,55 @@ const QuestionBankChapters = () => {
       console.log(error);
     }
   };
+  const handelDeleteQuestion = async (id) => {
+    try {
+      let { data } = await API.delete(`/question/deleteQuestion/${id}`);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const fetchStudentData = async () => {
+    try {
+      let id;
+      login.ownedLevels.map((level) => {
+        if (level.name == levelName) {
+          id = level.id;
+        }
+      });
+      let { data } = await API.get(`/level/getLevelStudents/${id}`);
+      console.log(data);
+      setStudents(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    if (openStudents) {
+      fetchStudentData();
+    }
+  }, [openStudents]);
+  const handelOwnerApprove = async (levelOnStudent) => {
+    try {
+      let { data } = await API.post(`/level/ownerApproved`, {
+        userId: levelOnStudent.userId,
+        levelId: levelOnStudent.levelId,
+      });
+      console.log(data);
+      fetchStudentData();
+      // let tempArray = [];
+      // students.map((student) => {
+      //   if (levelOnStudent.userId == student.userId) {
+      //     tempArray.push({ ...student, ownerApproved: true });
+      //   } else {
+      //     tempArray.push(student);
+      //   }
+      // });
+      // setStudents(tempArray);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div
       style={{
@@ -145,6 +193,12 @@ const QuestionBankChapters = () => {
           onChange={(e) => setChapterName(e.target.value)}
         />
         <input type={"submit"} value="Add A New Chapter" className="btn" />
+        <input
+          type="button"
+          value="Students"
+          className="btn"
+          onClick={() => setOpenStudents(true)}
+        />
       </form>
       {chapters && chapters.chapters
         ? chapters.chapters.map((chapter, index) => (
@@ -190,6 +244,7 @@ const QuestionBankChapters = () => {
                             <p>{question.question}</p>
                           </div>
                           <p>{`( ${question.difficulty} )`}</p>
+                          <p>{`pointes : ( ${question.pointes} )`}</p>
                           <div>
                             <BiEditAlt
                               style={{
@@ -206,6 +261,7 @@ const QuestionBankChapters = () => {
                                 color: "#A840D1",
                                 cursor: "pointer",
                               }}
+                              onClick={() => handelDeleteQuestion(question.id)}
                             />
                           </div>
                         </div>
@@ -242,20 +298,65 @@ const QuestionBankChapters = () => {
             </List>
           ))
         : null}
-      {chapterQuestions ? (
-        <Dialog
-          maxWidth={"md"}
-          fullWidth={true}
-          open={editQuestion ? true : false}
-          onClose={() => setEditQuestion(false)}
+
+      <Dialog
+        maxWidth={"md"}
+        fullWidth={true}
+        open={editQuestion ? true : false}
+        onClose={() => setEditQuestion(false)}
+      >
+        <QuestionMaker
+          handelQuestion={handelEditOldQuestion}
+          editFlag={true}
+          editData={editData}
+        />
+      </Dialog>
+      <Dialog
+        maxWidth={"lg"}
+        fullWidth={true}
+        open={openStudents ? true : false}
+        onClose={() => setOpenStudents(false)}
+      >
+        <div
+          style={{
+            height: "700px",
+            display: "flex",
+            alignItems: "center",
+            flexDirection: "column",
+          }}
         >
-          <QuestionMaker
-            handelQuestion={handelEditOldQuestion}
-            editFlag={true}
-            editData={editData}
-          />
-        </Dialog>
-      ) : null}
+          {students
+            ? students.map((student) => (
+                <div className="levelInfo">
+                  <div className="levelDetails">
+                    <p>Name: {student.user.name}</p>
+                    <p>Email : {student.user.email}</p>
+                    <p>Job: {student.user.role}</p>
+                  </div>
+                  <div className="studentApproved">
+                    {student.ownerApproved ? (
+                      <FcApproval
+                        style={{
+                          fontSize: "25px",
+                          color: "#9e17d3",
+                        }}
+                      />
+                    ) : (
+                      <HowToRegSharpIcon
+                        style={{
+                          fontSize: "30px",
+                          color: "#9e17d3",
+                          cursor: "pointer",
+                        }}
+                        onClick={() => handelOwnerApprove(student)}
+                      />
+                    )}
+                  </div>
+                </div>
+              ))
+            : null}
+        </div>
+      </Dialog>
     </div>
   );
 };

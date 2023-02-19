@@ -6,7 +6,7 @@ import Student from "../../images/student.png";
 import Teacher from "../../images/teacher.png";
 import { db } from "../../firebase/firebase-config";
 import { collection, addDoc } from "firebase/firestore";
-// import { toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
 import API from "../../utilities/api";
 import { addUser } from "../../redux/features/usersSlice";
@@ -38,11 +38,14 @@ const SignUp = () => {
     { label: "Student", logo: Student },
   ];
   const onSubmit = async (data) => {
-    delete data.confirmPassword;
-    data.role = userType;
-    console.log(data);
-    let result = await API.post("/user/create", data);
-    console.log(result);
+    try {
+      delete data.confirmPassword;
+      data.role = userType;
+      let result = await API.post("/user/create", data);
+      console.log(result);
+    } catch {
+      toast.error("المستخدم موجود بالفعل");
+    }
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="signUp">

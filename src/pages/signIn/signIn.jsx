@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { addLogin, deleteLogin } from "../../redux/features/loginSlice";
 import API from "../../utilities/api";
+import { toast } from "react-toastify";
+
 const SignIn = () => {
   const {
     register,
@@ -19,12 +21,15 @@ const SignIn = () => {
   const dispatch = useDispatch();
   var findLoginFlag = false;
   const onSubmit = async (values) => {
-    console.log(values);
-    let { data } = await API.post("/user/login", values);
-    console.log(data);
-    window.localStorage.setItem("token", data.token);
-    dispatch(addLogin(data.data));
-    navigate("/exams");
+    try {
+      let { data } = await API.post("/user/login", values);
+      console.log(data);
+      window.localStorage.setItem("token", data.token);
+      dispatch(addLogin(data.data));
+      navigate("/exams");
+    } catch {
+      toast.error("خطأ في اسم المستخدم أو كلمة المرور!");
+    }
   };
 
   return (

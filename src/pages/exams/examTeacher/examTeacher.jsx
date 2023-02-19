@@ -1,26 +1,40 @@
 import React, { useState, useEffect } from "react";
 import "../exams.css";
-
+import { useSelector, useDispatch } from "react-redux";
 import HorizontalLinearStepper from "../../../component/stepper/stepper";
 import { useForm, useFieldArray } from "react-hook-form";
 import ExamInfo from "./examInfo";
 import ExamCondition from "./examCondition";
 import ExamPreview from "./examPreview";
 import Box from "@mui/material/Box";
-
-// import { toast } from "react-toastify";
+import { toast } from "react-toastify";
 import success from "../../../images/success.jpg";
+import API from "../../../utilities/api";
 const ExamTeacher = () => {
+  const login = useSelector((state) => state.login.login);
+  console.log("login", login);
   const [activeStep, setActiveStep] = React.useState(0);
+  const [examData, setExamData] = useState(null);
+  const [level, setLevel] = useState("");
+  const [examQuestion, setExamQuestion] = useState(null);
+  const [totalPointes, setTotalPointes] = useState(0);
+  const [chosenChapters, setChosenChapters] = useState(null);
 
   const handleNext = async () => {
     const isStepValid = await trigger();
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    // if (isStepValid) {
-    //   setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    // } else {
-    //   toast.error("يرجي إدخال جميع البيانات ");
-    // }
+    if (isStepValid) {
+      if (activeStep == 1) {
+        if (examQuestion && examQuestion.length) {
+          setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        } else {
+          toast.error("يبدو أنك نسيت إضافة بعض الأسئلة ");
+        }
+      } else {
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      }
+    } else {
+      toast.error("يرجي إدخال جميع البيانات ");
+    }
   };
 
   const handleBack = () => {
@@ -37,22 +51,44 @@ const ExamTeacher = () => {
     shouldUnregister: false,
     mode: "onChange",
   });
-  const arrayField = useFieldArray({
-    control, // control props comes from useForm (optional: if you are using FormContext)
-    name: "conditions", // unique name for your Field Array
-  });
 
   const steps = ["Exam Information", "Exam Condition", "Exam Preview"];
 
   const onSubmit = (data) => {
-    console.log(data);
+    setExamData({
+      ...data,
+      chosenChapters: chosenChapters,
+      examQuestion: examQuestion,
+      totalPointes: totalPointes,
+    });
     handleNext();
   };
   const ExamsDetails = [
-    <ExamInfo register={register} />,
-    <ExamCondition mainRegister={register} arrayField={arrayField} />,
-    <ExamPreview register={register} />,
+    <ExamInfo register={register} setLevel={setLevel} />,
+    <ExamCondition
+      level={level}
+      setExamQuestion={setExamQuestion}
+      setTotalPointes={setTotalPointes}
+      examQuestion={examQuestion}
+      totalPointes={totalPointes}
+      chosenChapters={chosenChapters}
+      setChosenChapters={setChosenChapters}
+    />,
+    <ExamPreview register={register} examData={examData} />,
   ];
+  console.log("activeStep", activeStep);
+  const handleSaveExam = async () => {
+    console.log({ ...examData, level: JSON.parse(examData.level) });
+    try {
+      let { data } = await API.post("/exam/create", {
+        ...examData,
+        level: JSON.parse(examData.level),
+      });
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <form className="examStructure" onSubmit={handleSubmit(onSubmit)}>
       <div className="examStructureBody">
@@ -91,6 +127,7 @@ const ExamTeacher = () => {
               <input
                 type="button"
                 value="Save"
+                onClick={handleSaveExam}
                 style={{
                   backgroundColor: "#4abd4a",
                   color: "white",
