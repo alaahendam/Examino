@@ -17,7 +17,7 @@ import QuestionBankChapters from "./pages/questionBankChapters/questionBankChapt
 import Certificate from "./pages/certificate/certificate";
 import PrivateRoute from "./utilities/privateRoute";
 import StartExam from "./pages/StartExam/StartExam";
-import ExamContent from "./pages/ExamContent/ExamContent";
+
 import { addLogin, deleteLogin } from "./redux/features/loginSlice";
 
 import API from "./utilities/api";
@@ -66,7 +66,7 @@ function App() {
           <Route path="/signUp" element={PrivateRoute(<SignUp />, "SignIn")} />
           <Route path="/about" element={<About />} />
           <Route path="/startexam" element={<StartExam />} />
-          <Route path="/examcontent" element={<ExamContent />} />
+
           <Route path="/contactUs" element={<ContactUs />} />
           <Route path="/exams" element={PrivateRoute(<Exams />, "Both")} />
           <Route path="/scores" element={PrivateRoute(<Scores />, "Student")} />

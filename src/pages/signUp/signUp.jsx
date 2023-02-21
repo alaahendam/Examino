@@ -9,7 +9,7 @@ import { collection, addDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
 import API from "../../utilities/api";
-import { addUser } from "../../redux/features/usersSlice";
+import { addLogin, deleteLogin } from "../../redux/features/loginSlice";
 const SignUp = () => {
   const usersData = useSelector((state) => state.users.users);
   const dispatch = useDispatch();
@@ -42,7 +42,9 @@ const SignUp = () => {
       delete data.confirmPassword;
       data.role = userType;
       let result = await API.post("/user/create", data);
-      console.log(result);
+      window.localStorage.setItem("token", result.data.token);
+      dispatch(addLogin(result.data.data));
+      navigate("/exams");
     } catch {
       toast.error("المستخدم موجود بالفعل");
     }
