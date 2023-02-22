@@ -117,7 +117,6 @@ const QuestionMaker = ({ handelQuestion, editFlag, editData }) => {
                 control={control}
                 {...register(`correctAnswer`)}
               />
-
               <input
                 type="text"
                 style={{

@@ -4,17 +4,18 @@ import Dialog from "@mui/material/Dialog";
 import examImg from "../../../images/exam.png";
 import API from "../../../utilities/api";
 import { useSelector, useDispatch } from "react-redux";
-import Exam from './exam'
+import Exam from "./exam";
 // import { toast } from "react-toastify";
 
 const ExamStudent = () => {
   const login = useSelector((state) => state.login.login);
-  console.log(login)
+  console.log(login);
   const [activeTab, setActiveTab] = useState("activeExam");
   const [activeArrayExam, setActiveArrayExam] = useState(null);
-  const [activeExam,setActiveExam]=useState(null)
-  const [futureExam,setFutureExam]=useState(null)
-  const [openExam,setOpenExam]=useState(false)
+  const [activeExam, setActiveExam] = useState(null);
+  const [futureExam, setFutureExam] = useState(null);
+  const [openExam, setOpenExam] = useState(false);
+  const [examInfo, setExamInfo] = useState(null);
 
   const ExamTabs = [
     { label: "Old Exam", value: "oldExam" },
@@ -31,12 +32,12 @@ const ExamStudent = () => {
     const fetchData = async () => {
       try {
         let { data } = await API.post("/exam/studentExams", {
-          id:login.id
+          id: login.id,
         });
-          console.log(data)
-          setFutureExam(data.futureExam)
-          setActiveExam(data.activeExam)
-          setActiveArrayExam(data.activeExam);
+        console.log(data);
+        setFutureExam(data.futureExam);
+        setActiveExam(data.activeExam);
+        setActiveArrayExam(data.activeExam);
       } catch (error) {
         console.log(error);
       }
@@ -52,7 +53,10 @@ const ExamStudent = () => {
       setActiveArrayExam(futureExam);
     }
   }, [activeTab]);
-
+  const handelOpenExam = (exam) => {
+    setOpenExam(true);
+    setExamInfo(exam);
+  };
   return (
     <div className="Exams">
       <div className="examsHeader">
@@ -93,38 +97,48 @@ const ExamStudent = () => {
                   }}
                 />
                 <p>{exam.examName}</p>
-                {activeTab ==="futureExam"?(<p
-                  style={{
-                    fontSize: "14px",
-                    color: "gray",
-                  }}
-                >
-                  start at: {new Date(exam.start).toLocaleString()}
-                </p>):(<p
-                  style={{
-                    fontSize: "14px",
-                    color: "gray",
-                  }}
-                >
-                  end at: {new Date(exam.end).toLocaleString()}
-                </p>)}
-                
+                {activeTab === "futureExam" ? (
+                  <p
+                    style={{
+                      fontSize: "14px",
+                      color: "gray",
+                    }}
+                  >
+                    start at: {new Date(exam.start).toLocaleString()}
+                  </p>
+                ) : (
+                  <p
+                    style={{
+                      fontSize: "14px",
+                      color: "gray",
+                    }}
+                  >
+                    end at: {new Date(exam.end).toLocaleString()}
+                  </p>
+                )}
+
                 {activeTab === "oldExam" ? (
                   <p className="exambtnInfo">View Result</p>
                 ) : activeTab === "activeExam" ? (
-                  <p className="exambtnInfo" onClick={()=>setOpenExam(true)}>Start Exam</p>
+                  <p
+                    className="exambtnInfo"
+                    onClick={() => handelOpenExam(exam)}
+                  >
+                    Start Exam
+                  </p>
                 ) : null}
               </div>
             ))
           : null}
       </div>
       <Dialog
-        maxWidth={"md"}
+        maxWidth={"lg"}
         fullWidth={true}
+        fullScreen
         open={openExam ? true : false}
         onClose={() => setOpenExam(false)}
       >
-        <Exam />
+        <Exam examInfo={examInfo} />
       </Dialog>
     </div>
   );
