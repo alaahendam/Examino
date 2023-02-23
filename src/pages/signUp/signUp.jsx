@@ -74,7 +74,7 @@ const SignUp = () => {
             onClick={() => setUserType(type.label)}
             key={index}
           >
-            <img src={type.logo} alt="" srcset="" />
+            <img src={type.logo} alt="" />
             <p
               style={{
                 fontSize: "12px",

@@ -18,6 +18,7 @@ const Question = ({
               style={{
                 display: "flex",
               }}
+              key={index}
             >
               <input
                 type={questionType}

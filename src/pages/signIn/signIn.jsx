@@ -35,7 +35,7 @@ const SignIn = () => {
   return (
     <div className="signIn">
       <div className="signInInfo">
-        <img src={loginIcon} alt="" srcset="" />
+        <img src={loginIcon} alt="" />
         <p className="welcome">Welcome Back To Examino !</p>
         <p
           style={{

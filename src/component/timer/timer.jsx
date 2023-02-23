@@ -23,7 +23,7 @@ function MyTimer({ expiryTimestamp }) {
     <div>
       <div className="timer">
         <AccessTimeIcon sx={{ fontSize: "32px", marginRight: "7px" }} />
-        {minutes}:{seconds}
+        {hours}:{minutes}:{seconds}
       </div>
       {/*<p>{isRunning ? "Running" : "Not running"}</p>
       <button onClick={start}>Start</button>

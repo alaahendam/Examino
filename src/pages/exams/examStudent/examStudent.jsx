@@ -5,27 +5,25 @@ import examImg from "../../../images/exam.png";
 import API from "../../../utilities/api";
 import { useSelector, useDispatch } from "react-redux";
 import Exam from "./exam";
-// import { toast } from "react-toastify";
+import OldExam from "./oldExam";
+import { toast } from "react-toastify";
 
 const ExamStudent = () => {
   const login = useSelector((state) => state.login.login);
-  console.log(login);
   const [activeTab, setActiveTab] = useState("activeExam");
   const [activeArrayExam, setActiveArrayExam] = useState(null);
   const [activeExam, setActiveExam] = useState(null);
   const [futureExam, setFutureExam] = useState(null);
+  const [oldExam, setOldExam] = useState(null);
   const [openExam, setOpenExam] = useState(false);
+  const [openOldExam, setOpenOldExam] = useState(false);
   const [examInfo, setExamInfo] = useState(null);
+  const [timerInfo, setTimerInfo] = useState(null);
 
   const ExamTabs = [
     { label: "Old Exam", value: "oldExam" },
     { label: "Active Exam", value: "activeExam" },
     { label: "Future Exam", value: "futureExam" },
-  ];
-  const oldExam = [
-    { examName: "old1", examdate: "2022-03-25" },
-    { examName: "old2", examdate: "2022-03-25" },
-    { examName: "old1", examdate: "2022-03-25" },
   ];
 
   useEffect(() => {
@@ -37,6 +35,7 @@ const ExamStudent = () => {
         console.log(data);
         setFutureExam(data.futureExam);
         setActiveExam(data.activeExam);
+        setOldExam(data.oldExam);
         setActiveArrayExam(data.activeExam);
       } catch (error) {
         console.log(error);
@@ -53,8 +52,44 @@ const ExamStudent = () => {
       setActiveArrayExam(futureExam);
     }
   }, [activeTab]);
-  const handelOpenExam = (exam) => {
-    setOpenExam(true);
+  const handelOpenExam = async (exam) => {
+    try {
+      let { data } = await API.post("/studentExam/create", {
+        userId: login.id,
+        examId: exam.id,
+        examName: exam.examName,
+        points: exam.points,
+        answers: exam.questions,
+      });
+      console.log(data);
+      console.log(
+        "sub dates",
+        Math.abs(new Date().getTime() - new Date(data.startAt).getTime()) /
+          (1000 * 60)
+      );
+      if (
+        Math.abs(new Date().getTime() - new Date(data.startAt).getTime()) /
+          (1000 * 60) >=
+        exam.duration
+      ) {
+        toast.error("لا يمكنك بدأ الامتحان");
+      } else {
+        setOpenExam(true);
+        setExamInfo(exam);
+        setTimerInfo(
+          exam.duration -
+            Math.abs(new Date().getTime() - new Date(data.startAt).getTime()) /
+              (1000 * 60)
+        );
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  console.log("exam info", examInfo);
+  console.log("timerInfo", timerInfo);
+  const handelOpenOldExam = (exam) => {
+    setOpenOldExam(true);
     setExamInfo(exam);
   };
   return (
@@ -92,8 +127,8 @@ const ExamStudent = () => {
                   src={examImg}
                   alt=""
                   style={{
-                    width: "50%",
-                    height: "50%",
+                    width: "60px",
+                    height: "60px",
                   }}
                 />
                 <p>{exam.examName}</p>
@@ -106,7 +141,7 @@ const ExamStudent = () => {
                   >
                     start at: {new Date(exam.start).toLocaleString()}
                   </p>
-                ) : (
+                ) : activeTab === "activeExam" ? (
                   <p
                     style={{
                       fontSize: "14px",
@@ -115,10 +150,34 @@ const ExamStudent = () => {
                   >
                     end at: {new Date(exam.end).toLocaleString()}
                   </p>
+                ) : (
+                  <div>
+                    <p
+                      style={{
+                        fontSize: "14px",
+                        color: "gray",
+                      }}
+                    >
+                      start Exam at: {new Date(exam.startAt).toLocaleString()}
+                    </p>
+                    <p
+                      style={{
+                        fontSize: "14px",
+                        color: "gray",
+                      }}
+                    >
+                      submit at: {new Date(exam.endAt).toLocaleString()}
+                    </p>
+                  </div>
                 )}
 
                 {activeTab === "oldExam" ? (
-                  <p className="exambtnInfo">View Result</p>
+                  <p
+                    className="exambtnInfo"
+                    onClick={() => handelOpenOldExam(exam)}
+                  >
+                    View Result
+                  </p>
                 ) : activeTab === "activeExam" ? (
                   <p
                     className="exambtnInfo"
@@ -138,7 +197,16 @@ const ExamStudent = () => {
         open={openExam ? true : false}
         onClose={() => setOpenExam(false)}
       >
-        <Exam examInfo={examInfo} />
+        <Exam examInfo={examInfo} timerInfo={timerInfo} />
+      </Dialog>
+      <Dialog
+        maxWidth={"lg"}
+        fullWidth={true}
+        fullScreen
+        open={openOldExam ? true : false}
+        onClose={() => setOpenOldExam(false)}
+      >
+        <OldExam examInfo={examInfo} />
       </Dialog>
     </div>
   );
