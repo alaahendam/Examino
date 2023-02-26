@@ -65,11 +65,11 @@
 }
 .QuestionReview {
   width: 100%;
-  height: 70px;
+  padding: 12px;
   box-shadow: 2px 2px 2px 2px #c9c7c7;
   margin: 10px 5px;
-  padding-left: 15px;
-  padding-right: 30px;
+  /* padding-left: 15px;
+  padding-right: 30px; */
 }
 .levelsImg {
   width: 100%;

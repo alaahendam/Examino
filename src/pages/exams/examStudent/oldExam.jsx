@@ -13,9 +13,13 @@ const OldExam = ({ examInfo }) => {
       </div>
       <div>
         <h3>{examInfo.examName}</h3>
+        <p>
+          {examInfo.score} / {examInfo.points} point with Grade{" "}
+          {(examInfo.score / examInfo.points) * 100}%
+        </p>
         {examInfo
           ? examInfo.answers.map((info, index) => (
-              <OldQuestion questionInfo={info} />
+              <OldQuestion questionInfo={info} key={index} />
             ))
           : null}
       </div>

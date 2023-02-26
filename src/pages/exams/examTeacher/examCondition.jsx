@@ -248,13 +248,21 @@ const ExamCondition = ({
                                 {question.numberOfAnswer.map(
                                   (answer, index) => (
                                     <div
-                                      style={{ display: "flex" }}
+                                      style={{
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        alignItems: "center",
+                                      }}
                                       key={index}
                                     >
                                       <input
                                         disabled
                                         type={question.questionType}
                                         name="questionReview"
+                                        style={{
+                                          height: "12px",
+                                          margin: "0px",
+                                        }}
                                         defaultChecked={
                                           question.correctAnswer
                                             ? question.correctAnswer.includes(

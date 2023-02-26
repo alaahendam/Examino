@@ -7,9 +7,14 @@ const PrivateRoute = (element, role) => {
   let token = localStorage.getItem("token");
   if (token) {
     if (login && login.role == role) {
+      console.log("ok", login);
       return element;
     } else if (login && role == "Both") {
+      console.log("both", login);
       return element;
+    } else {
+      console.log("default", login);
+      return <Navigate to="/" replace />;
     }
   } else if (!login && role == "SignIn") {
     return element;

@@ -16,6 +16,11 @@ const SignUp = () => {
   const usersCollectionRef = collection(db, "users");
   const navigate = useNavigate();
   const [userType, setUserType] = useState("Teacher");
+  const [userExist, setUserExist] = useState({
+    name: true,
+    userId: true,
+    email: true,
+  });
   const {
     register,
     formState: { errors },
@@ -47,6 +52,30 @@ const SignUp = () => {
       navigate("/exams");
     } catch {
       toast.error("المستخدم موجود بالفعل");
+    }
+  };
+  const handelCheckUser = async (value, name) => {
+    let tempData = {};
+    if (!value) {
+      tempData[name] = true;
+      setUserExist({ ...userExist, ...tempData });
+    } else {
+      try {
+        if (name == "userId") {
+          tempData[name] = Number(value);
+        } else {
+          tempData[name] = value;
+        }
+        let { data } = await API.post("/user/checkUser", tempData);
+        console.log("value", value);
+        if (data) {
+          tempData[name] = true;
+          setUserExist({ ...userExist, ...tempData });
+        }
+      } catch (error) {
+        tempData[name] = false;
+        setUserExist({ ...userExist, ...tempData });
+      }
     }
   };
   return (
@@ -96,7 +125,13 @@ const SignUp = () => {
           style={{
             paddingLeft: "10px",
           }}
+          className={userExist[inputData.name] ? "userExist" : "userNotExist"}
           key={index}
+          onChange={(e) =>
+            index < 3
+              ? handelCheckUser(e.target.value, inputData.name)
+              : console.log("ok")
+          }
         />
       ))}
       <input
@@ -107,6 +142,9 @@ const SignUp = () => {
           color: "white",
           cursor: "pointer",
         }}
+        disabled={
+          userExist.name || userExist.userId || userExist.email ? true : false
+        }
       />
       <p
         style={{

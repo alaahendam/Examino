@@ -62,17 +62,12 @@ const ExamStudent = () => {
         answers: exam.questions,
       });
       console.log(data);
-      console.log(
-        "sub dates",
-        Math.abs(new Date().getTime() - new Date(data.startAt).getTime()) /
-          (1000 * 60)
-      );
       if (
         Math.abs(new Date().getTime() - new Date(data.startAt).getTime()) /
           (1000 * 60) >=
         exam.duration
       ) {
-        toast.error("لا يمكنك بدأ الامتحان");
+        toast.error("تم الإنتهاء من الإمتحان من قبل");
       } else {
         setOpenExam(true);
         setExamInfo(exam);
@@ -86,8 +81,7 @@ const ExamStudent = () => {
       console.log(error);
     }
   };
-  console.log("exam info", examInfo);
-  console.log("timerInfo", timerInfo);
+
   const handelOpenOldExam = (exam) => {
     setOpenOldExam(true);
     setExamInfo(exam);

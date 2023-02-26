@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./navBar.css";
 import menu from "../../images/menu.png";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -11,31 +11,34 @@ import Teacher from "../../images/teacher.png";
 const NavBar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { pathname } = useLocation();
+  useEffect(() => {
+    setActiveTab(pathname);
+  }, [pathname]);
   const login = useSelector((state) => state.login.login);
-
   const [activeTab, setActiveTab] = useState("home");
+
   const [openMenu, setOpenMenu] = useState(false);
   const [openLogout, setOpenLogout] = useState(false);
   var tabs = [
     { value: "/", label: "Home" },
-    { value: "about", label: "About" },
-    { value: "contactUs", label: "Contact Us" },
+    { value: "/about", label: "About" },
+    { value: "/contactUs", label: "Contact Us" },
     ,
   ];
   if (login && login.role == "Teacher") {
-    tabs.push({ value: "questionBank", label: "Question Bank" });
-    tabs.push({ value: "exams", label: "Exams" });
-    tabs.push({ value: "certificate", label: "Certificate" });
+    tabs.push({ value: "/questionBank", label: "Question Bank" });
+    tabs.push({ value: "/exams", label: "Exams" });
   } else if (login && login.role == "Student") {
-    tabs.push({ value: "exams", label: "Exams" });
-    tabs.push({ value: "scores", label: "Scores" });
+    tabs.push({ value: "/exams", label: "Exams" });
+    tabs.push({ value: "/scores", label: "Scores" });
+    tabs.push({ value: "/certificate", label: "Certificate" });
   } else {
-    tabs.push({ value: "signIn", label: "Sign In" });
-    tabs.push({ value: "signUp", label: "Sign Up" });
+    tabs.push({ value: "/signIn", label: "Sign In" });
+    tabs.push({ value: "/signUp", label: "Sign Up" });
   }
   const activeStyle = { fontSize: "15px", fontWeight: 600 };
   const handelNavigate = (value) => {
-    setActiveTab(value);
     navigate(value);
     setOpenMenu(false);
   };

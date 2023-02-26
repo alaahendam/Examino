@@ -13,6 +13,8 @@
 .Bbody {
   background-color: var(--background-color);
   color: var(--font-color);
+  height: 100%;
+  padding: 30px 20px;
 }
 .Bbody input {
   color: var(--font-color);

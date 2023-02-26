@@ -46,7 +46,7 @@ function App() {
         });
     } catch (error) {
       console.log(error);
-      // window.localStorage.clear();
+      //window.localStorage.clear();
       navigate("/");
     }
   }, []);
@@ -80,7 +80,7 @@ function App() {
           />
           <Route
             path="/certificate"
-            element={PrivateRoute(<Certificate />, "Teacher")}
+            element={PrivateRoute(<Certificate />, "Student")}
           />
         </Routes>
       </div>
