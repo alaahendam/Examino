@@ -1,25 +1,23 @@
-import React from "react";
-import { Route, Navigate, json } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Route, Navigate, json, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 const PrivateRoute = (element, role) => {
   const login = useSelector((state) => state.login.login);
+  const navigate = useNavigate();
   let token = localStorage.getItem("token");
   if (token) {
     if (login && login.role == role) {
-      console.log("ok", login);
       return element;
     } else if (login && role == "Both") {
-      console.log("both", login);
       return element;
-    } else {
-      console.log("default", login);
+    } else if (login && role == "SignIn") {
       return <Navigate to="/" replace />;
     }
-  } else if (!login && role == "SignIn") {
+  } else if (!token && !login && role == "SignIn") {
     return element;
   } else {
-    return <Navigate to="/about" replace />;
+    return <Navigate to="/" replace />;
   }
 };
 

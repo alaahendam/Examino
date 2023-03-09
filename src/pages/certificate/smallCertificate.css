@@ -1,0 +1,61 @@
+.smallCertificate {
+  width: 25%;
+  margin-top: 10px;
+  margin-right: 10px;
+}
+.smallCertificate #print {
+  width: 100%;
+}
+.smallCertificate .cert {
+  border-style: solid;
+  border-width: 5px;
+  border-color: linear-gradient(100deg, #a840d1, #56d1d4);
+  width: 100%;
+  font-family: arial;
+  color: #383737;
+}
+
+.smallCertificate .crt_title {
+  margin-top: 0px;
+  font-family: "Satisfy", cursive;
+  font-size: 17px;
+  letter-spacing: 1px;
+  color: #a840d1;
+}
+.smallCertificate .crt_logo img {
+  width: 90px;
+  margin: auto;
+  padding: 10px;
+}
+.colorGreen {
+  color: #27ae60;
+}
+.smallCertificate .crt_user {
+  display: inline-block;
+  width: 80%;
+  padding: 5px 25px;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+  font-family: "Satisfy", cursive;
+  font-size: 16px;
+  border-bottom: 1px solid #cecece;
+}
+
+.smallCertificate .afterName {
+  font-weight: 100;
+  color: #383737;
+}
+.smallCertificate .colorGrey {
+  color: grey;
+}
+.smallCertificate .certSign {
+  width: 120px;
+}
+.smallCertificate tr {
+  font-size: 10px;
+}
+@media (max-width: 700px) {
+  .smallCertificate {
+    width: 100%;
+  }
+}

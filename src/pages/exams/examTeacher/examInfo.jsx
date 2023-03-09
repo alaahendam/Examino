@@ -87,8 +87,10 @@ const ExamInfo = ({ register, setLevel }) => {
             Select Level{" "}
           </option>
           {levels
-            ? levels.map((level) => (
-                <option value={`${JSON.stringify(level)}`}>{level.name}</option>
+            ? levels.map((level, index) => (
+                <option value={`${JSON.stringify(level)}`} key={index}>
+                  {level.name}
+                </option>
               ))
             : null}
         </select>

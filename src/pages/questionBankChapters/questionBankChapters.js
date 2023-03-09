@@ -16,6 +16,8 @@ import { BiEditAlt } from "react-icons/bi";
 import { MdDeleteOutline } from "react-icons/md";
 import { FcApproval } from "react-icons/fc";
 import HowToRegSharpIcon from "@mui/icons-material/HowToRegSharp";
+import { AiOutlineDelete } from "react-icons/ai";
+import { toast } from "react-toastify";
 
 const QuestionBankChapters = () => {
   const login = useSelector((state) => state.login.login);
@@ -172,6 +174,16 @@ const QuestionBankChapters = () => {
       console.log(error);
     }
   };
+  const handelDeleteStudent = async (student) => {
+    try {
+      console.log(student);
+      const { data } = await API.post("level/deleteStudent", student);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+      toast.error("هناك خطأ قد حدث");
+    }
+  };
   return (
     <div
       style={{
@@ -323,8 +335,21 @@ const QuestionBankChapters = () => {
             display: "flex",
             alignItems: "center",
             flexDirection: "column",
+            padding: "20px",
           }}
         >
+          <button
+            className="btn"
+            style={{
+              width: "20%",
+              border: "none",
+              borderRadius: "6px",
+              background: "red",
+            }}
+            onClick={() => handelDeleteStudent({ levelId: chapters.id })}
+          >
+            Delete All Students
+          </button>
           {students
             ? students.map((student) => (
                 <div className="levelInfo">
@@ -351,6 +376,19 @@ const QuestionBankChapters = () => {
                         onClick={() => handelOwnerApprove(student)}
                       />
                     )}
+                    <AiOutlineDelete
+                      style={{
+                        fontSize: "24px",
+                        color: "red",
+                        cursor: "pointer",
+                      }}
+                      onClick={() =>
+                        handelDeleteStudent({
+                          userId: student.userId,
+                          levelId: student.levelId,
+                        })
+                      }
+                    />
                   </div>
                 </div>
               ))

@@ -30,8 +30,8 @@ const NavBar = () => {
     tabs.push({ value: "/questionBank", label: "Question Bank" });
     tabs.push({ value: "/exams", label: "Exams" });
   } else if (login && login.role == "Student") {
+    tabs.push({ value: "/memberships", label: "Memberships" });
     tabs.push({ value: "/exams", label: "Exams" });
-    tabs.push({ value: "/scores", label: "Scores" });
     tabs.push({ value: "/certificate", label: "Certificate" });
   } else {
     tabs.push({ value: "/signIn", label: "Sign In" });

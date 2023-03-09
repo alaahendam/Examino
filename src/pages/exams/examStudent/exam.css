@@ -1,0 +1,7 @@
+.btn {
+  background: linear-gradient(100deg, #a840d1, #56d1d4);
+  color: white;
+  cursor: pointer;
+  width: 10%;
+  height: 40px;
+}

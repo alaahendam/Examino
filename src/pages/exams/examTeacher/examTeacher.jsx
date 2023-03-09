@@ -19,7 +19,15 @@ const ExamTeacher = () => {
   const [examQuestion, setExamQuestion] = useState(null);
   const [totalPointes, setTotalPointes] = useState(0);
   const [chosenChapters, setChosenChapters] = useState(null);
-
+  const [examsData, setExamsData] = useState(null);
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data } = await API.get(`exam/getAllTeacherExams/${login.id}`);
+      console.log(data);
+      setExamsData(data);
+    };
+    fetchData();
+  }, []);
   const handleNext = async () => {
     const isStepValid = await trigger();
     if (isStepValid) {

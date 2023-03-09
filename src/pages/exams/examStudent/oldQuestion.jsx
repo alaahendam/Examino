@@ -27,12 +27,12 @@ const OldQuestion = ({ questionInfo }) => {
               style={{
                 display: "flex",
                 backgroundColor:
-                  questionInfo.correctAnswer.includes(`${index}`) &&
-                  questionInfo.studentAnswer.includes(`${index}`)
+                  questionInfo.correctAnswer?.includes(`${index}`) &&
+                  questionInfo.studentAnswer?.includes(`${index}`)
                     ? "green"
-                    : questionInfo.studentAnswer.includes(`${index}`)
+                    : questionInfo.studentAnswer?.includes(`${index}`)
                     ? "red"
-                    : questionInfo.correctAnswer.includes(`${index}`)
+                    : questionInfo.correctAnswer?.includes(`${index}`)
                     ? "green"
                     : null,
                 marginBottom: "3px",
