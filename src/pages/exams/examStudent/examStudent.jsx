@@ -192,7 +192,11 @@ const ExamStudent = () => {
         open={openExam ? true : false}
         onClose={() => setOpenExam(false)}
       >
-        <Exam examInfo={examInfo} timerInfo={timerInfo} />
+        <Exam
+          examInfo={examInfo}
+          timerInfo={timerInfo}
+          setOpenExam={setOpenExam}
+        />
       </Dialog>
       <Dialog
         maxWidth={"lg"}

@@ -7,8 +7,9 @@ import Timer from "../../../component/timer/timer";
 import { useForm, useFieldArray } from "react-hook-form";
 import API from "../../../utilities/api";
 import { useSelector, useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
-const Exam = ({ examInfo, timerInfo }) => {
+const Exam = ({ examInfo, timerInfo, setOpenExam }) => {
   const login = useSelector((state) => state.login.login);
   const {
     register,
@@ -17,17 +18,25 @@ const Exam = ({ examInfo, timerInfo }) => {
     control,
   } = useForm();
   const onSubmit = async (values) => {
-    console.log(values);
-    examInfo.questions.map((info) => {
-      info.studentAnswer = values[info.id];
-    });
-    let { data } = await API.put("/studentExam/submitExam", {
-      userId: login.id,
-      examId: examInfo.id,
-      answers: examInfo.questions,
-      points: examInfo.points,
-    });
-    console.log(data);
+    try {
+      console.log(values);
+      examInfo.questions.map((info) => {
+        info.studentAnswer = values[info.id];
+      });
+      let { data } = await API.put("/studentExam/submitExam", {
+        userId: login.id,
+        examId: examInfo.id,
+        answers: examInfo.questions,
+        points: examInfo.points,
+      });
+      if (data) {
+        console.log(data);
+        toast.success("تم اضافة الاجابات بنجاح");
+        setOpenExam(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
   const time = new Date();
   // min = 60 sec

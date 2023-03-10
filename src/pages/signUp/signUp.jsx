@@ -44,12 +44,16 @@ const SignUp = () => {
   ];
   const onSubmit = async (data) => {
     try {
-      delete data.confirmPassword;
-      data.role = userType;
-      let result = await API.post("/user/create", data);
-      window.localStorage.setItem("token", result.data.token);
-      dispatch(addLogin(result.data.data));
-      navigate("/exams");
+      if (userExist.name || userExist.userId || userExist.email) {
+        toast.error("المستخدم موجود بالفعل");
+      } else {
+        delete data.confirmPassword;
+        data.role = userType;
+        let result = await API.post("/user/create", data);
+        window.localStorage.setItem("token", result.data.token);
+        dispatch(addLogin(result.data.data));
+        navigate("/exams");
+      }
     } catch {
       toast.error("المستخدم موجود بالفعل");
     }
@@ -142,9 +146,6 @@ const SignUp = () => {
           color: "white",
           cursor: "pointer",
         }}
-        disabled={
-          userExist.name || userExist.userId || userExist.email ? true : false
-        }
       />
       <p
         style={{

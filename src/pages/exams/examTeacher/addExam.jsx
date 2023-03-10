@@ -83,6 +83,7 @@ const AddExam = ({ setExamsData, examsData, setOpenCreateExam }) => {
       let { data } = await API.post("/exam/create", {
         ...examData,
         level: JSON.parse(examData.level),
+        ownerId: Number(login.id),
       });
       console.log(data);
       if (data) {

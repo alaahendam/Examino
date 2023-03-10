@@ -18,7 +18,7 @@ const ExamTeacher = () => {
     const fetchData = async () => {
       const { data } = await API.get(`exam/getAllTeacherExams/${login.id}`);
       setExamsData(data);
-      console.log(data);
+      console.log("teacherExam", data);
     };
     fetchData();
   }, []);
