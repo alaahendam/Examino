@@ -25,6 +25,7 @@ const Exam = ({ examInfo, timerInfo }) => {
       userId: login.id,
       examId: examInfo.id,
       answers: examInfo.questions,
+      points: examInfo.points,
     });
     console.log(data);
   };
@@ -52,7 +53,7 @@ const Exam = ({ examInfo, timerInfo }) => {
               />
             ))
           : null}
-        <input type="submit" value={"submit"} />
+        <input type="submit" value={"submit"} className="btn" />
       </form>
     </div>
   );

@@ -29,6 +29,7 @@ const QuestionMaker = ({ handelQuestion, editFlag, editData }) => {
   );
 
   const onSubmit = (data) => {
+    console.log(data);
     handelQuestion(data);
     // reset();
     // setQuestionType("radio");
@@ -52,9 +53,9 @@ const QuestionMaker = ({ handelQuestion, editFlag, editData }) => {
           {...register("questionType", { required: true })}
           onChange={(e) => handelQuestionTypeChange(e.target.value)}
         >
-          <option value="radio">radio</option>
-          <option value="checkbox">checkbox</option>
-          <option value="radio">true & false</option>
+          <option value="radio">Choose Correct Answer</option>
+          <option value="checkbox">Choose Multi Correct Answer</option>
+          <option value="radio">True & False</option>
         </select>
         <div>
           <label>pointes</label>
@@ -115,7 +116,7 @@ const QuestionMaker = ({ handelQuestion, editFlag, editData }) => {
                 id={`${index}`}
                 value={index}
                 control={control}
-                {...register(`correctAnswer`)}
+                {...register(`correctAnswer`, { required: true })}
               />
               <input
                 type="text"

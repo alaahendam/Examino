@@ -11,7 +11,7 @@ import SignUp from "./pages/signUp/signUp";
 import About from "./pages/about/about";
 import ContactUs from "./pages/contactUs/contactUs";
 import Exams from "./pages/exams/exams";
-import Scores from "./pages/scores/scores";
+import Memberships from "./pages/memberships/memberships";
 import QuestionBank from "./pages/questionBank/questionBank";
 import QuestionBankChapters from "./pages/questionBankChapters/questionBankChapters";
 import Certificate from "./pages/certificate/certificate";
@@ -35,18 +35,13 @@ function App() {
       API.post("/user/checkToken")
         .then((res) => {
           console.log("this dispatch work");
-          console.log(res);
           dispatch(addLogin(res.data));
         })
         .catch((err) => {
-          console.log(err);
-          window.localStorage.clear();
-          dispatch(addLogin(null));
           navigate("/");
+          window.localStorage.clear();
         });
     } catch (error) {
-      console.log(error);
-      //window.localStorage.clear();
       navigate("/");
     }
   }, []);
@@ -69,7 +64,10 @@ function App() {
 
           <Route path="/contactUs" element={<ContactUs />} />
           <Route path="/exams" element={PrivateRoute(<Exams />, "Both")} />
-          <Route path="/scores" element={PrivateRoute(<Scores />, "Student")} />
+          <Route
+            path="/memberships"
+            element={PrivateRoute(<Memberships />, "Student")}
+          />
           <Route
             path="/questionBank"
             element={PrivateRoute(<QuestionBank />, "Teacher")}

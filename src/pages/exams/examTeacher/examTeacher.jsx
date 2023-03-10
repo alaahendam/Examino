@@ -1,207 +1,134 @@
 import React, { useState, useEffect } from "react";
 import "../exams.css";
 import { useSelector, useDispatch } from "react-redux";
-import HorizontalLinearStepper from "../../../component/stepper/stepper";
-import { useForm, useFieldArray } from "react-hook-form";
-import ExamInfo from "./examInfo";
-import ExamCondition from "./examCondition";
-import ExamPreview from "./examPreview";
-import Box from "@mui/material/Box";
 import { toast } from "react-toastify";
-import success from "../../../images/success.jpg";
 import API from "../../../utilities/api";
+import Dialog from "@mui/material/Dialog";
+import AddExam from "./addExam";
+import examImg from "../../../images/exam.png";
+import StudentsScore from "./studentsScore";
+import { AiOutlineDelete } from "react-icons/ai";
 const ExamTeacher = () => {
   const login = useSelector((state) => state.login.login);
-  console.log("login", login);
-  const [activeStep, setActiveStep] = React.useState(0);
-  const [examData, setExamData] = useState(null);
-  const [level, setLevel] = useState("");
-  const [examQuestion, setExamQuestion] = useState(null);
-  const [totalPointes, setTotalPointes] = useState(0);
-  const [chosenChapters, setChosenChapters] = useState(null);
-
-  const handleNext = async () => {
-    const isStepValid = await trigger();
-    if (isStepValid) {
-      if (activeStep == 1) {
-        if (examQuestion && examQuestion.length) {
-          setActiveStep((prevActiveStep) => prevActiveStep + 1);
-        } else {
-          toast.error("يبدو أنك نسيت إضافة بعض الأسئلة ");
-        }
-      } else {
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
-      }
-    } else {
-      toast.error("يرجي إدخال جميع البيانات ");
-    }
-  };
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-    control,
-    reset,
-    trigger,
-  } = useForm({
-    shouldUnregister: false,
-    mode: "onChange",
-  });
-
-  const steps = ["Exam Information", "Exam Condition", "Exam Preview"];
-
-  const onSubmit = (data) => {
-    setExamData({
-      ...data,
-      chosenChapters: chosenChapters,
-      examQuestion: examQuestion,
-      totalPointes: totalPointes,
-    });
-    handleNext();
-  };
-  const ExamsDetails = [
-    <ExamInfo register={register} setLevel={setLevel} />,
-    <ExamCondition
-      level={level}
-      setExamQuestion={setExamQuestion}
-      setTotalPointes={setTotalPointes}
-      examQuestion={examQuestion}
-      totalPointes={totalPointes}
-      chosenChapters={chosenChapters}
-      setChosenChapters={setChosenChapters}
-    />,
-    <ExamPreview register={register} examData={examData} />,
-  ];
-  console.log("activeStep", activeStep);
-  const handleSaveExam = async () => {
-    console.log({ ...examData, level: JSON.parse(examData.level) });
-    try {
-      let { data } = await API.post("/exam/create", {
-        ...examData,
-        level: JSON.parse(examData.level),
-      });
+  const [openCreateExam, setOpenCreateExam] = useState(false);
+  const [openStudentsScore, setOpenStudentsScore] = useState(false);
+  const [examsData, setExamsData] = useState(null);
+  const [examId, setExamId] = useState(null);
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data } = await API.get(`exam/getAllTeacherExams/${login.id}`);
+      setExamsData(data);
       console.log(data);
+    };
+    fetchData();
+  }, []);
+  const handleStudentsScore = (id) => {
+    setExamId(id);
+    setOpenStudentsScore(true);
+  };
+  const handleDeleteExam = async (id) => {
+    try {
+      const { data } = await API.delete(`/exam/deleteExam/${id}`);
+      console.log(data);
+      const tempArray = examsData.filter((exam) => {
+        return exam.id != id;
+      });
+      setExamsData(tempArray);
     } catch (error) {
       console.log(error);
     }
   };
   return (
-    <form className="examStructure" onSubmit={handleSubmit(onSubmit)}>
-      <div className="examStructureBody">
-        <HorizontalLinearStepper steps={steps} activeStep={activeStep} />
-        {ExamsDetails[activeStep]}
-
-        {activeStep === steps.length ? (
-          <div className="finalExamStep">
-            <img src={success} className="successImg" />
-            <div>
-              <input
-                type="button"
-                value="Delete"
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        paddingTop: "10px",
+        flexDirection: "column",
+        alignItems: "center",
+        flexWrap: "wrap",
+      }}
+    >
+      <button className="btn" onClick={() => setOpenCreateExam(true)}>
+        add Exam
+      </button>
+      <div style={{ display: "flex" }}>
+        {examsData?.map((exam, index) => (
+          <div className="examCard" key={index}>
+            <img
+              src={examImg}
+              alt=""
+              style={{
+                width: "60px",
+                height: "60px",
+              }}
+            />
+            <p>{exam.examName}</p>
+            <p
+              style={{
+                fontSize: "14px",
+                color: "gray",
+              }}
+            >
+              start at: {new Date(exam.start).toLocaleString()}
+            </p>
+            <p
+              style={{
+                fontSize: "14px",
+                color: "gray",
+              }}
+            >
+              end at: {new Date(exam.end).toLocaleString()}
+            </p>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-evenly",
+                width: "100%",
+              }}
+            >
+              <p
                 style={{
-                  backgroundColor: "#ff4e4e",
-                  color: "white",
+                  color: "#A840D1",
                   cursor: "pointer",
-                  width: "100px",
-                  height: "40px",
-                  marginLeft: "5px",
                 }}
-              />
-              <input
-                type="button"
-                value="Edit"
+                onClick={() => handleStudentsScore(exam.id)}
+              >
+                عرض النتائج
+              </p>
+              <AiOutlineDelete
                 style={{
-                  background: "linear-gradient(100deg,#A840D1, #56D1D4)",
-                  color: "white",
+                  fontSize: "24px",
+                  color: "red",
                   cursor: "pointer",
-                  width: "100px",
-                  height: "40px",
-                  marginLeft: "5px",
                 }}
-                onClick={() => setActiveStep(0)}
-              />
-              <input
-                type="button"
-                value="Save"
-                onClick={handleSaveExam}
-                style={{
-                  backgroundColor: "#4abd4a",
-                  color: "white",
-                  cursor: "pointer",
-                  width: "100px",
-                  height: "40px",
-                  marginLeft: "5px",
-                }}
+                onClick={() => handleDeleteExam(exam.id)}
               />
             </div>
           </div>
-        ) : null}
-
-        {activeStep === steps.length ? null : (
-          <React.Fragment>
-            <Box
-              sx={{
-                width: "100%",
-                display: "flex",
-                flexDirection: "row",
-                pt: 2,
-
-                height: "60px",
-                padding: "0px 10px",
-              }}
-            >
-              <input
-                type="button"
-                value="Back"
-                color="inherit"
-                disabled={activeStep === 0}
-                onClick={handleBack}
-                style={{
-                  borderImage:
-                    "linear-gradient(100deg, rgb(168, 64, 209), rgb(86, 209, 212)) 7 / 3 / 0 stretch",
-                  cursor: "pointer",
-                  width: "100px",
-                  height: "40px",
-                  backgroundColor: "white",
-                  color: "black",
-                }}
-              />
-              <Box sx={{ flex: "1 1 auto" }} />
-              {activeStep === steps.length - 2 ? (
-                <input
-                  type="submit"
-                  value="Next Page"
-                  style={{
-                    background: "linear-gradient(100deg,#A840D1, #56D1D4)",
-                    color: "white",
-                    cursor: "pointer",
-                    width: "100px",
-                    height: "40px",
-                  }}
-                />
-              ) : (
-                <input
-                  type="button"
-                  value={activeStep === steps.length - 1 ? "Done" : "Next Page"}
-                  onClick={handleNext}
-                  style={{
-                    background: "linear-gradient(100deg,#A840D1, #56D1D4)",
-                    color: "white",
-                    cursor: "pointer",
-                    width: "100px",
-                    height: "40px",
-                  }}
-                />
-              )}
-            </Box>
-          </React.Fragment>
-        )}
+        ))}
       </div>
-    </form>
+      <Dialog
+        maxWidth={"lg"}
+        fullWidth={true}
+        open={openCreateExam ? true : false}
+        onClose={() => setOpenCreateExam(false)}
+      >
+        <AddExam
+          setExamsData={setExamsData}
+          examsData={examsData}
+          setOpenCreateExam={setOpenCreateExam}
+        />
+      </Dialog>
+      <Dialog
+        maxWidth={"lg"}
+        fullWidth={true}
+        open={openStudentsScore ? true : false}
+        onClose={() => setOpenStudentsScore(false)}
+      >
+        <StudentsScore examId={examId} />
+      </Dialog>
+    </div>
   );
 };
 export default ExamTeacher;

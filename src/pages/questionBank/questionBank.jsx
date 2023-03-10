@@ -88,23 +88,21 @@ const QuestionBank = () => {
         />
       </div>
       <div className="levelsDivs">
-        {levels.length
-          ? levels.map((level, index) => (
-              <div
-                className="levelDiv"
-                // onClick={() =>
-                //   setOpenChapters({
-                //     levelIndex: index,
-                //     openChapterDialog: true,
-                //   })
-                // }
-                onClick={() => navigate(`${level.name}`)}
-                key={index}
-              >
-                {level.name}
-              </div>
-            ))
-          : null}
+        {levels?.map((level, index) => (
+          <div
+            className="levelDiv"
+            // onClick={() =>
+            //   setOpenChapters({
+            //     levelIndex: index,
+            //     openChapterDialog: true,
+            //   })
+            // }
+            onClick={() => navigate(`${level.name}`)}
+            key={index}
+          >
+            {level.name}
+          </div>
+        ))}
       </div>
       <Dialog
         maxWidth={"md"}

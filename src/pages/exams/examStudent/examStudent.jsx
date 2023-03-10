@@ -60,6 +60,7 @@ const ExamStudent = () => {
         examName: exam.examName,
         points: exam.points,
         answers: exam.questions,
+        examEnd: exam.end,
       });
       console.log(data);
       if (

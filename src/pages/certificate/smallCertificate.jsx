@@ -1,11 +1,10 @@
 import React from "react";
-import "./Certificates.css";
+import "./smallCertificate.css";
 import image from "../../images/student.png";
 import image1 from "../../images/forma.png";
 import html2canvas from "html2canvas";
 import { useSelector, useDispatch } from "react-redux";
-
-function Certificates({ examInfo }) {
+const SmallCertificate = ({ examInfo }) => {
   const login = useSelector((state) => state.login.login);
   const handleDownloadImage = async () => {
     const element = document.getElementById("print"),
@@ -21,14 +20,14 @@ function Certificates({ examInfo }) {
     document.body.removeChild(link);
   };
   return (
-    <div>
+    <div className="smallCertificate">
       <div id="print">
         {/* <link href="https://fonts.googleapis.com/css?family=Satisfy" rel="stylesheet"> */}
 
         <table class="cert">
           <tr>
             <td align="center" class="crt_logo">
-              <img style={{ width: "150px" }} src={image} alt="logo" />
+              <img src={image} alt="logo" />
             </td>
           </tr>
           <tr>
@@ -37,7 +36,7 @@ function Certificates({ examInfo }) {
               <h2>This Certificate is awarded to</h2>
               <h1 class="colorGreen crt_user">{login.name}</h1>
               <h3 class="afterName">
-                For his/her completion for high degree from Examino
+                For his/her completion for {examInfo.grade}% degree from Examino
               </h3>
               <h3>Awarded on {examInfo.endAt.split("T")[0]} </h3>
             </td>
@@ -57,5 +56,5 @@ function Certificates({ examInfo }) {
       </button>
     </div>
   );
-}
-export default Certificates;
+};
+export default SmallCertificate;
