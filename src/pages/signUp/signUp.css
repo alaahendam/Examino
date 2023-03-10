@@ -1,25 +1,34 @@
-.signUp{
-    width: 100%;
-    height: 86vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    padding-top: 60px;
+.signUp {
+  width: 100%;
+  height: 86vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 60px;
 }
-.signUp input{
-    margin-bottom: 10px;
-    height: 37px;
-    width: 40%;
-    border:1px solid #E7EBF0;
-    border-radius: 4px;
+.signUp input {
+  margin-bottom: 10px;
+  height: 37px;
+  width: 40%;
+  border: 1px solid #e7ebf0;
+  border-radius: 4px;
 }
-.signUp input:focus{
-    outline-color: #56D1D4;
+.signUp input:focus {
+  outline-color: #56d1d4;
+}
+.signUp .userExist {
+  border: 1px solid red;
+}
+
+.signUp .userExist:focus {
+  outline-color: red;
+}
+.signUp .userNotExist:focus {
+  outline-color: #56d1d4;
 }
 @media only screen and (max-width: 600px) {
-    .signUp input{
-        width: 80%;
-    }
-
+  .signUp input {
+    width: 80%;
   }
+}

@@ -56,6 +56,10 @@ const QuestionMaker = ({ handelQuestion, editFlag, editData }) => {
           <option value="checkbox">checkbox</option>
           <option value="radio">true & false</option>
         </select>
+        <div>
+          <label>pointes</label>
+          <input type="number" {...register(`pointes`, { required: true })} />
+        </div>
         <label htmlFor="uploadImgLabel">
           <BsCardImage
             style={{
@@ -113,7 +117,6 @@ const QuestionMaker = ({ handelQuestion, editFlag, editData }) => {
                 control={control}
                 {...register(`correctAnswer`)}
               />
-
               <input
                 type="text"
                 style={{

@@ -8,22 +8,28 @@ import { db } from "../../firebase/firebase-config";
 import { collection, addDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
-import { addUser } from "../../redux/features/usersSlice";
+import API from "../../utilities/api";
+import { addLogin, deleteLogin } from "../../redux/features/loginSlice";
 const SignUp = () => {
   const usersData = useSelector((state) => state.users.users);
   const dispatch = useDispatch();
   const usersCollectionRef = collection(db, "users");
   const navigate = useNavigate();
   const [userType, setUserType] = useState("Teacher");
+  const [userExist, setUserExist] = useState({
+    name: true,
+    userId: true,
+    email: true,
+  });
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
   const inputField = [
-    { type: "text", placeholder: "user name", name: "userName" },
-    { type: "number", placeholder: "ID", name: "id" },
-    { type: "email", placeholder: "Email Address", name: "emailAddress" },
+    { type: "text", placeholder: "user name", name: "name" },
+    { type: "number", placeholder: "ID", name: "userId" },
+    { type: "email", placeholder: "Email Address", name: "email" },
     { type: "text", placeholder: "Telephone", name: "telephone" },
     { type: "password", placeholder: "Password", name: "password" },
     {
@@ -36,23 +42,40 @@ const SignUp = () => {
     { label: "Teacher", logo: Teacher },
     { label: "Student", logo: Student },
   ];
-  var findLoginFlag = false;
   const onSubmit = async (data) => {
-    delete data.confirmPassword;
-    usersData.map((users) => {
-      if (
-        users.userName == data.userName ||
-        users.id == data.id ||
-        users.emailAddress == data.emailAddress
-      ) {
-        toast.error("الحساب موجود بالفعل");
-        findLoginFlag = true;
+    try {
+      delete data.confirmPassword;
+      data.role = userType;
+      let result = await API.post("/user/create", data);
+      window.localStorage.setItem("token", result.data.token);
+      dispatch(addLogin(result.data.data));
+      navigate("/exams");
+    } catch {
+      toast.error("المستخدم موجود بالفعل");
+    }
+  };
+  const handelCheckUser = async (value, name) => {
+    let tempData = {};
+    if (!value) {
+      tempData[name] = true;
+      setUserExist({ ...userExist, ...tempData });
+    } else {
+      try {
+        if (name == "userId") {
+          tempData[name] = Number(value);
+        } else {
+          tempData[name] = value;
+        }
+        let { data } = await API.post("/user/checkUser", tempData);
+        console.log("value", value);
+        if (data) {
+          tempData[name] = true;
+          setUserExist({ ...userExist, ...tempData });
+        }
+      } catch (error) {
+        tempData[name] = false;
+        setUserExist({ ...userExist, ...tempData });
       }
-    });
-    if (!findLoginFlag) {
-      await addDoc(usersCollectionRef, { ...data, role: userType });
-      dispatch(addUser({ ...data, role: userType }));
-      toast("تم تسجيل البيانات بنجاح");
     }
   };
   return (
@@ -80,7 +103,7 @@ const SignUp = () => {
             onClick={() => setUserType(type.label)}
             key={index}
           >
-            <img src={type.logo} alt="" srcset="" />
+            <img src={type.logo} alt="" />
             <p
               style={{
                 fontSize: "12px",
@@ -102,7 +125,13 @@ const SignUp = () => {
           style={{
             paddingLeft: "10px",
           }}
+          className={userExist[inputData.name] ? "userExist" : "userNotExist"}
           key={index}
+          onChange={(e) =>
+            index < 3
+              ? handelCheckUser(e.target.value, inputData.name)
+              : console.log("ok")
+          }
         />
       ))}
       <input
@@ -113,6 +142,9 @@ const SignUp = () => {
           color: "white",
           cursor: "pointer",
         }}
+        disabled={
+          userExist.name || userExist.userId || userExist.email ? true : false
+        }
       />
       <p
         style={{

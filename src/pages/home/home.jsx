@@ -18,7 +18,7 @@ const Home = () => {
             justifyContent: "center",
           }}
         >
-          <img src={home} alt="" srcset="" />
+          <img src={home} alt="" />
           <div className="getStartedInfo">
             <p
               style={{

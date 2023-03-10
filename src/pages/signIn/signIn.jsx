@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import "./signIn.css";
 import { useForm } from "react-hook-form";
 import loginIcon from "../../images/Login-amico.png";
-import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { addLogin, deleteLogin } from "../../redux/features/loginSlice";
+import API from "../../utilities/api";
+import { toast } from "react-toastify";
+
 const SignIn = () => {
   const {
     register,
@@ -18,25 +20,22 @@ const SignIn = () => {
   const usersData = useSelector((state) => state.users.users);
   const dispatch = useDispatch();
   var findLoginFlag = false;
-  const onSubmit = (data) => {
-    usersData.map((users) => {
-      if (users.userName == data.userName && users.password == data.password) {
-        dispatch(addLogin(users));
-        toast("يمكنك الدخول");
-        window.localStorage.setItem("login", JSON.stringify(users));
-        navigate("/exams");
-        findLoginFlag = true;
-      }
-    });
-    if (!findLoginFlag) {
-      toast.error("المستخدم غير موجود");
+  const onSubmit = async (values) => {
+    try {
+      let { data } = await API.post("/user/login", values);
+      console.log(data);
+      window.localStorage.setItem("token", data.token);
+      dispatch(addLogin(data.data));
+      navigate("/exams");
+    } catch {
+      toast.error("خطأ في اسم المستخدم أو كلمة المرور!");
     }
   };
 
   return (
     <div className="signIn">
       <div className="signInInfo">
-        <img src={loginIcon} alt="" srcset="" />
+        <img src={loginIcon} alt="" />
         <p className="welcome">Welcome Back To Examino !</p>
         <p
           style={{
@@ -58,7 +57,7 @@ const SignIn = () => {
           <input
             type="text"
             placeholder="User Name"
-            {...register("userName", { required: true })}
+            {...register("name", { required: true })}
             style={{
               paddingLeft: "10px",
             }}
