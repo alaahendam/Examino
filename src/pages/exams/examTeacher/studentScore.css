@@ -1,0 +1,13 @@
+.studentsScore {
+  height: 100vh;
+  padding: 20px;
+}
+.studentsScoreCard {
+  padding: 10px;
+  background: linear-gradient(100deg, #a840d1, #56d1d4);
+  color: white;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+}

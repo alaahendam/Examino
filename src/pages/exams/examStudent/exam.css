@@ -4,4 +4,6 @@
   cursor: pointer;
   width: 10%;
   height: 40px;
+  border: none;
+  border-radius: 6px;
 }
