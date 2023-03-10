@@ -30,7 +30,7 @@ const QuestionMaker = ({ handelQuestion, editFlag, editData }) => {
 
   const onSubmit = (data) => {
     console.log(data);
-    // handelQuestion(data);
+    handelQuestion(data);
     // reset();
     // setQuestionType("radio");
     remove();
