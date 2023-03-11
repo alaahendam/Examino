@@ -18,13 +18,16 @@ import { FcApproval } from "react-icons/fc";
 import HowToRegSharpIcon from "@mui/icons-material/HowToRegSharp";
 import { AiOutlineDelete } from "react-icons/ai";
 import { toast } from "react-toastify";
-
+import CircularProgress from '@mui/material/CircularProgress';
+import { Box } from "@mui/material";
 const QuestionBankChapters = () => {
   const login = useSelector((state) => state.login.login);
   let { levelName } = useParams();
   const [chapters, setChapters] = useState(null);
   const [chapterName, setChapterName] = useState("");
   const [chapterQuestions, setChapterQuestions] = useState(null);
+  
+  const [loading , setLoading] = useState (false); 
 
   const [openChapterQuestion, setOpenChapterQuestion] = useState(null);
   const [editQuestion, setEditQuestion] = useState(false);
@@ -34,11 +37,13 @@ const QuestionBankChapters = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true)
         let { data } = await API.post("/level/levelInfo", {
           ownerId: login.id,
           levelName: levelName,
         });
         setChapters(data[0]);
+        setLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -141,9 +146,11 @@ const QuestionBankChapters = () => {
           id = level.id;
         }
       });
+      setLoading(true);
       let { data } = await API.get(`/level/getLevelStudents/${id}`);
       console.log(data);
       setStudents(data);
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -212,7 +219,9 @@ const QuestionBankChapters = () => {
           onClick={() => setOpenStudents(true)}
         />
       </form>
-      {chapters && chapters.chapters
+      {loading ? <Box sx={{ display: 'flex' }}>
+                       <CircularProgress />
+                    </Box> : chapters && chapters.chapters
         ? chapters.chapters.map((chapter, index) => (
             <List
               sx={{
@@ -310,6 +319,7 @@ const QuestionBankChapters = () => {
             </List>
           ))
         : null}
+      
 
       <Dialog
         maxWidth={"md"}
@@ -350,7 +360,9 @@ const QuestionBankChapters = () => {
           >
             Delete All Students
           </button>
-          {students
+          {loading ?  <Box sx={{ display: 'flex' }}>
+                       <CircularProgress />
+                    </Box> : students
             ? students.map((student) => (
                 <div className="levelInfo">
                   <div className="levelDetails">
@@ -392,7 +404,8 @@ const QuestionBankChapters = () => {
                   </div>
                 </div>
               ))
-            : null}
+            : null} 
+        
         </div>
       </Dialog>
     </div>
