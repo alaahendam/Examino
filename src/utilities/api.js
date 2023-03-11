@@ -1,6 +1,7 @@
 import axios from "axios";
 // https://examino-backend.onrender.com/
 // "http://localhost:7070"
+// "http://localhost:7070"
 const request = axios.create({
   baseURL: "https://examino-backend.onrender.com/",
   headers: {
