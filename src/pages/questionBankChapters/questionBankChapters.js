@@ -37,11 +37,13 @@ const QuestionBankChapters = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true)
         let { data } = await API.post("/level/levelInfo", {
           ownerId: login.id,
           levelName: levelName,
         });
         setChapters(data[0]);
+        setLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -217,7 +219,9 @@ const QuestionBankChapters = () => {
           onClick={() => setOpenStudents(true)}
         />
       </form>
-      {chapters && chapters.chapters
+      {loading ? <Box sx={{ display: 'flex' }}>
+                       <CircularProgress />
+                    </Box> : chapters && chapters.chapters
         ? chapters.chapters.map((chapter, index) => (
             <List
               sx={{
@@ -315,6 +319,7 @@ const QuestionBankChapters = () => {
             </List>
           ))
         : null}
+      
 
       <Dialog
         maxWidth={"md"}
