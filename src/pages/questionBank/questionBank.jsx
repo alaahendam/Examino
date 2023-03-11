@@ -1,21 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./questionBank.css";
-import QuestionMaker from "../../component/questionMaker/questionMaker";
 import Dialog from "@mui/material/Dialog";
-import NavBar from "../../component/navBar/navBar";
-import List from "@mui/material/List";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
-import Collapse from "@mui/material/Collapse";
-import levelImg from "../../images/level3.jpg";
-import ExpandLess from "@mui/icons-material/ExpandLess";
-import ExpandMore from "@mui/icons-material/ExpandMore";
-import { BiEditAlt } from "react-icons/bi";
-import { MdDeleteOutline } from "react-icons/md";
 import API from "../../utilities/api";
 import { useForm } from "react-hook-form";
 import { useSelector, useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
 const QuestionBank = () => {
   const {
@@ -72,6 +62,7 @@ const QuestionBank = () => {
       setNewLevel(false);
     } catch (error) {
       console.log(error);
+      toast.error("كود المستوي موجود بالفعل");
     }
   };
 

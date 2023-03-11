@@ -18,7 +18,7 @@ import { FcApproval } from "react-icons/fc";
 import HowToRegSharpIcon from "@mui/icons-material/HowToRegSharp";
 import { AiOutlineDelete } from "react-icons/ai";
 import { toast } from "react-toastify";
-import CircularProgress from '@mui/material/CircularProgress';
+import CircularProgress from "@mui/material/CircularProgress";
 import { Box } from "@mui/material";
 const QuestionBankChapters = () => {
   const login = useSelector((state) => state.login.login);
@@ -26,8 +26,8 @@ const QuestionBankChapters = () => {
   const [chapters, setChapters] = useState(null);
   const [chapterName, setChapterName] = useState("");
   const [chapterQuestions, setChapterQuestions] = useState(null);
-  
-  const [loading , setLoading] = useState (false); 
+
+  const [loading, setLoading] = useState(false);
 
   const [openChapterQuestion, setOpenChapterQuestion] = useState(null);
   const [editQuestion, setEditQuestion] = useState(false);
@@ -37,7 +37,7 @@ const QuestionBankChapters = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setLoading(true)
+        setLoading(true);
         let { data } = await API.post("/level/levelInfo", {
           ownerId: login.id,
           levelName: levelName,
@@ -84,8 +84,11 @@ const QuestionBankChapters = () => {
         levelId: chapters.id,
       });
       console.log(data);
+      setChapters({ ...chapters, chapters: [...chapters?.chapters, data] });
+      toast.success("تم الإضافة بنجاح");
     } catch (error) {
       console.log(error);
+      toast.error("حدث خطأ ما يرجي اعادة المحاولة ");
     }
   };
 
@@ -107,6 +110,16 @@ const QuestionBankChapters = () => {
         details: questions,
       });
       console.log(data);
+      toast.success("تم إضافة سؤال بنجاح");
+      setChapterQuestions([
+        ...chapterQuestions,
+        {
+          ...data.details,
+          difficulty: data.difficulty,
+          questionType: data.type,
+          id: data.id,
+        },
+      ]);
     } catch (error) {
       console.log(error);
     }
@@ -125,7 +138,22 @@ const QuestionBankChapters = () => {
         type: questions.questionType,
         details: questions,
       });
-      console.log(data);
+      let tempEditData = {
+        ...data.details,
+        difficulty: data.difficulty,
+        questionType: data.type,
+        id: data.id,
+      };
+      let tempEditArray = [];
+      chapterQuestions.map((item, index) => {
+        if (item.id == tempEditData.id) {
+          tempEditArray.push(tempEditData);
+        } else {
+          tempEditArray.push(item);
+        }
+      });
+      setChapterQuestions(tempEditArray);
+      toast.success("تم التعديل بنجاح");
     } catch (error) {
       console.log(error);
     }
@@ -134,6 +162,11 @@ const QuestionBankChapters = () => {
     try {
       let { data } = await API.delete(`/question/deleteQuestion/${id}`);
       console.log(data);
+      let tempDeleteArray = chapterQuestions.filter((item) => {
+        return item.id != id;
+      });
+      setChapterQuestions(tempDeleteArray);
+      toast.success("تم حذف السؤال بنجاح");
     } catch (error) {
       console.log(error);
     }
@@ -191,6 +224,7 @@ const QuestionBankChapters = () => {
       toast.error("هناك خطأ قد حدث");
     }
   };
+  console.log("chapterQuestions", chapterQuestions);
   return (
     <div
       style={{
@@ -219,107 +253,108 @@ const QuestionBankChapters = () => {
           onClick={() => setOpenStudents(true)}
         />
       </form>
-      {loading ? <Box sx={{ display: 'flex' }}>
-                       <CircularProgress />
-                    </Box> : chapters && chapters.chapters
-        ? chapters.chapters.map((chapter, index) => (
-            <List
-              sx={{
-                width: "100%",
+      {loading ? (
+        <Box sx={{ display: "flex" }}>
+          <CircularProgress />
+        </Box>
+      ) : chapters && chapters.chapters ? (
+        chapters?.chapters?.map((chapter, index) => (
+          <List
+            sx={{
+              width: "100%",
 
-                bgcolor: "background.paper",
-              }}
-              component="nav"
-              key={index}
+              bgcolor: "background.paper",
+            }}
+            component="nav"
+            key={index}
+          >
+            <ListItemButton onClick={() => handleClick(chapter.id)}>
+              <ListItemText primary={`${chapter.name}`} />
+              {openChapterQuestion === chapter.id ? (
+                <ExpandLess />
+              ) : (
+                <ExpandMore />
+              )}
+            </ListItemButton>
+            <Collapse
+              in={openChapterQuestion === chapter.id}
+              timeout="auto"
+              unmountOnExit
             >
-              <ListItemButton onClick={() => handleClick(chapter.id)}>
-                <ListItemText primary={`${chapter.name}`} />
-                {openChapterQuestion === chapter.id ? (
-                  <ExpandLess />
-                ) : (
-                  <ExpandMore />
-                )}
-              </ListItemButton>
-              <Collapse
-                in={openChapterQuestion === chapter.id}
-                timeout="auto"
-                unmountOnExit
-              >
-                <QuestionMaker handelQuestion={handelQuestion} />
-                {chapterQuestions
-                  ? chapterQuestions.map((question, index) => (
-                      <div className="QuestionReview" key={index}>
+              <QuestionMaker handelQuestion={handelQuestion} />
+              {chapterQuestions
+                ? chapterQuestions?.map((question, index) => (
+                    <div className="QuestionReview" key={index}>
+                      <div
+                        style={{
+                          display: "flex",
+                          flexWrap: "wrap",
+                          justifyContent: "space-between",
+                        }}
+                      >
                         <div
                           style={{
                             display: "flex",
-                            flexWrap: "wrap",
-                            justifyContent: "space-between",
                           }}
                         >
-                          <div
-                            style={{
-                              display: "flex",
-                            }}
-                          >
-                            <p>{`Q${index + 1} )`}</p>
-                            <p>{question.question}</p>
-                          </div>
-                          <p>{`( ${question.difficulty} )`}</p>
-                          <p>{`pointes : ( ${question.pointes} )`}</p>
-                          <div>
-                            <BiEditAlt
-                              style={{
-                                fontSize: "30px",
-                                color: "#A840D1",
-                                cursor: "pointer",
-                              }}
-                              onClick={() => handelEditData(question)}
-                            />
-                            <MdDeleteOutline
-                              style={{
-                                marginLeft: "10px",
-                                fontSize: "30px",
-                                color: "#A840D1",
-                                cursor: "pointer",
-                              }}
-                              onClick={() => handelDeleteQuestion(question.id)}
-                            />
-                          </div>
+                          <p>{`Q${index + 1} )`}</p>
+                          <p>{question.question}</p>
                         </div>
-                        <form
-                          style={{
-                            display: "flex",
-                            flexWrap: "wrap",
-                            justifyContent: "space-between",
-                          }}
-                        >
-                          {question.numberOfAnswer.map((answer, index) => (
-                            <div style={{ display: "flex" }} key={index}>
-                              <input
-                                type={question.questionType}
-                                name="questionReview"
-                                defaultChecked={
-                                  question.correctAnswer
-                                    ? question.correctAnswer.includes(
-                                        String(index)
-                                      )
-                                      ? true
-                                      : false
-                                    : null
-                                }
-                              />
-                              <label>{answer.answerLabel}</label>
-                            </div>
-                          ))}
-                        </form>
+                        <p>{`( ${question.difficulty} )`}</p>
+                        <p>{`pointes : ( ${question.pointes} )`}</p>
+                        <div>
+                          <BiEditAlt
+                            style={{
+                              fontSize: "30px",
+                              color: "#A840D1",
+                              cursor: "pointer",
+                            }}
+                            onClick={() => handelEditData(question)}
+                          />
+                          <MdDeleteOutline
+                            style={{
+                              marginLeft: "10px",
+                              fontSize: "30px",
+                              color: "#A840D1",
+                              cursor: "pointer",
+                            }}
+                            onClick={() => handelDeleteQuestion(question.id)}
+                          />
+                        </div>
                       </div>
-                    ))
-                  : null}
-              </Collapse>
-            </List>
-          ))
-        : null}
-      
+                      <form
+                        style={{
+                          display: "flex",
+                          flexWrap: "wrap",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        {question?.numberOfAnswer.map((answer, index) => (
+                          <div style={{ display: "flex" }} key={index}>
+                            <input
+                              type={question.questionType}
+                              name="questionReview"
+                              defaultChecked={
+                                question.correctAnswer
+                                  ? question.correctAnswer.includes(
+                                      String(index)
+                                    )
+                                    ? true
+                                    : false
+                                  : null
+                              }
+                            />
+                            <label>{answer.answerLabel}</label>
+                          </div>
+                        ))}
+                      </form>
+                    </div>
+                  ))
+                : null}
+            </Collapse>
+          </List>
+        ))
+      ) : null}
 
       <Dialog
         maxWidth={"md"}
@@ -360,52 +395,53 @@ const QuestionBankChapters = () => {
           >
             Delete All Students
           </button>
-          {loading ?  <Box sx={{ display: 'flex' }}>
-                       <CircularProgress />
-                    </Box> : students
-            ? students.map((student) => (
-                <div className="levelInfo">
-                  <div className="levelDetails">
-                    <p>Name: {student.user.name}</p>
-                    <p>Email : {student.user.email}</p>
-                    <p>Job: {student.user.role}</p>
-                  </div>
-                  <div className="studentApproved">
-                    {student.ownerApproved ? (
-                      <FcApproval
-                        style={{
-                          fontSize: "25px",
-                          color: "#9e17d3",
-                        }}
-                      />
-                    ) : (
-                      <HowToRegSharpIcon
-                        style={{
-                          fontSize: "30px",
-                          color: "#9e17d3",
-                          cursor: "pointer",
-                        }}
-                        onClick={() => handelOwnerApprove(student)}
-                      />
-                    )}
-                    <AiOutlineDelete
+          {loading ? (
+            <Box sx={{ display: "flex" }}>
+              <CircularProgress />
+            </Box>
+          ) : students ? (
+            students.map((student) => (
+              <div className="levelInfo">
+                <div className="levelDetails">
+                  <p>Name: {student.user.name}</p>
+                  <p>Email : {student.user.email}</p>
+                  <p>Job: {student.user.role}</p>
+                </div>
+                <div className="studentApproved">
+                  {student.ownerApproved ? (
+                    <FcApproval
                       style={{
-                        fontSize: "24px",
-                        color: "red",
+                        fontSize: "25px",
+                        color: "#9e17d3",
+                      }}
+                    />
+                  ) : (
+                    <HowToRegSharpIcon
+                      style={{
+                        fontSize: "30px",
+                        color: "#9e17d3",
                         cursor: "pointer",
                       }}
-                      onClick={() =>
-                        handelDeleteStudent({
-                          userId: student.userId,
-                          levelId: student.levelId,
-                        })
-                      }
+                      onClick={() => handelOwnerApprove(student)}
                     />
-                  </div>
+                  )}
+                  <AiOutlineDelete
+                    style={{
+                      fontSize: "24px",
+                      color: "red",
+                      cursor: "pointer",
+                    }}
+                    onClick={() =>
+                      handelDeleteStudent({
+                        userId: student.userId,
+                        levelId: student.levelId,
+                      })
+                    }
+                  />
                 </div>
-              ))
-            : null} 
-        
+              </div>
+            ))
+          ) : null}
         </div>
       </Dialog>
     </div>

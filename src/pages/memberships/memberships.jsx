@@ -5,15 +5,15 @@ import { useSelector, useDispatch } from "react-redux";
 import { RiUserFollowFill } from "react-icons/ri";
 import { FcApproval } from "react-icons/fc";
 import waitingList from "../../images/waitingList.png";
-import CircularProgress from '@mui/material/CircularProgress';
-import Box from '@mui/material/Box';
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
 const Memberships = () => {
   const [searchInput, setSearchInput] = useState("");
   const [level, setLevel] = useState(null);
   const [approvalData, setApprovalData] = useState(null);
   const [studentMemberships, setStudentMemberships] = useState(null);
 
-  const [loading,setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const login = useSelector((state) => state.login.login);
   const getData = async (e) => {
@@ -57,7 +57,6 @@ const Memberships = () => {
   }, [level]);
   useEffect(() => {
     try {
-      
       const levelOnUser = async () => {
         setLoading(true);
         const { data } = await API.get(`/level/studentMemberships/${login.id}`);
@@ -66,7 +65,6 @@ const Memberships = () => {
         setLoading(false);
       };
       levelOnUser();
-     
     } catch (error) {
       console.log(error);
     }
@@ -114,41 +112,43 @@ const Memberships = () => {
           </div>
         </div>
       ) : null}
-        {loading ?    <Box sx={{ display: 'flex' }}>
-                       <CircularProgress />
-                    </Box> :  <div className="studentMemberships">
-        {studentMemberships?.map((membership, index) => (
-          <div
-            className="levelInfo"
-            style={{
-              width: "100%",
-              background:
-                "linear-gradient(70deg, rgb(219 167 239), rgb(113 233 236))",
-              color: "white",
-            }}
-          >
-            <div className="levelDetails">
-              <p>level Name: {membership.level.name}</p>
-              <p>Teacher Name : {membership.level.owner.name}</p>
-              <p>Email: {membership.level.owner.email}</p>
+      {loading ? (
+        <Box sx={{ display: "flex" }}>
+          <CircularProgress />
+        </Box>
+      ) : (
+        <div className="studentMemberships">
+          {studentMemberships?.map((membership, index) => (
+            <div
+              className="levelInfo"
+              style={{
+                width: "100%",
+                background:
+                  "linear-gradient(70deg, rgb(219 167 239), rgb(113 233 236))",
+                color: "white",
+              }}
+            >
+              <div className="levelDetails">
+                <p>level Name: {membership.level.name}</p>
+                <p>Teacher Name : {membership.level.owner.name}</p>
+                <p>Email: {membership.level.owner.email}</p>
+              </div>
+              <div className="studentApproved">
+                {membership.ownerApproved ? (
+                  <FcApproval
+                    style={{
+                      fontSize: "25px",
+                      color: "#9e17d3",
+                    }}
+                  />
+                ) : (
+                  <img src={waitingList} alt="" srcset="" />
+                )}
+              </div>
             </div>
-            <div className="studentApproved">
-              {membership.ownerApproved ? (
-                <FcApproval
-                  style={{
-                    fontSize: "25px",
-                    color: "#9e17d3",
-                  }}
-                />
-              ) : (
-                <img src={waitingList} alt="" srcset="" />
-              )}
-            </div>
-          </div>
-        ))}
-      </div>
-       }
-     
+          ))}
+        </div>
+      )}
     </div>
   );
 };
