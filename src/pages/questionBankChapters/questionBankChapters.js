@@ -20,6 +20,7 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { toast } from "react-toastify";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Box } from "@mui/material";
+import Swal from 'sweetalert2'
 const QuestionBankChapters = () => {
   const login = useSelector((state) => state.login.login);
   let { levelName } = useParams();
@@ -78,6 +79,13 @@ const QuestionBankChapters = () => {
   }, [openChapterQuestion]);
   const addChapter = async (e) => {
     e.preventDefault();
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'The chapter has been added successfully',
+      showConfirmButton: false,
+      timer: 1500
+    })
     try {
       let { data } = await API.post("/chapter/create", {
         name: chapterName,
@@ -85,7 +93,7 @@ const QuestionBankChapters = () => {
       });
       console.log(data);
       setChapters({ ...chapters, chapters: [...chapters?.chapters, data] });
-      toast.success("تم الإضافة بنجاح");
+      // toast.success("تم الإضافة بنجاح");
     } catch (error) {
       console.log(error);
       toast.error("حدث خطأ ما يرجي اعادة المحاولة ");
@@ -240,23 +248,30 @@ const QuestionBankChapters = () => {
         onSubmit={addChapter}
       >
         <input
+        style={{marginLeft:"0.5rem"}}
           required
           type="text"
           placeholder="Pleace Set Chapter Name"
           onChange={(e) => setChapterName(e.target.value)}
         />
-        <input type={"submit"} value="Add A New Chapter" className="btn" />
+        <input type={"submit"} value="Add A New Chapter" className="btn"
+         style={{marginLeft:"0.5rem"}} />
+         <div style={{textAlign:"center",margin:"auto"}}>
         <input
           type="button"
           value="Students"
           className="btn"
           onClick={() => setOpenStudents(true)}
         />
+        </div>
       </form>
       {loading ? (
-        <Box sx={{ display: "flex" }}>
+        <>
+        <br/><br/>
+        <Box style={{textAlign:"center",margin:"auto"}}>
           <CircularProgress />
         </Box>
+        </>
       ) : chapters && chapters.chapters ? (
         chapters?.chapters?.map((chapter, index) => (
           <List
