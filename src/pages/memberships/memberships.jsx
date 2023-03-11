@@ -5,11 +5,16 @@ import { useSelector, useDispatch } from "react-redux";
 import { RiUserFollowFill } from "react-icons/ri";
 import { FcApproval } from "react-icons/fc";
 import waitingList from "../../images/waitingList.png";
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 const Memberships = () => {
   const [searchInput, setSearchInput] = useState("");
   const [level, setLevel] = useState(null);
   const [approvalData, setApprovalData] = useState(null);
   const [studentMemberships, setStudentMemberships] = useState(null);
+
+  const [loading,setLoading] = useState(false);
+
   const login = useSelector((state) => state.login.login);
   const getData = async (e) => {
     try {
@@ -52,12 +57,16 @@ const Memberships = () => {
   }, [level]);
   useEffect(() => {
     try {
+      
       const levelOnUser = async () => {
+        setLoading(true);
         const { data } = await API.get(`/level/studentMemberships/${login.id}`);
         console.log(data);
         setStudentMemberships(data);
+        setLoading(false);
       };
       levelOnUser();
+     
     } catch (error) {
       console.log(error);
     }
@@ -105,7 +114,9 @@ const Memberships = () => {
           </div>
         </div>
       ) : null}
-      <div className="studentMemberships">
+        {loading ?    <Box sx={{ display: 'flex' }}>
+                       <CircularProgress />
+                    </Box> :  <div className="studentMemberships">
         {studentMemberships?.map((membership, index) => (
           <div
             className="levelInfo"
@@ -136,6 +147,8 @@ const Memberships = () => {
           </div>
         ))}
       </div>
+       }
+     
     </div>
   );
 };
