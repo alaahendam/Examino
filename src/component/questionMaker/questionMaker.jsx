@@ -75,6 +75,7 @@ const QuestionMaker = ({ handelQuestion, editFlag, editData }) => {
               fontSize: "20px",
               cursor: "pointer",
             }}
+            onClick={() => toast.info("إضافة صورة للسؤال غير متاحة حاليا")}
           />
         </label>
         <input

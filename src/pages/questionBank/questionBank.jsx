@@ -62,7 +62,7 @@ const QuestionBank = () => {
       Swal.fire({
         position: "center",
         icon: "success",
-        title: "Your Chapter Added",
+        title: "Your Level Added",
         showConfirmButton: false,
         timer: 1500,
       });

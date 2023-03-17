@@ -38,6 +38,7 @@ function App() {
           dispatch(addLogin(res.data));
         })
         .catch((err) => {
+          dispatch(addLogin(null));
           window.localStorage.clear();
         });
     } catch (error) {

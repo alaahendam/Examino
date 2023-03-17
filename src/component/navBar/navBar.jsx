@@ -26,10 +26,14 @@ const NavBar = () => {
     { value: "/contactUs", label: "Contact Us" },
     ,
   ];
-  if (login && login.role == "Teacher") {
+  if (localStorage.getItem("token") && login && login.role == "Teacher") {
     tabs.push({ value: "/questionBank", label: "Question Bank" });
     tabs.push({ value: "/exams", label: "Exams" });
-  } else if (login && login.role == "Student") {
+  } else if (
+    localStorage.getItem("token") &&
+    login &&
+    login.role == "Student"
+  ) {
     tabs.push({ value: "/memberships", label: "Memberships" });
     tabs.push({ value: "/exams", label: "Exams" });
     tabs.push({ value: "/certificate", label: "Certificate" });

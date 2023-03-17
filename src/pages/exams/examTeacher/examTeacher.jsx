@@ -60,7 +60,9 @@ const ExamTeacher = () => {
       }}
     >
       <MainButton text="add Exam" onClick={() => setOpenCreateExam(true)} />
-      <div style={{ display: "flex", flexWrap: "wrap" }}>
+      <div
+        style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
+      >
         {examsData?.map((exam, index) => (
           <div className="examCard" key={index}>
             <img
