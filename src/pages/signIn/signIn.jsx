@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { addLogin, deleteLogin } from "../../redux/features/loginSlice";
 import API from "../../utilities/api";
 import { toast } from "react-toastify";
-
+import Swal from 'sweetalert2'
 const SignIn = () => {
   const {
     register,
@@ -21,7 +21,33 @@ const SignIn = () => {
   const dispatch = useDispatch();
   var findLoginFlag = false;
   const onSubmit = async (values) => {
+ 
     try {
+      let timerInterval
+      Swal.fire({
+        customClass: {
+          popup: 'colored-toast'
+        },
+        // html: 'I will close in <b></b> milliseconds.',
+        timer: 2000,
+        timerProgressBar: true,
+        background:"#EDEADE",
+        didOpen: () => {
+          Swal.showLoading()
+          const b = Swal.getHtmlContainer().querySelector('b')
+          timerInterval = setInterval(() => {
+            b.textContent = Swal.getTimerLeft()
+          }, 100)
+        },
+        willClose: () => {
+          clearInterval(timerInterval)
+        }
+      }).then((result) => {
+        /* Read more about handling dismissals below */
+        if (result.dismiss === Swal.DismissReason.timer) {
+          console.log('I was closed by the timer')
+        }
+      })
       let { data } = await API.post("/user/login", values);
       console.log(data);
       window.localStorage.setItem("token", data.token);
