@@ -2,13 +2,16 @@ import React, { useState, useEffect } from "react";
 import "./examStructure.css";
 import { useSelector, useDispatch } from "react-redux";
 import API from "../../../utilities/api";
-
+import { toast } from "react-toastify";
 const ExamInfo = ({ register, setLevel }) => {
   const login = useSelector((state) => state.login.login);
   const [levels, setLevels] = useState(null);
   const [chapters, setChapters] = useState(null);
   useEffect(() => {
     setLevels(login.ownedLevels);
+    if (!login.ownedLevels.length) {
+      toast.error("يجب اضافة بنك أسئلة اولا اضف بعض المستويات وأعد المحاولة");
+    }
   }, []);
 
   return (

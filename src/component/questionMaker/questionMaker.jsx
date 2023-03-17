@@ -4,6 +4,7 @@ import { useForm, useFieldArray } from "react-hook-form";
 import { BsCardImage } from "react-icons/bs";
 import { AiOutlineClose } from "react-icons/ai";
 import MainButton from "../button/button";
+import { toast } from "react-toastify";
 const QuestionMaker = ({ handelQuestion, editFlag, editData }) => {
   const [questionType, setQuestionType] = useState(
     editFlag ? editData.questionType : "radio"
@@ -30,7 +31,13 @@ const QuestionMaker = ({ handelQuestion, editFlag, editData }) => {
 
   const onSubmit = (data) => {
     console.log(data);
-    handelQuestion(data);
+    if (!data.numberOfAnswer.length) {
+      console.log("no answer");
+      toast.error("يجب أن تضيف بعض الإجابات اولا");
+    } else {
+      handelQuestion(data);
+    }
+    //
     // reset();
     // setQuestionType("radio");
     remove();

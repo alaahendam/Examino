@@ -9,6 +9,7 @@ import API from "../../../utilities/api";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import MainButton from "../../../component/button/button";
+import NavBar from "../../../component/navBar/navBar";
 const Exam = ({ examInfo, timerInfo, setOpenExam }) => {
   const login = useSelector((state) => state.login.login);
   const {
@@ -43,27 +44,30 @@ const Exam = ({ examInfo, timerInfo, setOpenExam }) => {
   time.setSeconds(time.getSeconds() + timerInfo * 60);
 
   return (
-    <div className="Bbody">
-      <div style={{ textAlign: "right" }}>
-        <DarkMode />
+    <div style={{ height: "100vh" }}>
+      <NavBar />
+      <div className="Bbody" style={{ marginTop: "30px" }}>
+        <div style={{ textAlign: "right" }}>
+          <DarkMode />
+        </div>
+        <div>
+          <Timer expiryTimestamp={time} />
+        </div>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <h3>{examInfo.examName}</h3>
+          {examInfo
+            ? examInfo.questions.map((info, index) => (
+                <Question
+                  {...info}
+                  register={register}
+                  control={control}
+                  key={index}
+                />
+              ))
+            : null}
+          <MainButton type="submit" text={"submit"} />
+        </form>
       </div>
-      <div>
-        <Timer expiryTimestamp={time} />
-      </div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <h3>{examInfo.examName}</h3>
-        {examInfo
-          ? examInfo.questions.map((info, index) => (
-              <Question
-                {...info}
-                register={register}
-                control={control}
-                key={index}
-              />
-            ))
-          : null}
-        <MainButton type="submit" text={"submit"} />
-      </form>
     </div>
   );
 };
