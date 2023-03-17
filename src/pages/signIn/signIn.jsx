@@ -33,6 +33,7 @@ const SignIn = () => {
       dispatch(addLogin(data.data));
       navigate("/exams");
     } catch {
+      setLoading(false);
       toast.error("خطأ في اسم المستخدم أو كلمة المرور!");
     }
   };
