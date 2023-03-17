@@ -105,6 +105,7 @@ const SignIn = () => {
             forgot password ?
           </p>
           <input
+          class="btn"
             type="submit"
             value="Sign In"
             style={{

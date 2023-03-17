@@ -7,6 +7,12 @@
   flex-direction: column;
   padding-top: 60px;
 }
+.btn:hover{
+  transform: scale(1.1);
+}
+.btn{
+  transition: all 1.3s;
+}
 .signUp input {
   margin-bottom: 10px;
   height: 37px;
