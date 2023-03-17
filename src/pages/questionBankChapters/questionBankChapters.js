@@ -411,9 +411,12 @@ const QuestionBankChapters = () => {
             Delete All Students
           </button>
           {loading ? (
+            <>
+            <br/><br/>
             <Box sx={{ display: "flex" }}>
               <CircularProgress />
             </Box>
+            </>
           ) : students ? (
             students.map((student) => (
               <div className="levelInfo">

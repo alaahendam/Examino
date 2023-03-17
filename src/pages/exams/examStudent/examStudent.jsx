@@ -7,7 +7,8 @@ import { useSelector, useDispatch } from "react-redux";
 import Exam from "./exam";
 import OldExam from "./oldExam";
 import { toast } from "react-toastify";
-
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
 const ExamStudent = () => {
   const login = useSelector((state) => state.login.login);
   const [activeTab, setActiveTab] = useState("activeExam");
@@ -19,6 +20,8 @@ const ExamStudent = () => {
   const [openOldExam, setOpenOldExam] = useState(false);
   const [examInfo, setExamInfo] = useState(null);
   const [timerInfo, setTimerInfo] = useState(null);
+   
+  const [loading, setLoading] = useState(false);
 
   const ExamTabs = [
     { label: "Old Exam", value: "oldExam" },
@@ -28,10 +31,13 @@ const ExamStudent = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      
       try {
+        setLoading(true);
         let { data } = await API.post("/exam/studentExams", {
           id: login.id,
         });
+        setLoading(false);
         console.log(data);
         setFutureExam(data.futureExam);
         setActiveExam(data.activeExam);
@@ -114,77 +120,85 @@ const ExamStudent = () => {
           ))}
         </div>
       </div>
-      <div className="examTabInfo">
-        {activeArrayExam
-          ? activeArrayExam.map((exam, index) => (
-              <div className="examCard" key={index}>
-                <img
-                  src={examImg}
-                  alt=""
-                  style={{
-                    width: "60px",
-                    height: "60px",
-                  }}
-                />
-                <p>{exam.examName}</p>
-                {activeTab === "futureExam" ? (
-                  <p
+      {loading ? <>
+        <br /> <br />
+        <Box sx={{ display: "flex" }}>
+          <CircularProgress />
+        </Box>
+        </> : 
+          <div className="examTabInfo">
+          {activeArrayExam
+            ? activeArrayExam.map((exam, index) => (
+                <div className="examCard" key={index}>
+                  <img
+                    src={examImg}
+                    alt=""
                     style={{
-                      fontSize: "14px",
-                      color: "gray",
+                      width: "60px",
+                      height: "60px",
                     }}
-                  >
-                    start at: {new Date(exam.start).toLocaleString()}
-                  </p>
-                ) : activeTab === "activeExam" ? (
-                  <p
-                    style={{
-                      fontSize: "14px",
-                      color: "gray",
-                    }}
-                  >
-                    end at: {new Date(exam.end).toLocaleString()}
-                  </p>
-                ) : (
-                  <div>
+                  />
+                  <p>{exam.examName}</p>
+                  {activeTab === "futureExam" ? (
                     <p
                       style={{
                         fontSize: "14px",
                         color: "gray",
                       }}
                     >
-                      start Exam at: {new Date(exam.startAt).toLocaleString()}
+                      start at: {new Date(exam.start).toLocaleString()}
                     </p>
+                  ) : activeTab === "activeExam" ? (
                     <p
                       style={{
                         fontSize: "14px",
                         color: "gray",
                       }}
                     >
-                      submit at: {new Date(exam.endAt).toLocaleString()}
+                      end at: {new Date(exam.end).toLocaleString()}
                     </p>
-                  </div>
-                )}
-
-                {activeTab === "oldExam" ? (
-                  <p
-                    className="exambtnInfo"
-                    onClick={() => handelOpenOldExam(exam)}
-                  >
-                    View Result
-                  </p>
-                ) : activeTab === "activeExam" ? (
-                  <p
-                    className="exambtnInfo"
-                    onClick={() => handelOpenExam(exam)}
-                  >
-                    Start Exam
-                  </p>
-                ) : null}
-              </div>
-            ))
-          : null}
-      </div>
+                  ) : (
+                    <div>
+                      <p
+                        style={{
+                          fontSize: "14px",
+                          color: "gray",
+                        }}
+                      >
+                        start Exam at: {new Date(exam.startAt).toLocaleString()}
+                      </p>
+                      <p
+                        style={{
+                          fontSize: "14px",
+                          color: "gray",
+                        }}
+                      >
+                        submit at: {new Date(exam.endAt).toLocaleString()}
+                      </p>
+                    </div>
+                  )}
+  
+                  {activeTab === "oldExam" ? (
+                    <p
+                      className="exambtnInfo"
+                      onClick={() => handelOpenOldExam(exam)}
+                    >
+                      View Result
+                    </p>
+                  ) : activeTab === "activeExam" ? (
+                    <p
+                      className="exambtnInfo"
+                      onClick={() => handelOpenExam(exam)}
+                    >
+                      Start Exam
+                    </p>
+                  ) : null}
+                </div>
+              ))
+            : null}
+        </div>
+        }
+    
       <Dialog
         maxWidth={"lg"}
         fullWidth={true}
