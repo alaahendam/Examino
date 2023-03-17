@@ -20,7 +20,6 @@ const Exam = ({ examInfo, timerInfo, setOpenExam }) => {
   } = useForm();
   const onSubmit = async (values) => {
     try {
-      console.log(values);
       examInfo.questions.map((info) => {
         info.studentAnswer = values[info.id];
       });
@@ -31,7 +30,6 @@ const Exam = ({ examInfo, timerInfo, setOpenExam }) => {
         points: examInfo.points,
       });
       if (data) {
-        console.log(data);
         toast.success("تم اضافة الاجابات بنجاح");
         setOpenExam(false);
       }

@@ -20,7 +20,7 @@ const ExamStudent = () => {
   const [openOldExam, setOpenOldExam] = useState(false);
   const [examInfo, setExamInfo] = useState(null);
   const [timerInfo, setTimerInfo] = useState(null);
-   
+
   const [loading, setLoading] = useState(false);
 
   const ExamTabs = [
@@ -31,14 +31,12 @@ const ExamStudent = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      
       try {
         setLoading(true);
         let { data } = await API.post("/exam/studentExams", {
           id: login.id,
         });
         setLoading(false);
-        console.log(data);
         setFutureExam(data.futureExam);
         setActiveExam(data.activeExam);
         setOldExam(data.oldExam);
@@ -68,7 +66,6 @@ const ExamStudent = () => {
         answers: exam.questions,
         examEnd: exam.end,
       });
-      console.log(data);
       if (
         Math.abs(new Date().getTime() - new Date(data.startAt).getTime()) /
           (1000 * 60) >=
@@ -120,13 +117,15 @@ const ExamStudent = () => {
           ))}
         </div>
       </div>
-      {loading ? <>
-        <br /> <br />
-        <Box sx={{ display: "flex" }}>
-          <CircularProgress />
-        </Box>
-        </> : 
-          <div className="examTabInfo">
+      {loading ? (
+        <>
+          <br /> <br />
+          <Box sx={{ display: "flex" }}>
+            <CircularProgress />
+          </Box>
+        </>
+      ) : (
+        <div className="examTabInfo">
           {activeArrayExam
             ? activeArrayExam.map((exam, index) => (
                 <div className="examCard" key={index}>
@@ -177,7 +176,7 @@ const ExamStudent = () => {
                       </p>
                     </div>
                   )}
-  
+
                   {activeTab === "oldExam" ? (
                     <p
                       className="exambtnInfo"
@@ -197,8 +196,8 @@ const ExamStudent = () => {
               ))
             : null}
         </div>
-        }
-    
+      )}
+
       <Dialog
         maxWidth={"lg"}
         fullWidth={true}

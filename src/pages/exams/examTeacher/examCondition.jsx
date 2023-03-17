@@ -61,7 +61,6 @@ const ExamCondition = ({
 
   const handelChaptersCheckbox = (data, e) => {
     e.preventDefault();
-    console.log(data.chaptersCheckbox);
     setChosenChapters(data.chaptersCheckbox);
   };
   const handleClick = (chapter) => {
@@ -74,11 +73,9 @@ const ExamCondition = ({
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log("ok this work");
         let { data } = await API.post("/question/getChapterQuestions", {
           chapterId: openChapterQuestion,
         });
-        console.log(data);
         let tempArray = [];
         data.map((question) => {
           tempArray.push({
@@ -120,10 +117,6 @@ const ExamCondition = ({
       setTotalPointes(totalPointes + Number(question.pointes));
     }
   };
-  useEffect(() => {
-    console.log("hello exam question", examQuestion);
-  }, [examQuestion]);
-
   return (
     <div className="ExamInfo ExamStructureInfo">
       <div>

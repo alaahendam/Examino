@@ -71,7 +71,6 @@ const SignUp = () => {
           tempData[name] = value;
         }
         let { data } = await API.post("/user/checkUser", tempData);
-        console.log("value", value);
         if (data) {
           tempData[name] = true;
           setUserExist({ ...userExist, ...tempData });
@@ -132,14 +131,12 @@ const SignUp = () => {
           className={userExist[inputData.name] ? "userExist" : "userNotExist"}
           key={index}
           onChange={(e) =>
-            index < 3
-              ? handelCheckUser(e.target.value, inputData.name)
-              : console.log("ok")
+            index < 3 ? handelCheckUser(e.target.value, inputData.name) : null
           }
         />
       ))}
       <input
-      className="btn"
+        className="btn"
         type="submit"
         value="Sign Up"
         style={{

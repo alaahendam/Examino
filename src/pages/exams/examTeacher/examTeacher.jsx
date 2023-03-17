@@ -28,7 +28,6 @@ const ExamTeacher = () => {
       const { data } = await API.get(`exam/getAllTeacherExams/${login.id}`);
       setExamsData(data);
       setLoading(false);
-      console.log("teacherExam", data);
     };
     fetchData();
   }, []);
@@ -39,7 +38,6 @@ const ExamTeacher = () => {
   const handleDeleteExam = async (id) => {
     try {
       const { data } = await API.delete(`/exam/deleteExam/${id}`);
-      console.log(data);
       const tempArray = examsData.filter((exam) => {
         return exam.id != id;
       });
@@ -80,7 +78,7 @@ const ExamTeacher = () => {
                 color: "gray",
               }}
             >
-              start at: {new Date(exam.start).toLocaleString("ar-EG")}
+              start at: {new Date(exam.start).toLocaleString()}
               {/* start at: {dateParser(exam.start)} */}
             </p>
             <p
@@ -89,7 +87,7 @@ const ExamTeacher = () => {
                 color: "gray",
               }}
             >
-              end at: {new Date(exam.end).toLocaleString("ar-EG")}
+              end at: {new Date(exam.end).toLocaleString()}
             </p>
             <div
               style={{
