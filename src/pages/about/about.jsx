@@ -24,9 +24,9 @@ const About = () => {
           <br/>
           <div className="whyPargraph" style={{textAlign:"left"}}>
              <ol>
-                <li>Details Summary behave a lot like the only just the basics. Could you layer on functionality, like a group of details elements in which only one can be open at once?</li>
-                <li>Can you progressively enhance Details  Summary to add custom styling and animation?</li>
-                <li>These elements You could have a look at the polyfills out there and perhaps build your own if you'd like to have a go at it.</li>
+             <li>Multiple choices, multiple answers, Fill in the blanks, True & False, Essay, Match the Matrix, Match the following, and much more</li>
+                <li>The software automatically picks random questions for different users to avoid cheating and duplication of questions.</li>
+                <li>Our software is 110% fully customizable. You can give us the changes and your requirements anytime with free software demo.</li>
             </ol>
           </div>
         </div>
