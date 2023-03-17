@@ -59,7 +59,6 @@ const QuestionBankChapters = () => {
         let { data } = await API.post("/question/getChapterQuestions", {
           chapterId: openChapterQuestion,
         });
-        console.log(data);
         let tempArray = [];
         data.map((question) => {
           tempArray.push({
@@ -69,7 +68,6 @@ const QuestionBankChapters = () => {
             id: question.id,
           });
         });
-        console.log("tempArray", tempArray);
         setChapterQuestions(tempArray);
       } catch (error) {
         console.log(error);
@@ -86,7 +84,6 @@ const QuestionBankChapters = () => {
         name: chapterName,
         levelId: chapters.id,
       });
-      console.log(data);
       setOpenAddChapter(false);
       setChapters({ ...chapters, chapters: [...chapters?.chapters, data] });
       Swal.fire({
@@ -112,7 +109,6 @@ const QuestionBankChapters = () => {
   };
 
   const handelQuestion = async (questions) => {
-    console.log(questions);
     try {
       let { data } = await API.post("/question/create", {
         chapterId: openChapterQuestion,
@@ -120,7 +116,7 @@ const QuestionBankChapters = () => {
         type: questions.questionType,
         details: questions,
       });
-      console.log(data);
+
       toast.success("تم إضافة سؤال بنجاح");
       setChapterQuestions([
         ...chapterQuestions,
@@ -131,17 +127,13 @@ const QuestionBankChapters = () => {
           id: data.id,
         },
       ]);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
   const handelEditData = (data) => {
     setEditQuestion(!editQuestion);
     setEditData(data);
-    console.log("data", data);
   };
   const handelEditOldQuestion = async (questions) => {
-    console.log(questions);
     try {
       let { data } = await API.put("/question/edit", {
         id: editData.id,
@@ -172,7 +164,6 @@ const QuestionBankChapters = () => {
   const handelDeleteQuestion = async (id) => {
     try {
       let { data } = await API.delete(`/question/deleteQuestion/${id}`);
-      console.log(data);
       let tempDeleteArray = chapterQuestions.filter((item) => {
         return item.id != id;
       });
@@ -192,7 +183,7 @@ const QuestionBankChapters = () => {
       });
       setLoading(true);
       let { data } = await API.get(`/level/getLevelStudents/${id}`);
-      console.log(data);
+
       setStudents(data);
       setLoading(false);
     } catch (error) {
@@ -210,7 +201,6 @@ const QuestionBankChapters = () => {
         userId: levelOnStudent.userId,
         levelId: levelOnStudent.levelId,
       });
-      console.log(data);
       fetchStudentData();
       // let tempArray = [];
       // students.map((student) => {
@@ -227,15 +217,12 @@ const QuestionBankChapters = () => {
   };
   const handelDeleteStudent = async (student) => {
     try {
-      console.log(student);
       const { data } = await API.post("level/deleteStudent", student);
-      console.log(data);
     } catch (error) {
       console.log(error);
       toast.error("هناك خطأ قد حدث");
     }
   };
-  console.log("chapterQuestions", chapterQuestions);
   return (
     <div
       style={{

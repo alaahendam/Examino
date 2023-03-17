@@ -13,7 +13,6 @@ const Certificate = () => {
         `/studentExam/studentCertificates/${login.id}`
       );
       setCertificatesData(data);
-      console.log(data);
     };
     fetchData();
   }, []);

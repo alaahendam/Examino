@@ -28,7 +28,6 @@ const ExamTeacher = () => {
       const { data } = await API.get(`exam/getAllTeacherExams/${login.id}`);
       setExamsData(data);
       setLoading(false);
-      console.log("teacherExam", data);
     };
     fetchData();
   }, []);
@@ -39,7 +38,6 @@ const ExamTeacher = () => {
   const handleDeleteExam = async (id) => {
     try {
       const { data } = await API.delete(`/exam/deleteExam/${id}`);
-      console.log(data);
       const tempArray = examsData.filter((exam) => {
         return exam.id != id;
       });

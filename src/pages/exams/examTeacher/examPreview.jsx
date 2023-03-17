@@ -1,7 +1,6 @@
 import React from "react";
 import { dateParser, parseToDateTime } from "../../../utilities/date";
 const ExamPreview = ({ examData }) => {
-  console.log("examData", examData);
   return (
     <div className="examPreview">
       <div className="ExamInfo ExamStructureInfo examPrevie2">

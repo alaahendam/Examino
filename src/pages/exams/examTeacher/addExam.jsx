@@ -14,7 +14,6 @@ import { parseToDateTime } from "../../../utilities/date";
 import MainButton from "../../../component/button/button";
 const AddExam = ({ setExamsData, examsData, setOpenCreateExam }) => {
   const login = useSelector((state) => state.login.login);
-  console.log("login", login);
   const [activeStep, setActiveStep] = React.useState(0);
   const [examData, setExamData] = useState(null);
   const [level, setLevel] = useState("");
@@ -78,9 +77,7 @@ const AddExam = ({ setExamsData, examsData, setOpenCreateExam }) => {
     />,
     <ExamPreview register={register} examData={examData} />,
   ];
-  console.log("activeStep", activeStep);
   const handleSaveExam = async () => {
-    console.log({ ...examData, level: JSON.parse(examData.level) });
     try {
       let { data } = await API.post("/exam/create", {
         ...examData,
@@ -89,7 +86,6 @@ const AddExam = ({ setExamsData, examsData, setOpenCreateExam }) => {
         level: JSON.parse(examData.level),
         ownerId: Number(login.id),
       });
-      console.log(data);
       if (data) {
         setExamsData([...examsData, data]);
         setOpenCreateExam(false);

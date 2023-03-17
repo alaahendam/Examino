@@ -34,7 +34,6 @@ function App() {
     try {
       API.post("/user/checkToken")
         .then((res) => {
-          console.log("this dispatch work");
           dispatch(addLogin(res.data));
         })
         .catch((err) => {
@@ -42,7 +41,7 @@ function App() {
           window.localStorage.clear();
         });
     } catch (error) {
-      console.log("final catch");
+      console.log(error);
       navigate("/");
     }
   }, []);

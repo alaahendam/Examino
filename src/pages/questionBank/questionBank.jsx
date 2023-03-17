@@ -27,31 +27,8 @@ const QuestionBank = () => {
   const [questionEditIndex, setQuestionEditIndex] = useState(null);
 
   useEffect(() => {
-    // const fetchData = async () => {
-    //   try {
-    //     let { data } = await API.post("/level/getOwnerLevels", {
-    //       id: login.id,
-    //     });
-    //     console.log(data);
-    //     setLevels(data);
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // };
-    // fetchData();
     setLevels(login.ownedLevels);
   }, []);
-  console.log(login);
-  // useEffect(() => {
-  //   if (
-  //     levels[openChapters.levelIndex] &&
-  //     levels[openChapters.levelIndex].chapters[openChapterQuestion]
-  //   ) {
-  //     setChapterInfo(
-  //       levels[openChapters.levelIndex].chapters[openChapterQuestion].question
-  //     );
-  //   }
-  // }, [chapterInfo]);
 
   const handelAddNewLevel = async (values) => {
     try {
@@ -66,7 +43,6 @@ const QuestionBank = () => {
         showConfirmButton: false,
         timer: 1500,
       });
-      console.log(data);
       setLevels([...levels, values]);
       setNewLevel(false);
     } catch (error) {
@@ -76,7 +52,7 @@ const QuestionBank = () => {
   };
 
   // Dont Forget Veno Partner .....
-  // console.log(levels);
+
   return (
     <div className="QuestionBank">
       <div>
@@ -86,12 +62,6 @@ const QuestionBank = () => {
         {levels?.map((level, index) => (
           <div
             className="levelDiv"
-            // onClick={() =>
-            //   setOpenChapters({
-            //     levelIndex: index,
-            //     openChapterDialog: true,
-            //   })
-            // }
             onClick={() => navigate(`${level.name}`)}
             key={index}
           >

@@ -30,9 +30,7 @@ const QuestionMaker = ({ handelQuestion, editFlag, editData }) => {
   );
 
   const onSubmit = (data) => {
-    console.log(data);
     if (!data.numberOfAnswer.length) {
-      console.log("no answer");
       toast.error("يجب أن تضيف بعض الإجابات اولا");
     } else {
       handelQuestion(data);
@@ -41,7 +39,6 @@ const QuestionMaker = ({ handelQuestion, editFlag, editData }) => {
     // reset();
     // setQuestionType("radio");
     remove();
-    console.log(data);
     remove();
     resetField("correctAnswer");
   };

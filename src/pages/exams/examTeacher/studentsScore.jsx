@@ -8,7 +8,6 @@ const StudentsScore = ({ examId }) => {
       const { data } = await API.get(
         `studentExam/StudentsExamResult/${examId}`
       );
-      console.log(data);
       setExamData(data);
     };
     fetchData();

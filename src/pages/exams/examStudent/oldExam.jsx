@@ -6,7 +6,6 @@ import NavBar from "../../../component/navBar/navBar";
 import "./exam.css";
 
 const OldExam = ({ examInfo }) => {
-  console.log("exam  info", examInfo);
   return (
     <div style={{ height: "100vh" }}>
       <NavBar />

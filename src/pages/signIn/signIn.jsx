@@ -49,7 +49,6 @@ const SignIn = () => {
         }
       });
       let { data } = await API.post("/user/login", values);
-      console.log(data);
       window.localStorage.setItem("token", data.token);
       dispatch(addLogin(data.data));
       navigate("/exams");

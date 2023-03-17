@@ -60,7 +60,6 @@ const Memberships = () => {
       const levelOnUser = async () => {
         setLoading(true);
         const { data } = await API.get(`/level/studentMemberships/${login.id}`);
-        console.log(data);
         setStudentMemberships(data);
         setLoading(false);
       };
@@ -114,10 +113,10 @@ const Memberships = () => {
       ) : null}
       {loading ? (
         <>
-        <br /> <br />
-        <Box sx={{ display: "flex" }}>
-          <CircularProgress />
-        </Box>
+          <br /> <br />
+          <Box sx={{ display: "flex" }}>
+            <CircularProgress />
+          </Box>
         </>
       ) : (
         <div className="studentMemberships">
