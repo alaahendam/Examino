@@ -82,7 +82,7 @@ const QuestionBankChapters = () => {
     Swal.fire({
       position: 'center',
       icon: 'success',
-      title: 'The chapter has been added successfully',
+      title: 'Your Chapter Added',
       showConfirmButton: false,
       timer: 1500
     })
