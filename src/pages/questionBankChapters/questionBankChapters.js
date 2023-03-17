@@ -20,7 +20,8 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { toast } from "react-toastify";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Box } from "@mui/material";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
+import MainButton from "../../component/button/button";
 const QuestionBankChapters = () => {
   const login = useSelector((state) => state.login.login);
   let { levelName } = useParams();
@@ -80,12 +81,12 @@ const QuestionBankChapters = () => {
   const addChapter = async (e) => {
     e.preventDefault();
     Swal.fire({
-      position: 'center',
-      icon: 'success',
-      title: 'The chapter has been added successfully',
+      position: "center",
+      icon: "success",
+      title: "The chapter has been added successfully",
       showConfirmButton: false,
-      timer: 1500
-    })
+      timer: 1500,
+    });
     try {
       let { data } = await API.post("/chapter/create", {
         name: chapterName,
@@ -248,29 +249,29 @@ const QuestionBankChapters = () => {
         onSubmit={addChapter}
       >
         <input
-        style={{marginLeft:"0.5rem"}}
+          style={{ marginLeft: "0.5rem" }}
           required
           type="text"
           placeholder="Pleace Set Chapter Name"
           onChange={(e) => setChapterName(e.target.value)}
         />
-        <input type={"submit"} value="Add A New Chapter" className="btn"
-         style={{marginLeft:"0.5rem"}} />
-         <div style={{textAlign:"center",margin:"auto"}}>
-        <input
-          type="button"
-          value="Students"
+        <MainButton
+          type={"submit"}
+          text="Add A New Chapter"
           className="btn"
-          onClick={() => setOpenStudents(true)}
+          style={{ marginLeft: "0.5rem" }}
         />
+        <div style={{ textAlign: "center", margin: "auto" }}>
+          <MainButton text="Students" onClick={() => setOpenStudents(true)} />
         </div>
       </form>
       {loading ? (
         <>
-        <br/><br/>
-        <Box style={{textAlign:"center",margin:"auto"}}>
-          <CircularProgress />
-        </Box>
+          <br />
+          <br />
+          <Box style={{ textAlign: "center", margin: "auto" }}>
+            <CircularProgress />
+          </Box>
         </>
       ) : chapters && chapters.chapters ? (
         chapters?.chapters?.map((chapter, index) => (

@@ -98,8 +98,8 @@ const ExamPreview = ({ examData }) => {
           ))}
         </div>
         <div>
-          {examData.examQuestion
-            ? examData.examQuestion.map((question, index) => {
+          {examData?.examQuestion
+            ? examData?.examQuestion?.map((question, index) => {
                 return (
                   <div
                     className="QuestionReview"

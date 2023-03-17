@@ -1,0 +1,6 @@
+.mainBtn {
+  color: white;
+  background: linear-gradient(100deg, #a840d1, #56d1d4);
+  cursor: pointer;
+  padding: 13px;
+}

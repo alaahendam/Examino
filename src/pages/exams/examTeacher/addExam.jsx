@@ -10,6 +10,8 @@ import Box from "@mui/material/Box";
 import { toast } from "react-toastify";
 import success from "../../../images/success.jpg";
 import API from "../../../utilities/api";
+import { parseToDateTime } from "../../../utilities/date";
+import MainButton from "../../../component/button/button";
 const AddExam = ({ setExamsData, examsData, setOpenCreateExam }) => {
   const login = useSelector((state) => state.login.login);
   console.log("login", login);
@@ -82,6 +84,8 @@ const AddExam = ({ setExamsData, examsData, setOpenCreateExam }) => {
     try {
       let { data } = await API.post("/exam/create", {
         ...examData,
+        startDate: new Date(examData.startDate),
+        endDate: new Date(examData.endDate),
         level: JSON.parse(examData.level),
         ownerId: Number(login.id),
       });
@@ -104,42 +108,18 @@ const AddExam = ({ setExamsData, examsData, setOpenCreateExam }) => {
           <div className="finalExamStep">
             <img src={success} className="successImg" />
             <div>
-              <input
-                type="button"
-                value="Delete"
+              <MainButton
+                text="Delete"
                 style={{
-                  backgroundColor: "#ff4e4e",
-                  color: "white",
-                  cursor: "pointer",
-                  width: "100px",
-                  height: "40px",
-                  marginLeft: "5px",
+                  background: "#ff4e4e",
                 }}
               />
-              <input
-                type="button"
-                value="Edit"
-                style={{
-                  background: "linear-gradient(100deg,#A840D1, #56D1D4)",
-                  color: "white",
-                  cursor: "pointer",
-                  width: "100px",
-                  height: "40px",
-                  marginLeft: "5px",
-                }}
-                onClick={() => setActiveStep(0)}
-              />
-              <input
-                type="button"
-                value="Save"
+              <MainButton text="Edit" onClick={() => setActiveStep(0)} />
+              <MainButton
+                text="Save"
                 onClick={handleSaveExam}
                 style={{
-                  backgroundColor: "#4abd4a",
-                  color: "white",
-                  cursor: "pointer",
-                  width: "100px",
-                  height: "40px",
-                  marginLeft: "5px",
+                  background: "#4abd4a",
                 }}
               />
             </div>
@@ -159,47 +139,26 @@ const AddExam = ({ setExamsData, examsData, setOpenCreateExam }) => {
                 padding: "0px 10px",
               }}
             >
-              <input
-                type="button"
-                value="Back"
-                color="inherit"
+              <MainButton
+                text="Back"
                 disabled={activeStep === 0}
                 onClick={handleBack}
                 style={{
                   borderImage:
                     "linear-gradient(100deg, rgb(168, 64, 209), rgb(86, 209, 212)) 7 / 3 / 0 stretch",
-                  cursor: "pointer",
-                  width: "100px",
-                  height: "40px",
-                  backgroundColor: "white",
+                  background: "white",
                   color: "black",
+                  width: "30%",
                 }}
               />
               <Box sx={{ flex: "1 1 auto" }} />
               {activeStep === steps.length - 2 ? (
-                <input
-                  type="submit"
-                  value="Next Page"
-                  style={{
-                    background: "linear-gradient(100deg,#A840D1, #56D1D4)",
-                    color: "white",
-                    cursor: "pointer",
-                    width: "100px",
-                    height: "40px",
-                  }}
-                />
+                <MainButton type="submit" text="Next Page" />
               ) : (
-                <input
-                  type="button"
-                  value={activeStep === steps.length - 1 ? "Done" : "Next Page"}
+                <MainButton
+                  text={activeStep === steps.length - 1 ? "Done" : "Next Page"}
                   onClick={handleNext}
-                  style={{
-                    background: "linear-gradient(100deg,#A840D1, #56D1D4)",
-                    color: "white",
-                    cursor: "pointer",
-                    width: "100px",
-                    height: "40px",
-                  }}
+                  style={{ width: "30%" }}
                 />
               )}
             </Box>

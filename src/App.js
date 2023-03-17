@@ -38,10 +38,10 @@ function App() {
           dispatch(addLogin(res.data));
         })
         .catch((err) => {
-          navigate("/");
           window.localStorage.clear();
         });
     } catch (error) {
+      console.log("final catch");
       navigate("/");
     }
   }, []);

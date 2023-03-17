@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { addLogin, deleteLogin } from "../../redux/features/loginSlice";
 import API from "../../utilities/api";
 import { toast } from "react-toastify";
-
+import MainButton from "../../component/button/button";
 const SignIn = () => {
   const {
     register,
@@ -78,13 +78,12 @@ const SignIn = () => {
           >
             forgot password ?
           </p>
-          <input
+          <MainButton
             type="submit"
-            value="Sign In"
+            text="Login"
             style={{
-              background: "linear-gradient(100deg,#A840D1, #56D1D4)",
-              color: "white",
-              cursor: "pointer",
+              margin: "0px",
+              height: "45px",
             }}
           />
           <p

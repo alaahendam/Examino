@@ -8,7 +8,7 @@ import { useForm, useFieldArray } from "react-hook-form";
 import API from "../../../utilities/api";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-
+import MainButton from "../../../component/button/button";
 const Exam = ({ examInfo, timerInfo, setOpenExam }) => {
   const login = useSelector((state) => state.login.login);
   const {
@@ -62,7 +62,7 @@ const Exam = ({ examInfo, timerInfo, setOpenExam }) => {
               />
             ))
           : null}
-        <input type="submit" value={"submit"} className="btn" />
+        <MainButton type="submit" text={"submit"} />
       </form>
     </div>
   );

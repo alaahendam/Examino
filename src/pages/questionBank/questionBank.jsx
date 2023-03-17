@@ -6,7 +6,7 @@ import API from "../../utilities/api";
 import { useForm } from "react-hook-form";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-
+import MainButton from "../../component/button/button";
 const QuestionBank = () => {
   const {
     register,
@@ -24,6 +24,7 @@ const QuestionBank = () => {
   const [editQuestion, setEditQuestion] = useState(false);
   const [editData, setEditData] = useState(null);
   const [questionEditIndex, setQuestionEditIndex] = useState(null);
+
   useEffect(() => {
     // const fetchData = async () => {
     //   try {
@@ -71,12 +72,7 @@ const QuestionBank = () => {
   return (
     <div className="QuestionBank">
       <div>
-        <input
-          type={"button"}
-          value="Add A New Level"
-          className="btn"
-          onClick={() => setNewLevel(true)}
-        />
+        <MainButton text="Add A New Level" onClick={() => setNewLevel(true)} />
       </div>
       <div className="levelsDivs">
         {levels?.map((level, index) => (
@@ -119,7 +115,7 @@ const QuestionBank = () => {
             placeholder="Pleace Set Special Code For This Level"
             {...register("specialCode", { required: true })}
           />
-          <input type={"submit"} value="Add Level" className="btn" />
+          <MainButton type={"submit"} text="Add Level" />
         </form>
       </Dialog>
       {/* <Dialog

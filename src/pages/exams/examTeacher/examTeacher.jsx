@@ -8,16 +8,26 @@ import AddExam from "./addExam";
 import examImg from "../../../images/exam.png";
 import StudentsScore from "./studentsScore";
 import { AiOutlineDelete } from "react-icons/ai";
+import CircularProgress from "@mui/material/CircularProgress";
+import { Box } from "@mui/material";
+import {
+  toIsoString,
+  parseToDateTime,
+  dateParser,
+} from "../../../utilities/date";
+import MainButton from "../../../component/button/button";
 const ExamTeacher = () => {
   const login = useSelector((state) => state.login.login);
   const [openCreateExam, setOpenCreateExam] = useState(false);
   const [openStudentsScore, setOpenStudentsScore] = useState(false);
   const [examsData, setExamsData] = useState(null);
   const [examId, setExamId] = useState(null);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
       const { data } = await API.get(`exam/getAllTeacherExams/${login.id}`);
       setExamsData(data);
+      setLoading(false);
       console.log("teacherExam", data);
     };
     fetchData();
@@ -49,10 +59,8 @@ const ExamTeacher = () => {
         flexWrap: "wrap",
       }}
     >
-      <button className="btn" onClick={() => setOpenCreateExam(true)}>
-        add Exam
-      </button>
-      <div style={{ display: "flex" }}>
+      <MainButton text="add Exam" onClick={() => setOpenCreateExam(true)} />
+      <div style={{ display: "flex", flexWrap: "wrap" }}>
         {examsData?.map((exam, index) => (
           <div className="examCard" key={index}>
             <img
@@ -70,7 +78,8 @@ const ExamTeacher = () => {
                 color: "gray",
               }}
             >
-              start at: {new Date(exam.start).toLocaleString()}
+              start at: {new Date(exam.start).toLocaleString("ar-EG")}
+              {/* start at: {dateParser(exam.start)} */}
             </p>
             <p
               style={{
@@ -78,7 +87,7 @@ const ExamTeacher = () => {
                 color: "gray",
               }}
             >
-              end at: {new Date(exam.end).toLocaleString()}
+              end at: {new Date(exam.end).toLocaleString("ar-EG")}
             </p>
             <div
               style={{
