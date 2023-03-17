@@ -1,6 +1,7 @@
 import React from "react";
 import { dateParser, parseToDateTime } from "../../../utilities/date";
 const ExamPreview = ({ examData }) => {
+  console.log("examDate", typeof examData.chosenChapters);
   return (
     <div className="examPreview">
       <div className="ExamInfo ExamStructureInfo examPrevie2">
@@ -92,9 +93,13 @@ const ExamPreview = ({ examData }) => {
           >
             Chapters :{" "}
           </p>
-          {examData.chosenChapters.map((chapter) => (
-            <p style={{ marginRight: "5px" }}>{chapter}</p>
-          ))}
+          {typeof examData.chosenChapters == "string" ? (
+            <p style={{ marginRight: "5px" }}>{examData.chosenChapters}</p>
+          ) : (
+            examData.chosenChapters.map((chapter) => (
+              <p style={{ marginRight: "5px" }}>{chapter}</p>
+            ))
+          )}
         </div>
         <div>
           {examData?.examQuestion

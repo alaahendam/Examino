@@ -5,11 +5,11 @@ import API from "../../../utilities/api";
 import { toast } from "react-toastify";
 const ExamInfo = ({ register, setLevel }) => {
   const login = useSelector((state) => state.login.login);
-  const [levels, setLevels] = useState(null);
+  const [levels, setLevels] = useState([]);
   const [chapters, setChapters] = useState(null);
   useEffect(() => {
     setLevels(login.ownedLevels);
-    if (!login.ownedLevels.length) {
+    if (!login?.ownedLevels?.length) {
       toast.error("يجب اضافة بنك أسئلة اولا اضف بعض المستويات وأعد المحاولة");
     }
   }, []);

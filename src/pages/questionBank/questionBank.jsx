@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./questionBank.css";
 import Dialog from "@mui/material/Dialog";
 import API from "../../utilities/api";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import MainButton from "../../component/button/button";
@@ -43,7 +43,12 @@ const QuestionBank = () => {
         showConfirmButton: false,
         timer: 1500,
       });
-      setLevels([...levels, values]);
+      if (levels?.length) {
+        setLevels([...levels, values]);
+      } else {
+        setLevels([values]);
+      }
+
       setNewLevel(false);
     } catch (error) {
       console.log(error);
