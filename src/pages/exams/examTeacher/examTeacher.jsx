@@ -80,7 +80,7 @@ const ExamTeacher = () => {
                 color: "gray",
               }}
             >
-              start at: {new Date(exam.start).toLocaleString("ar-EG")}
+              start at: {new Date(exam.start).toLocaleString()}
               {/* start at: {dateParser(exam.start)} */}
             </p>
             <p
@@ -89,7 +89,7 @@ const ExamTeacher = () => {
                 color: "gray",
               }}
             >
-              end at: {new Date(exam.end).toLocaleString("ar-EG")}
+              end at: {new Date(exam.end).toLocaleString()}
             </p>
             <div
               style={{
