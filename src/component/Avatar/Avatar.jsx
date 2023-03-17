@@ -3,28 +3,28 @@ import Avatar from '@mui/material/Avatar';
 import "../Avatar/Avatar.css"
 import AvatarGroup from '@mui/material/AvatarGroup';
 import image from "../../images/onlinecall.webp"
+import avatar1 from "../../images/avatar1.jpg";
+import avatar2 from "../../images/avatar2.jpg";
 function Avatarr(){
     return(
        <div>
      <AvatarGroup max={2} style={{justifyContent:"center",paddingTop:"15px"}}>
-      <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-      <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />
+      <Avatar alt="Travis Howard" src={avatar2} />
+      <Avatar alt="Remy Sharp" src={avatar1} />
     </AvatarGroup>
     <br/>
          <h4>
-          Mohamed Adel & Alaa Hendam
+          Alaa Hendam & Mohamed Adel
          </h4>
          <br/>
           <p className="para1">
-          
-        GeeksforGeeks is my favourite site where 
-        I can gain a lot of knowledge and can 
-        also share my knowledge what i have 
-        gained while learning. We can add more 
-        paragraphs for content. This is just an 
-        example to tell how to create a story 
-        book like effect. More paragraphs, 
-        content just for showing its best effect. 
+          With an online exam, there is no need to manually grade each answer sheet,
+           as the results are automatically calculated by the computer.
+            This not only saves time, but also reduces the risk of human error.
+          An online exam provides flexibility and security to the examination process.
+           Once all the questions are uploaded in the system,
+            the system can shuffle and give questions in different orders to different students.
+             This minimizes the chance of cheating.
         <span>,,</span>
     </p>
     <br/>

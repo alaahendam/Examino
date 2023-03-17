@@ -139,6 +139,7 @@ const SignUp = () => {
         />
       ))}
       <input
+      className="btn"
         type="submit"
         value="Sign Up"
         style={{

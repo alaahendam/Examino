@@ -15,6 +15,23 @@ const Sliderr = () => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const ImagesSlider = [
+    {
+      img : image 
+    },
+    {
+      img : image
+    },
+    {
+      img : image
+    }, {
+      img : image
+    },
+    {
+      img : image 
+    }
+  ]
   return (
     <div style={{display:"flex",justifyContent:"center"}}>
       <div style={{
@@ -22,34 +39,25 @@ const Sliderr = () => {
     }}>
       <h3 style={{textAlign:"center"}}> We Bult Our Trust With Our<br/> Proffesors & Students</h3>
       <br/>
+     
     <Carousel className="Carousell" cols={3} rows={1} gap={10} loop >
-      <Carousel.Item >
+    {ImagesSlider.map((image4) => (
+          <Carousel.Item >
   
-        <React.Fragment  >
-        <img  width="100%" className='carsImage' src={image} onClick={handleClickOpen} />
-      <Dialog
-        open={open}
-        onClose={handleClose}
-      >
-
-        <DialogContent style={{textAlign:"center",height:"100%",width:"100%"}}>
-          <img src={image} style={{width:"100%",height:"90%px"}}/>
-        </DialogContent>
-      </Dialog>
-    </React.Fragment>
-      </Carousel.Item>
-      <Carousel.Item>
-        <img width="100%"  className='carsImage' src={image} />
-      </Carousel.Item>
-      <Carousel.Item>
-        <img width="100%"  className='carsImage' src={image} />
-      </Carousel.Item>
-      <Carousel.Item>
-        <img width="100%"  className='carsImage' src={image} />
-      </Carousel.Item>
-      <Carousel.Item>
-        <img width="100%"  className='carsImage' src={image} />
-      </Carousel.Item>
+          <React.Fragment  >
+          <img  width="100%" className='carsImage' src={image4.img} onClick={handleClickOpen} />
+        <Dialog
+          open={open}
+          onClose={handleClose}
+        >
+          <DialogContent style={{textAlign:"center",height:"100%",width:"100%"}}>
+            <img src={image4.img} style={{width:"100%",height:"90%px"}}/>
+          </DialogContent>
+        </Dialog>
+      </React.Fragment>
+        </Carousel.Item>
+        ))}
+     
     </Carousel>
     </div>
     </div>
