@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import MainButton from "../../component/button/button";
+import Swal from "sweetalert2";
 const QuestionBank = () => {
   const {
     register,
