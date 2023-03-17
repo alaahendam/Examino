@@ -9,6 +9,8 @@ import API from "../../utilities/api";
 import { toast } from "react-toastify";
 import MainButton from "../../component/button/button";
 import Swal from "sweetalert2";
+import Dialog from "@mui/material/Dialog";
+import CircularProgress from "@mui/material/CircularProgress";
 const SignIn = () => {
   const {
     register,
@@ -20,36 +22,14 @@ const SignIn = () => {
   const login = useSelector((state) => state.login.login);
   const usersData = useSelector((state) => state.users.users);
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
   var findLoginFlag = false;
   const onSubmit = async (values) => {
     try {
-      let timerInterval;
-      Swal.fire({
-        customClass: {
-          popup: "colored-toast",
-        },
-        // html: 'I will close in <b></b> milliseconds.',
-        timer: 2000,
-        timerProgressBar: true,
-        background: "#EDEADE",
-        didOpen: () => {
-          Swal.showLoading();
-          const b = Swal.getHtmlContainer().querySelector("b");
-          timerInterval = setInterval(() => {
-            b.textContent = Swal.getTimerLeft();
-          }, 100);
-        },
-        willClose: () => {
-          clearInterval(timerInterval);
-        },
-      }).then((result) => {
-        /* Read more about handling dismissals below */
-        if (result.dismiss === Swal.DismissReason.timer) {
-          console.log("I was closed by the timer");
-        }
-      });
+      setLoading(true);
       let { data } = await API.post("/user/login", values);
       window.localStorage.setItem("token", data.token);
+      setLoading(false);
       dispatch(addLogin(data.data));
       navigate("/exams");
     } catch {
@@ -132,6 +112,32 @@ const SignIn = () => {
           </p>
         </form>
       </div>
+      <Dialog
+        maxWidth={"lg"}
+        open={loading ? true : false}
+        PaperProps={{
+          style: {
+            backgroundColor: "transparent",
+            boxShadow: "none",
+          },
+        }}
+      >
+        <div
+          style={{
+            width: "100px",
+            height: "100px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <CircularProgress
+            sx={{
+              color: "#a840d1",
+            }}
+          />
+        </div>
+      </Dialog>
     </div>
   );
 };

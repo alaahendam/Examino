@@ -10,17 +10,15 @@ import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
 import API from "../../utilities/api";
 import { addLogin, deleteLogin } from "../../redux/features/loginSlice";
+import Dialog from "@mui/material/Dialog";
+import CircularProgress from "@mui/material/CircularProgress";
 const SignUp = () => {
   const usersData = useSelector((state) => state.users.users);
   const dispatch = useDispatch();
-  const usersCollectionRef = collection(db, "users");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [userType, setUserType] = useState("Teacher");
-  const [userExist, setUserExist] = useState({
-    name: true,
-    userId: true,
-    email: true,
-  });
+  const [userExist, setUserExist] = useState({});
   const {
     register,
     formState: { errors },
@@ -44,7 +42,9 @@ const SignUp = () => {
   ];
   const onSubmit = async (data) => {
     try {
+      setLoading(true);
       if (userExist.name || userExist.userId || userExist.email) {
+        setLoading(false);
         toast.error("المستخدم موجود بالفعل");
       } else {
         delete data.confirmPassword;
@@ -52,9 +52,11 @@ const SignUp = () => {
         let result = await API.post("/user/create", data);
         window.localStorage.setItem("token", result.data.token);
         dispatch(addLogin(result.data.data));
+        setLoading(false);
         navigate("/exams");
       }
     } catch {
+      setLoading(false);
       toast.error("المستخدم موجود بالفعل");
     }
   };
@@ -122,16 +124,16 @@ const SignUp = () => {
       </div>
       {inputField.map((inputData, index) => (
         <input
-          type={inputData.type}
-          placeholder={inputData.placeholder}
-          {...register(`${inputData.name}`, { required: true })}
+          type={inputData?.type}
+          placeholder={inputData?.placeholder}
+          {...register(`${inputData?.name}`, { required: true })}
           style={{
             paddingLeft: "10px",
           }}
-          className={userExist[inputData.name] ? "userExist" : "userNotExist"}
+          className={userExist[inputData?.name] ? "userExist" : "userNotExist"}
           key={index}
           onChange={(e) =>
-            index < 3 ? handelCheckUser(e.target.value, inputData.name) : null
+            index < 3 ? handelCheckUser(e.target.value, inputData?.name) : null
           }
         />
       ))}
@@ -164,6 +166,32 @@ const SignUp = () => {
           Sign In
         </a>
       </p>
+      <Dialog
+        maxWidth={"lg"}
+        open={loading ? true : false}
+        PaperProps={{
+          style: {
+            backgroundColor: "transparent",
+            boxShadow: "none",
+          },
+        }}
+      >
+        <div
+          style={{
+            width: "100px",
+            height: "100px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <CircularProgress
+            sx={{
+              color: "#a840d1",
+            }}
+          />
+        </div>
+      </Dialog>
     </form>
   );
 };
