@@ -6,6 +6,7 @@ import API from "../../utilities/api";
 import { useForm } from "react-hook-form";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+import Swal from 'sweetalert2'
 
 const QuestionBank = () => {
   const {
@@ -52,11 +53,19 @@ const QuestionBank = () => {
   // }, [chapterInfo]);
 
   const handelAddNewLevel = async (values) => {
+    
     try {
       let { data } = await API.post("/level/create", {
         ...values,
         ownerId: login.id,
       });
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Your Chapter Added',
+        showConfirmButton: false,
+        timer: 1500
+      })
       console.log(data);
       setLevels([...levels, values]);
       setNewLevel(false);
