@@ -113,9 +113,12 @@ const Memberships = () => {
         </div>
       ) : null}
       {loading ? (
+        <>
+        <br /> <br />
         <Box sx={{ display: "flex" }}>
           <CircularProgress />
         </Box>
+        </>
       ) : (
         <div className="studentMemberships">
           {studentMemberships?.map((membership, index) => (

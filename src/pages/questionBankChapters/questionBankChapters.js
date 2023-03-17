@@ -83,7 +83,7 @@ const QuestionBankChapters = () => {
     Swal.fire({
       position: "center",
       icon: "success",
-      title: "The chapter has been added successfully",
+      title: "Your Chapter Added",
       showConfirmButton: false,
       timer: 1500,
     });
@@ -412,9 +412,13 @@ const QuestionBankChapters = () => {
             Delete All Students
           </button>
           {loading ? (
-            <Box sx={{ display: "flex" }}>
-              <CircularProgress />
-            </Box>
+            <>
+              <br />
+              <br />
+              <Box sx={{ display: "flex" }}>
+                <CircularProgress />
+              </Box>
+            </>
           ) : students ? (
             students.map((student) => (
               <div className="levelInfo">

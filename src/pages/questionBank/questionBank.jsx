@@ -58,6 +58,13 @@ const QuestionBank = () => {
         ...values,
         ownerId: login.id,
       });
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Your Chapter Added",
+        showConfirmButton: false,
+        timer: 1500,
+      });
       console.log(data);
       setLevels([...levels, values]);
       setNewLevel(false);
