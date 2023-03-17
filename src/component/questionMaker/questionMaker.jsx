@@ -3,7 +3,8 @@ import "./questionMaker.css";
 import { useForm, useFieldArray } from "react-hook-form";
 import { BsCardImage } from "react-icons/bs";
 import { AiOutlineClose } from "react-icons/ai";
-
+import MainButton from "../button/button";
+import { toast } from "react-toastify";
 const QuestionMaker = ({ handelQuestion, editFlag, editData }) => {
   const [questionType, setQuestionType] = useState(
     editFlag ? editData.questionType : "radio"
@@ -30,7 +31,13 @@ const QuestionMaker = ({ handelQuestion, editFlag, editData }) => {
 
   const onSubmit = (data) => {
     console.log(data);
-    handelQuestion(data);
+    if (!data.numberOfAnswer.length) {
+      console.log("no answer");
+      toast.error("يجب أن تضيف بعض الإجابات اولا");
+    } else {
+      handelQuestion(data);
+    }
+    //
     // reset();
     // setQuestionType("radio");
     remove();
@@ -68,6 +75,7 @@ const QuestionMaker = ({ handelQuestion, editFlag, editData }) => {
               fontSize: "20px",
               cursor: "pointer",
             }}
+            onClick={() => toast.info("إضافة صورة للسؤال غير متاحة حاليا")}
           />
         </label>
         <input
@@ -94,10 +102,9 @@ const QuestionMaker = ({ handelQuestion, editFlag, editData }) => {
           {...register(`question`)}
         />
         <div>
-          <input
+          <MainButton
             type="button"
-            className="btn"
-            value="Add Answer"
+            text="Add Answer"
             onClick={() => append({})}
           />
         </div>
@@ -139,15 +146,10 @@ const QuestionMaker = ({ handelQuestion, editFlag, editData }) => {
           ))}
         </div>
       </div>
-      <input
+      <MainButton
         type="submit"
-        className="btn"
-        value={editFlag ? "Save Edit" : "Submit"}
-        style={{
-          position: "absolute",
-          bottom: "10px",
-          right: "30px",
-        }}
+        text={editFlag ? "Save Edit" : "Submit"}
+        style={{ position: "absolute", bottom: "10px", right: "30px" }}
       />
     </form>
   );

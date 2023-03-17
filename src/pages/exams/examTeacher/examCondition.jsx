@@ -12,7 +12,7 @@ import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import { BiEditAlt } from "react-icons/bi";
 import { number } from "yup";
-
+import MainButton from "../../../component/button/button";
 const ExamCondition = ({
   level,
   setExamQuestion,
@@ -158,9 +158,9 @@ const ExamCondition = ({
                   />
                 </div>
               ))}
-              <input
+              <MainButton
                 type="submit"
-                value={"Save"}
+                text={"Save"}
                 onClick={handleSubmit(handelChaptersCheckbox)}
               />
             </form>

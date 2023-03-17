@@ -29,14 +29,10 @@
 }
 .chapterFrom {
   display: flex;
-}
-.chapterFrom .btn {
-  color: white;
-  background: linear-gradient(100deg, #a840d1, #56d1d4);
-  width: 140px;
-  height: 40px;
-  cursor: pointer;
-  padding-left: 0px;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 50vh;
 }
 .newLevelDiv input {
   padding-left: 10px;
@@ -67,7 +63,6 @@
   width: 100%;
   padding: 12px;
   box-shadow: 2px 2px 2px 2px #c9c7c7;
-  margin: 10px 5px;
   /* padding-left: 15px;
   padding-right: 30px; */
 }

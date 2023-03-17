@@ -4,6 +4,7 @@ import image from "../../images/student.png";
 import image1 from "../../images/forma.png";
 import html2canvas from "html2canvas";
 import { useSelector, useDispatch } from "react-redux";
+import MainButton from "../../component/button/button";
 const SmallCertificate = ({ examInfo }) => {
   const login = useSelector((state) => state.login.login);
   const handleDownloadImage = async () => {
@@ -51,9 +52,7 @@ const SmallCertificate = ({ examInfo }) => {
           </tr>
         </table>
       </div>
-      <button type="button" onClick={handleDownloadImage}>
-        Download
-      </button>
+      <MainButton text="download" onClick={handleDownloadImage} />
     </div>
   );
 };

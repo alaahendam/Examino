@@ -4,16 +4,16 @@
   position: relative;
   box-shadow: 2px 2px 2px 2px #c9c7c7;
   border-radius: 5px;
-  margin: 5px;
 }
 .QuestionMaker .header {
-  height: 50px;
+  padding: 10px 2px;
   box-shadow: 2px 2px 2px 2px #c9c7c7;
   margin-bottom: 5px;
   display: flex;
   justify-content: space-around;
   align-items: center;
   margin: 8px 5px;
+  flex-wrap: wrap;
 }
 .QuestionMaker .header select {
   height: 30px;

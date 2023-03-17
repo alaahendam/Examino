@@ -6,8 +6,8 @@ import API from "../../utilities/api";
 import { useForm } from "react-hook-form";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import Swal from 'sweetalert2'
-
+import MainButton from "../../component/button/button";
+import Swal from "sweetalert2";
 const QuestionBank = () => {
   const {
     register,
@@ -25,6 +25,7 @@ const QuestionBank = () => {
   const [editQuestion, setEditQuestion] = useState(false);
   const [editData, setEditData] = useState(null);
   const [questionEditIndex, setQuestionEditIndex] = useState(null);
+
   useEffect(() => {
     // const fetchData = async () => {
     //   try {
@@ -53,19 +54,18 @@ const QuestionBank = () => {
   // }, [chapterInfo]);
 
   const handelAddNewLevel = async (values) => {
-    
     try {
       let { data } = await API.post("/level/create", {
         ...values,
         ownerId: login.id,
       });
       Swal.fire({
-        position: 'center',
-        icon: 'success',
-        title: 'Your Chapter Added',
+        position: "center",
+        icon: "success",
+        title: "Your Level Added",
         showConfirmButton: false,
-        timer: 1500
-      })
+        timer: 1500,
+      });
       console.log(data);
       setLevels([...levels, values]);
       setNewLevel(false);
@@ -80,12 +80,7 @@ const QuestionBank = () => {
   return (
     <div className="QuestionBank">
       <div>
-        <input
-          type={"button"}
-          value="Add A New Level"
-          className="btn"
-          onClick={() => setNewLevel(true)}
-        />
+        <MainButton text="Add A New Level" onClick={() => setNewLevel(true)} />
       </div>
       <div className="levelsDivs">
         {levels?.map((level, index) => (
@@ -128,7 +123,7 @@ const QuestionBank = () => {
             placeholder="Pleace Set Special Code For This Level"
             {...register("specialCode", { required: true })}
           />
-          <input type={"submit"} value="Add Level" className="btn" />
+          <MainButton type={"submit"} text="Add Level" />
         </form>
       </Dialog>
       {/* <Dialog

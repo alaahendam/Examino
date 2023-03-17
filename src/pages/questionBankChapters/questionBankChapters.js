@@ -20,7 +20,8 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { toast } from "react-toastify";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Box } from "@mui/material";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
+import MainButton from "../../component/button/button";
 const QuestionBankChapters = () => {
   const login = useSelector((state) => state.login.login);
   let { levelName } = useParams();
@@ -35,6 +36,7 @@ const QuestionBankChapters = () => {
   const [editData, setEditData] = useState(null);
   const [openStudents, setOpenStudents] = useState(false);
   const [students, setStudents] = useState(null);
+  const [openAddChapter, setOpenAddChapter] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -79,20 +81,21 @@ const QuestionBankChapters = () => {
   }, [openChapterQuestion]);
   const addChapter = async (e) => {
     e.preventDefault();
-    Swal.fire({
-      position: 'center',
-      icon: 'success',
-      title: 'Your Chapter Added',
-      showConfirmButton: false,
-      timer: 1500
-    })
     try {
       let { data } = await API.post("/chapter/create", {
         name: chapterName,
         levelId: chapters.id,
       });
       console.log(data);
+      setOpenAddChapter(false);
       setChapters({ ...chapters, chapters: [...chapters?.chapters, data] });
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Your Chapter Added",
+        showConfirmButton: false,
+        timer: 1500,
+      });
       // toast.success("تم الإضافة بنجاح");
     } catch (error) {
       console.log(error);
@@ -240,37 +243,27 @@ const QuestionBankChapters = () => {
       }}
     >
       <NavBar />
-      <form
-        className="chapterFrom"
+      <div
         style={{
-          paddingTop: "50px",
+          display: "flex",
+          justifyContent: "space-evenly",
+          padding: "20px",
         }}
-        onSubmit={addChapter}
       >
-        <input
-        style={{marginLeft:"0.5rem"}}
-          required
-          type="text"
-          placeholder="Pleace Set Chapter Name"
-          onChange={(e) => setChapterName(e.target.value)}
+        <MainButton
+          text="Add Chapter"
+          onClick={() => setOpenAddChapter(true)}
         />
-        <input type={"submit"} value="Add A New Chapter" className="btn"
-         style={{marginLeft:"0.5rem"}} />
-         <div style={{textAlign:"center",margin:"auto"}}>
-        <input
-          type="button"
-          value="Students"
-          className="btn"
-          onClick={() => setOpenStudents(true)}
-        />
-        </div>
-      </form>
+
+        <MainButton text="Students" onClick={() => setOpenStudents(true)} />
+      </div>
       {loading ? (
         <>
-        <br/><br/>
-        <Box style={{textAlign:"center",margin:"auto"}}>
-          <CircularProgress />
-        </Box>
+          <br />
+          <br />
+          <Box style={{ textAlign: "center", margin: "auto" }}>
+            <CircularProgress />
+          </Box>
         </>
       ) : chapters && chapters.chapters ? (
         chapters?.chapters?.map((chapter, index) => (
@@ -395,34 +388,31 @@ const QuestionBankChapters = () => {
             display: "flex",
             alignItems: "center",
             flexDirection: "column",
-            padding: "20px",
+            padding: "15px",
           }}
         >
-          <button
-            className="btn"
+          <MainButton
             style={{
-              width: "20%",
-              border: "none",
-              borderRadius: "6px",
               background: "red",
             }}
             onClick={() => handelDeleteStudent({ levelId: chapters.id })}
-          >
-            Delete All Students
-          </button>
+            text="Delete All Students"
+          />
+
           {loading ? (
             <>
-            <br/><br/>
-            <Box sx={{ display: "flex" }}>
-              <CircularProgress />
-            </Box>
+              <br />
+              <br />
+              <Box sx={{ display: "flex" }}>
+                <CircularProgress />
+              </Box>
             </>
           ) : students ? (
             students.map((student) => (
               <div className="levelInfo">
                 <div className="levelDetails">
                   <p>Name: {student.user.name}</p>
-                  <p>Email : {student.user.email}</p>
+                  <p>Telephone: {student.user.telephone}</p>
                   <p>Job: {student.user.role}</p>
                 </div>
                 <div className="studentApproved">
@@ -461,6 +451,29 @@ const QuestionBankChapters = () => {
             ))
           ) : null}
         </div>
+      </Dialog>
+      <Dialog
+        maxWidth={"lg"}
+        fullWidth={true}
+        open={openAddChapter ? true : false}
+        onClose={() => setOpenAddChapter(false)}
+      >
+        <form className="chapterFrom" onSubmit={addChapter}>
+          <label>Add A New Chapter</label>
+          <input
+            style={{ marginLeft: "0.5rem", padding: "13px" }}
+            required
+            type="text"
+            placeholder="Set Chapter Name"
+            onChange={(e) => setChapterName(e.target.value)}
+          />
+
+          <MainButton
+            type={"submit"}
+            text="Add Chapter"
+            style={{ marginLeft: "0.5rem" }}
+          />
+        </form>
       </Dialog>
     </div>
   );
